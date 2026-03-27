@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
-    //
+    protected $fillable = ['url', 'campaign_id'];
+
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class);
+    }
 }

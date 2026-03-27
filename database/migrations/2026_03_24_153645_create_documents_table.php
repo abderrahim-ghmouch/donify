@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -13,6 +14,10 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('campaign_id')->constrained()->onDelete('cascade');
+            $table->string('title')->nullable();
+            $table->string('url');
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

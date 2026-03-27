@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('stripes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('stripe_customer_id')->nullable();
+            $table->string('stripe_account_id')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
