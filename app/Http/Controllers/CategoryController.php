@@ -7,22 +7,16 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $categories = Category::all();
-        return view('categories.index', compact('categories'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('categories.create');
+        return response()->json([
+            'status'     => 'success',
+            'data'       => $categories,
+        ], 200);
     }
 
     /**
@@ -30,23 +24,28 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'category_name' => 'required|string|max:255|unique:categories,category_name',
         ]);
 
-        Category::create([
-            'category_name' => $request->category_name,
-        ]);
+        $category = Category::create($validated);
 
-        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Category created successfully.',
+            'data'    => $category,
+        ], 201);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      */
-    public function edit(Category $category)
+    public function show(Category $category)
     {
-        return view('categories.edit', compact('category'));
+        return response()->json([
+            'status' => 'success',
+            'data'   => $category,
+        ], 200);
     }
 
     /**
@@ -54,15 +53,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $request->validate([
+        $validated = $request->validate([
             'category_name' => 'required|string|max:255|unique:categories,category_name,' . $category->id,
         ]);
 
-        $category->update([
-            'category_name' => $request->category_name,
-        ]);
+        $category->update($validated);
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Category updated successfully.',
+            'data'    => $category,
+        ], 200);
     }
 
     /**
@@ -72,6 +73,9 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Category deleted successfully.',
+        ], 200);
     }
 }
