@@ -29,6 +29,30 @@ $campaign=Campaign::create($validateData);
 return response()->json(['data'=>$campaign,'message'=>'Campaign created successfully','status'=>201],'201');
 
 }
-public function update (Request )
 
+public function update(Request $request, $id)
+{
+    $campaign = Campaign::findOrFail($id);
+
+    $validatedData = $request->validate([
+        'name' => 'sometimes|string|max:255',
+        'description' => 'sometimes|nullable|string',
+        'start_date' => 'sometimes|date',
+        'end_date' => 'sometimes|date|after_or_equal:start_date',
+    ]);
+
+    $campaign->update($validatedData);
+
+    return response()->json(['data' => $campaign, 'message' => 'Campaign updated successfully', 'status' => 200]);
 }
+
+public function destroy($id){
+
+    $campaign = Campaign::findOrFail($id);
+
+    $campaign->delete();
+
+    return response()->json(['data' => $campaign, 'message' => 'Campaign deleted successfully', 'status' => 200]);
+}
+}
+
