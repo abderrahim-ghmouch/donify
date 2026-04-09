@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CampaignController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 
@@ -19,4 +20,14 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('categories', [CategoryController::class, 'store']);
     Route::put('categories/{category}', [CategoryController::class, 'update']);
     Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
+});
+
+Route::middleware(['auth:sanctum','porter'])->group(function(){
+    Route::get('campaigns', [CampaignController::class, 'index']);
+    Route::post('campaigns', [CampaignController::class, 'store']);
+    Route::get('campaigns/{id}', [CampaignController::class, 'show']);
+    Route::put('campaigns/{id}', [CampaignController::class, 'update']);
+    Route::delete('campaigns/{id}', [CampaignController::class, 'destroy']);
+    Route::get('campaigns/search', [CampaignController::class, 'search']);
+    Route::get('campaigns/filter', [CampaignController::class, 'filter']);
 });
