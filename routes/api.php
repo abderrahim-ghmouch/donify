@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 
@@ -11,18 +12,31 @@ use App\Http\Controllers\CategoryController;
 | All routes here are prefixed with /api automatically.
 */
 
-// Public: list & show categories
+// ==================== Public Auth Routes ====================
+Route::post('auth/register', [UserController::class, 'register']);
+Route::post('auth/login', [UserController::class, 'login']);
+
+// ==================== Protected Auth Routes ====================
+Route::middleware('auth:api')->group(function () {
+    Route::get('auth/me', [UserController::class, 'me']);
+    Route::post('auth/refresh', [UserController::class, 'refresh']);
+    Route::post('auth/logout', [UserController::class, 'logout']);
+    Route::put('auth/profile', [UserController::class, 'update']);
+});
+
+// ==================== Public Routes ====================
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('categories/{category}', [CategoryController::class, 'show']);
 
-// Admin-only: create, update, delete
-Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+// ==================== Admin Routes ====================
+Route::middleware(['auth:api', 'admin'])->group(function () {
     Route::post('categories', [CategoryController::class, 'store']);
     Route::put('categories/{category}', [CategoryController::class, 'update']);
     Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 });
 
-Route::middleware(['auth:sanctum','porter'])->group(function(){
+// ==================== Porter Routes ====================
+Route::middleware(['auth:api','porter'])->group(function(){
     Route::get('campaigns', [CampaignController::class, 'index']);
     Route::post('campaigns', [CampaignController::class, 'store']);
     Route::get('campaigns/{id}', [CampaignController::class, 'show']);

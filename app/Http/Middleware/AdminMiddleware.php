@@ -11,14 +11,19 @@ class AdminMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  Closure(Request): (Response)  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role === 'admin') {
+        // 1. Check if user is logged in AND has admin role
+        if (auth('api')->check() && auth('api')->user()->role === 'admin') {
             return $next($request);
         }
 
-        return redirect()->back()->with('error', 'Unauthorized access.');
+        // 2. Return proper JSON response for API
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Unauthorized. Admin access required.'
+        ], 403);
     }
 }
