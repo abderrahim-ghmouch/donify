@@ -15,20 +15,28 @@ $campaigns =Campaign::all();
 return response()->json(['data'=>$campaigns,'message'=>'Campaigns retrieved successfully','status'=>200]);
 }
 
-public function store(Request $request){
+    public function store(Request $request)
+    {
+        $validateData = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'target_amount' => 'required|numeric|min:1',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
 
-$validateData = $request->validate([
-    'name' => 'required|string|max:255',
-    'description' => 'nullable|string',
-    'start_date' => 'required|date',
-    'end_date' => 'required|date|after_or_equal:start_date',
-]);
+        // Automatically assign the authenticated user
+        $validateData['user_id'] = auth()->id();
 
-$campaign=Campaign::create($validateData);
+        $campaign = Campaign::create($validateData);
 
-return response()->json(['data'=>$campaign,'message'=>'Campaign created successfully','status'=>201],'201');
-
-}
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Campaign created successfully',
+            'data' => $campaign
+        ], 201);
+    }
 
 public function show($id){
 
@@ -37,30 +45,56 @@ public function show($id){
     return response()->json(['data' => $campaign, 'message' => 'Campaign retrieved successfully', 'status' => 200]);
 }
 
-public function update(Request $request, $id)
-{
-    $campaign = Campaign::findOrFail($id);
+    public function update(Request $request, $id)
+    {
+        $campaign = Campaign::findOrFail($id);
 
-    $validatedData = $request->validate([
-        'name' => 'sometimes|string|max:255',
-        'description' => 'sometimes|nullable|string',
-        'start_date' => 'sometimes|date',
-        'end_date' => 'sometimes|date|after_or_equal:start_date',
-    ]);
+        // Ownership Check: Only owner or admin can update
+        if ($campaign->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized. You do not own this campaign.'
+            ], 403);
+        }
 
-    $campaign->update($validatedData);
+        $validatedData = $request->validate([
+            'category_id' => 'sometimes|exists:categories,id',
+            'title' => 'sometimes|string|max:255',
+            'description' => 'sometimes|string',
+            'target_amount' => 'sometimes|numeric|min:1',
+            'start_date' => 'sometimes|date',
+            'end_date' => 'sometimes|date|after_or_equal:start_date',
+            'status' => 'sometimes|in:active,completed,cancelled'
+        ]);
 
-    return response()->json(['data' => $campaign, 'message' => 'Campaign updated successfully', 'status' => 200]);
-}
+        $campaign->update($validatedData);
 
-public function destroy($id){
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Campaign updated successfully',
+            'data' => $campaign
+        ]);
+    }
 
-    $campaign = Campaign::findOrFail($id);
+    public function destroy($id)
+    {
+        $campaign = Campaign::findOrFail($id);
 
-    $campaign->delete();
+        // Ownership Check
+        if ($campaign->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized. You do not own this campaign.'
+            ], 403);
+        }
 
-    return response()->json(['data' => $campaign, 'message' => 'Campaign deleted successfully', 'status' => 200]);
-}
+        $campaign->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Campaign deleted successfully'
+        ]);
+    }
 
 public function search(Request $request){
 
@@ -77,25 +111,20 @@ public function search(Request $request){
     return response()->json(['data' => $campaigns, 'message' => 'Search results retrieved successfully', 'status' => 200]);
 }
 
-public function filter(Request $request){
+    public function filter(Request $request)
+    {
+        
 
-    $query = Campaign::query();
+        if ($request->has('category_id')) {
+            $campaigns = Campaign::where('category_id', $request->input('category_id'))->get();
+        }
 
-    if ($request->has('start_date')) {
-        $query->whereDate('start_date', '>=', $request->input('start_date'));
+
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Filtered campaigns retrieved successfully',
+            'data' => $campaigns
+        ]);
     }
-
-    if ($request->has('end_date')) {
-        $query->whereDate('end_date', '<=', $request->input('end_date'));
-    }
-
-    if ($request->has('name')) {
-        $query->where('name', 'like', '%' . $request->input('name') . '%');
-    }
-
-    $campaigns = $query->get();
-
-    return response()->json(['data' => $campaigns, 'message' => 'Filtered campaigns retrieved successfully', 'status' => 200]);
 }
-}
-

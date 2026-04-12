@@ -4,6 +4,7 @@ use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FavouriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,10 @@ Route::middleware(['auth:api', 'check.banned'])->group(function () {
     Route::post('auth/refresh', [UserController::class, 'refresh']);
     Route::post('auth/logout', [UserController::class, 'logout']);
     Route::put('auth/profile', [UserController::class, 'update']);
+
+    // Favourites
+    Route::get('favourites', [FavouriteController::class, 'index']);
+    Route::post('campaigns/{campaign}/favourite', [FavouriteController::class, 'toggle']);
 });
 
 // ==================== Public Routes ====================

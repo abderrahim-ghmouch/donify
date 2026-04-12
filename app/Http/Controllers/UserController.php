@@ -58,6 +58,7 @@ class UserController extends Controller
      */
     public function me()
     {
+
         return response()->json(auth()->user());
     }
 
@@ -83,6 +84,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+       
         $user = auth()->user();
 
         $validated = $request->validate([
@@ -99,9 +101,7 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * Ban a user
-     */
+
     public function ban(User $user)
     {
         $user->update(['is_banned' => true]);
