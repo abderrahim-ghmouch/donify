@@ -61,7 +61,7 @@ class UserController extends Controller
         return response()->json(auth()->user());
     }
 
-   
+
     public function refresh()
     {
         return response()->json([
