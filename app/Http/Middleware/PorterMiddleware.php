@@ -15,7 +15,7 @@ class PorterMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->check() && auth()->user()->role === 'porter') {
+        if (auth('api')->check() && auth('api')->user()->role === 'porter') {
             return $next($request);
         }
 
