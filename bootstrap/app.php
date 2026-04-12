@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'donor' => \App\Http\Middleware\DonorMiddleware::class,
+            'check.banned' => \App\Http\Middleware\CheckBanned::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

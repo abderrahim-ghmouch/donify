@@ -98,4 +98,30 @@ class UserController extends Controller
             'user' => $user,
         ]);
     }
+
+    /**
+     * Ban a user
+     */
+    public function ban(User $user)
+    {
+        $user->update(['is_banned' => true]);
+
+        return response()->json([
+            'message' => 'User has been banned successfully',
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * Unban a user
+     */
+    public function unban(User $user)
+    {
+        $user->update(['is_banned' => false]);
+
+        return response()->json([
+            'message' => 'User has been unbanned successfully',
+            'user' => $user
+        ]);
+    }
 }

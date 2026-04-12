@@ -17,7 +17,7 @@ Route::post('auth/register', [UserController::class, 'register']);
 Route::post('auth/login', [UserController::class, 'login']);
 
 // ==================== Protected Auth Routes ====================
-Route::middleware('auth:api')->group(function () {
+Route::middleware(['auth:api', 'check.banned'])->group(function () {
     Route::get('auth/me', [UserController::class, 'me']);
     Route::post('auth/refresh', [UserController::class, 'refresh']);
     Route::post('auth/logout', [UserController::class, 'logout']);
@@ -29,14 +29,18 @@ Route::get('categories', [CategoryController::class, 'index']);
 Route::get('categories/{category}', [CategoryController::class, 'show']);
 
 // ==================== Admin Routes ====================
-Route::middleware(['auth:api', 'admin'])->group(function () {
+Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
     Route::post('categories', [CategoryController::class, 'store']);
     Route::put('categories/{category}', [CategoryController::class, 'update']);
     Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
+    
+    // User Management
+    Route::post('users/{user}/ban', [UserController::class, 'ban']);
+    Route::post('users/{user}/unban', [UserController::class, 'unban']);
 });
 
 // ==================== Porter Routes ====================
-Route::middleware(['auth:api','porter'])->group(function(){
+Route::middleware(['auth:api', 'check.banned', 'porter'])->group(function(){
     Route::get('campaigns', [CampaignController::class, 'index']);
     Route::post('campaigns', [CampaignController::class, 'store']);
     Route::get('campaigns/{id}', [CampaignController::class, 'show']);
