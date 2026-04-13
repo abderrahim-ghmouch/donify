@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavouriteController;
+use App\Http\Controllers\DonationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,10 @@ Route::middleware(['auth:api', 'check.banned'])->group(function () {
     // Favourites
     Route::get('favourites', [FavouriteController::class, 'index']);
     Route::post('campaigns/{campaign}/favourite', [FavouriteController::class, 'toggle']);
+
+    // Donations
+    Route::post('campaigns/{id}/donate', [DonationController::class, 'donate']);
+    Route::get('my-donations', [DonationController::class, 'myDonations']);
 });
 
 // ==================== Public Routes ====================

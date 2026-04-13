@@ -104,7 +104,7 @@ public function search(Request $request){
         return response()->json(['data' => [], 'message' => 'Search query is required', 'status' => 400], 400);
     }
 
-    $campaigns = Campaign::where('name', 'like', '%' . $query . '%')
+    $campaigns = Campaign::where('title', 'like', '%' . $query . '%')
         ->orWhere('description', 'like', '%' . $query . '%')
         ->get();
 
