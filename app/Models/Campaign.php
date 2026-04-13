@@ -36,7 +36,7 @@ class Campaign extends Model
 
     public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function documents()

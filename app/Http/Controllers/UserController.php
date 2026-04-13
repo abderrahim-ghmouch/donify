@@ -124,4 +124,37 @@ class UserController extends Controller
             'user' => $user
         ]);
     }
+
+    /**
+     * Upload user avatar
+     */
+    public function uploadAvatar(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        // Delete old image if exists (optional but good practice)
+        if ($user->images) {
+            // Logic to delete physical file could go here
+        }
+
+        // Store the file in storage/app/public/avatars
+        $path = $request->file('image')->store('avatars', 'public');
+
+        // Update or create the polymorphic relationship
+        $user->images()->updateOrCreate(
+            [], // No unique criteria needed for morphOne update if handled by relation
+            ['url' => asset('storage/' . $path)]
+        );
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Avatar uploaded successfully',
+            'url' => asset('storage/' . $path)
+        ]);
+    }
 }

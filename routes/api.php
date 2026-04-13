@@ -23,6 +23,7 @@ Route::middleware(['auth:api', 'check.banned'])->group(function () {
     Route::post('auth/refresh', [UserController::class, 'refresh']);
     Route::post('auth/logout', [UserController::class, 'logout']);
     Route::put('auth/profile', [UserController::class, 'update']);
+    Route::post('auth/avatar', [UserController::class, 'uploadAvatar']);
 
     // Favourites
     Route::get('favourites', [FavouriteController::class, 'index']);
@@ -51,6 +52,7 @@ Route::middleware(['auth:api', 'check.banned', 'porter'])->group(function(){
     Route::get('campaigns/{id}', [CampaignController::class, 'show']);
     Route::put('campaigns/{id}', [CampaignController::class, 'update']);
     Route::delete('campaigns/{id}', [CampaignController::class, 'destroy']);
+    Route::post('campaigns/{id}/image', [CampaignController::class, 'uploadImage']);
     Route::get('campaigns/search', [CampaignController::class, 'search']);
     Route::get('campaigns/filter', [CampaignController::class, 'filter']);
 });

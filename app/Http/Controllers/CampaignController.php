@@ -113,18 +113,50 @@ public function search(Request $request){
 
     public function filter(Request $request)
     {
-        
+        $query = Campaign::query();
 
         if ($request->has('category_id')) {
-            $campaigns = Campaign::where('category_id', $request->input('category_id'))->get();
+            $query->where('category_id', $request->input('category_id'));
         }
 
-
+        $campaigns = $query->get();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Filtered campaigns retrieved successfully',
             'data' => $campaigns
         ]);
+    }
+
+    /**
+     * Upload image to campaign gallery
+     */
+    public function uploadImage(Request $request, $id)
+    {
+        $campaign = Campaign::findOrFail($id);
+
+        // Security
+        if ($campaign->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Unauthorized. You do not own this campaign.'
+            ], 403);
+        }
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $path = $request->file('image')->store('campaigns', 'public');
+
+        $image = $campaign->images()->create([
+            'url' => asset('storage/' . $path)
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Image added to campaign gallery',
+            'data' => $image
+        ], 201);
     }
 }
