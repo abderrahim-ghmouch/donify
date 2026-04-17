@@ -10,7 +10,7 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 class UserController extends Controller
 {
 
-  public function register(Request $request)
+    public function register(Request $request)
     {
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
@@ -18,6 +18,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:9',
             'role' => 'nullable|string|in:admin,porter,donor',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $user = User::create([
@@ -28,9 +29,16 @@ class UserController extends Controller
             'role' => $validated['role'] ?? 'donor',
         ]);
 
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('avatars', 'public');
+            $user->images()->create([
+                'url' => asset('storage/' . $path)
+            ]);
+        }
+
         return response()->json([
             'message' => 'User registered successfully',
-            'user' => $user,
+            'user' => $user->load('images'),
         ], 201);
     }
 
@@ -49,7 +57,7 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Login successful',
             'access_token' => $token,
-            'user' => auth()->user(),
+            'user' => auth()->user()->load('images'),
         ]);
     }
 
@@ -97,7 +105,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User updated successfully',
-            'user' => $user,
+            'user' => $user->load('images'),
         ]);
     }
 
