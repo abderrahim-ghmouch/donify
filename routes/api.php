@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\DonationController;
+use App\Http\Controllers\OrganisationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,11 @@ Route::middleware(['auth:api', 'check.banned'])->group(function () {
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('categories/{category}', [CategoryController::class, 'show']);
 
+// Organisation public routes
+Route::get('organisations', [OrganisationController::class, 'index']);
+Route::post('organisations/register', [OrganisationController::class, 'register']);
+Route::get('organisations/{id}', [OrganisationController::class, 'show']);
+
 // ==================== Admin Routes ====================
 Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
     Route::post('categories', [CategoryController::class, 'store']);
@@ -48,16 +54,21 @@ Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
     // User Management
     Route::post('users/{user}/ban', [UserController::class, 'ban']);
     Route::post('users/{user}/unban', [UserController::class, 'unban']);
+
+    // Organisation Management
+    Route::get('organisations/pending', [OrganisationController::class, 'pending']);
+    Route::post('organisations/{id}/verify', [OrganisationController::class, 'verify']);
+    Route::post('organisations/{id}/reject', [OrganisationController::class, 'reject']);
 });
 
 // ==================== Porter Routes ====================
 Route::middleware(['auth:api', 'check.banned', 'porter'])->group(function(){
     Route::get('campaigns', [CampaignController::class, 'index']);
     Route::post('campaigns', [CampaignController::class, 'store']);
+    Route::get('campaigns/search', [CampaignController::class, 'search']);
+    Route::get('campaigns/filter', [CampaignController::class, 'filter']);
     Route::get('campaigns/{id}', [CampaignController::class, 'show']);
     Route::put('campaigns/{id}', [CampaignController::class, 'update']);
     Route::delete('campaigns/{id}', [CampaignController::class, 'destroy']);
     Route::post('campaigns/{id}/image', [CampaignController::class, 'uploadImage']);
-    Route::get('campaigns/search', [CampaignController::class, 'search']);
-    Route::get('campaigns/filter', [CampaignController::class, 'filter']);
 });

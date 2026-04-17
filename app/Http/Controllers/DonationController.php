@@ -21,7 +21,7 @@ class DonationController extends Controller
         ]);
 
         try {
-            return DB::transaction(function () use ($request, $campaign) {
+            return DB::transactionstart(function () use ($request, $campaign) {
                 // Create Donation
                 $donation = Donation::create([
                     'user_id' => auth()->id(),

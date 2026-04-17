@@ -16,7 +16,9 @@ class Campaign extends Model
         'description',
         'target_amount',
         'current_amount',
-        'status'
+        'status',
+        'start_date',
+        'end_date',
     ];
 
     public function user()

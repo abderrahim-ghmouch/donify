@@ -13,9 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'admin' => \App\Http\Middleware\AdminMiddleware::class,
-            'donor' => \App\Http\Middleware\DonorMiddleware::class,
-            'check.banned' => \App\Http\Middleware\CheckBanned::class,
+            'admin'       => \App\Http\Middleware\AdminMiddleware::class,
+            'donor'       => \App\Http\Middleware\DonorMiddleware::class,
+            'porter'      => \App\Http\Middleware\PorterMiddleware::class,
+            'check.banned'=> \App\Http\Middleware\CheckBanned::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

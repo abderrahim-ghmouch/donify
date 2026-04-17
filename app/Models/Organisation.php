@@ -7,18 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Organisation extends Model
 {
     protected $fillable = [
-        'user_id',
         'name',
         'description',
         'email',
         'phone',
-        'address'
+        'address',
+        'logo',
+        'document_path',
+        'is_verified'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $casts = [
+        'is_verified' => 'boolean',
+    ];
 
     public function campaigns()
     {
