@@ -56,7 +56,7 @@ Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
     Route::post('categories', [CategoryController::class, 'store']);
     Route::put('categories/{category}', [CategoryController::class, 'update']);
     Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
-    
+
     // User Management
     Route::post('users/{user}/ban', [UserController::class, 'ban']);
     Route::post('users/{user}/unban', [UserController::class, 'unban']);
@@ -65,15 +65,17 @@ Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
     Route::get('organisations/pending', [OrganisationController::class, 'pending']);
     Route::post('organisations/{id}/verify', [OrganisationController::class, 'verify']);
     Route::post('organisations/{id}/reject', [OrganisationController::class, 'reject']);
+
+    // Campaign moderation
+    Route::get('campaigns/pending', [CampaignController::class, 'pending']);
+    Route::post('campaigns/{id}/approve', [CampaignController::class, 'approve']);
+    Route::post('campaigns/{id}/reject', [CampaignController::class, 'reject']);
 });
 
 // ==================== Porter Routes ====================
-Route::middleware(['auth:api', 'check.banned', 'porter'])->group(function(){
-    Route::get('campaigns', [CampaignController::class, 'index']);
+Route::middleware(['auth:api', 'check.banned', 'porter'])->group(function () {
     Route::post('campaigns', [CampaignController::class, 'store']);
-    Route::get('campaigns/search', [CampaignController::class, 'search']);
-    Route::get('campaigns/filter', [CampaignController::class, 'filter']);
-    Route::get('campaigns/{id}', [CampaignController::class, 'show']);
+    Route::get('my-campaigns', [CampaignController::class, 'myCampaigns']);
     Route::put('campaigns/{id}', [CampaignController::class, 'update']);
     Route::delete('campaigns/{id}', [CampaignController::class, 'destroy']);
     Route::post('campaigns/{id}/image', [CampaignController::class, 'uploadImage']);

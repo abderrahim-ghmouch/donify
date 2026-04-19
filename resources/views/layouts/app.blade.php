@@ -114,7 +114,14 @@
                         </div>
                     </div>
                     <div class="h-8 w-px bg-gray-200 mx-1"></div>
-                    <a href="{{ route('profile') }}" class="text-gray-600 font-semibold hover:text-emerald-500 transition-colors">Profile</a>
+                    <!-- Role-aware nav links injected by JS -->
+                    <a href="{{ route('profile') }}" id="navProfileLink" class="text-gray-600 font-semibold hover:text-emerald-500 transition-colors">Profile</a>
+                    <a href="{{ route('dashboard') }}" id="navDashboardLink" class="hidden items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-sm shadow-emerald-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM14 13a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
+                        </svg>
+                        Dashboard
+                    </a>
                     <button onclick="handleLogout()" class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all" title="Logout">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -209,19 +216,32 @@
             const userElements = document.querySelectorAll('.auth-user');
             const userNameElements = document.querySelectorAll('.user-name');
             const userAvatarElement = document.getElementById('userAvatar');
+            const dashLink = document.getElementById('navDashboardLink');
 
             if (ApiClient.isAuthenticated()) {
                 const user = ApiClient.getUser();
                 guestElements.forEach(el => el.classList.add('hidden'));
                 userElements.forEach(el => el.classList.remove('hidden'));
                 userNameElements.forEach(el => el.textContent = user.first_name);
-                
+
                 if (user.images && user.images.url) {
                     userAvatarElement.innerHTML = `<img src="${user.images.url}" class="w-full h-full object-cover">`;
+                }
+
+                // Show Dashboard button only for porters
+                if (dashLink) {
+                    if (user.role === 'porter') {
+                        dashLink.classList.remove('hidden');
+                        dashLink.classList.add('inline-flex');
+                    } else {
+                        dashLink.classList.add('hidden');
+                        dashLink.classList.remove('inline-flex');
+                    }
                 }
             } else {
                 guestElements.forEach(el => el.classList.remove('hidden'));
                 userElements.forEach(el => el.classList.add('hidden'));
+                if (dashLink) { dashLink.classList.add('hidden'); dashLink.classList.remove('inline-flex'); }
             }
         }
 

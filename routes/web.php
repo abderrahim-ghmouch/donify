@@ -7,6 +7,7 @@ Route::get('/campaigns', [FrontendController::class, 'campaigns'])->name('campai
 Route::get('/campaigns/{id}', [FrontendController::class, 'campaigns'])->name('campaigns.show');
 Route::get('/organisations', [FrontendController::class, 'organisations'])->name('organisations.index');
 Route::get('/profile', [FrontendController::class, 'profile'])->name('profile');
+Route::get('/dashboard', [FrontendController::class, 'dashboard'])->name('dashboard');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [FrontendController::class, 'login'])->name('login');
