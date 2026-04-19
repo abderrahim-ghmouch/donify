@@ -1,3 +1,4 @@
+@php $hide_nav = true; @endphp
 @extends('layouts.app')
 
 @section('styles')
@@ -6,7 +7,7 @@
     .admin-wrap {
         display: grid;
         grid-template-columns: 20% 80%;
-        min-height: calc(100vh - 80px);
+        min-height: 100vh;
         background: #f1f5f9;
     }
     @media (max-width: 900px) {
@@ -23,8 +24,8 @@
         flex-direction: column;
         padding: 2rem 1.25rem 1.5rem;
         position: sticky;
-        top: 80px;
-        height: calc(100vh - 80px);
+        top: 0;
+        height: 100vh;
         overflow-y: auto;
         border-right: 1px solid rgba(255,255,255,.05);
     }
@@ -98,7 +99,7 @@
         background:#fff; border-bottom:1px solid #f1f5f9;
         padding:1.25rem 2rem;
         display:flex; align-items:center; justify-content:space-between;
-        position: sticky; top: 80px; z-index: 10;
+        position: sticky; top: 0; z-index: 10;
     }
     .admin-topbar h1 { font-family:'Outfit',sans-serif; font-size:1.4rem; font-weight:800; color:#0f172a; }
     .admin-topbar p  { color:#94a3b8; font-size:.82rem; margin-top:.1rem; }

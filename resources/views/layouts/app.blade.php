@@ -82,6 +82,7 @@
 </head>
 <body class="antialiased">
     <!-- Navbar -->
+    @unless(isset($hide_nav) && $hide_nav)
     <nav class="fixed w-full z-50 top-0 transition-all duration-300 px-6 py-4" id="navbar">
         <div class="max-w-7xl mx-auto flex items-center justify-between glass rounded-2xl px-6 py-3 shadow-sm">
             <a href="{{ route('home') }}" class="flex items-center space-x-2">
@@ -143,13 +144,15 @@
 
         </div>
     </nav>
+    @endunless
 
     <!-- Main Content -->
-    <main class="pt-24 min-h-screen">
+    <main class="{{ (isset($hide_nav) && $hide_nav) ? '' : 'pt-24' }} min-h-screen">
         @yield('content')
     </main>
 
     <!-- Footer -->
+    @unless(isset($hide_nav) && $hide_nav)
     <footer class="bg-slate-900 text-white py-20 px-6 mt-20">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="col-span-1 md:col-span-1">
@@ -200,6 +203,7 @@
             &copy; {{ date('Y') }} Donify. All rights reserved.
         </div>
     </footer>
+    @endunless
 
     <!-- Native JavaScript for Interactions -->
     <script src="{{ asset('js/api-client.js') }}"></script>
@@ -223,6 +227,10 @@
             const userNameElements = document.querySelectorAll('.user-name');
             const userAvatarElement = document.getElementById('userAvatar');
             const dashLink = document.getElementById('navDashboardLink');
+            const adminLink = document.getElementById('navAdminLink');
+
+            const hide = el => { if(el){ el.classList.add('hidden'); el.classList.remove('inline-flex'); } };
+            const show = el => { if(el){ el.classList.remove('hidden'); el.classList.add('inline-flex'); } };
 
             if (ApiClient.isAuthenticated()) {
                 const user = ApiClient.getUser();
@@ -234,20 +242,22 @@
                     userAvatarElement.innerHTML = `<img src="${user.images.url}" class="w-full h-full object-cover">`;
                 }
 
-                // Show Dashboard button only for porters
-                if (dashLink) {
-                    if (user.role === 'porter') {
-                        dashLink.classList.remove('hidden');
-                        dashLink.classList.add('inline-flex');
-                    } else {
-                        dashLink.classList.add('hidden');
-                        dashLink.classList.remove('inline-flex');
-                    }
+                // Role-aware links
+                if (user.role === 'porter') { 
+                    show(dashLink); 
+                    hide(adminLink); 
+                } else if (user.role === 'admin') { 
+                    hide(dashLink); 
+                    show(adminLink); 
+                } else { 
+                    hide(dashLink); 
+                    hide(adminLink); 
                 }
             } else {
                 guestElements.forEach(el => el.classList.remove('hidden'));
                 userElements.forEach(el => el.classList.add('hidden'));
-                if (dashLink) { dashLink.classList.add('hidden'); dashLink.classList.remove('inline-flex'); }
+                hide(dashLink);
+                hide(adminLink);
             }
         }
 
