@@ -9,10 +9,8 @@ class CampaignController extends Controller
 
 
 public function index(){
-
-$campaigns =Campaign::all();
-
-return response()->json(['data'=>$campaigns,'message'=>'Campaigns retrieved successfully','status'=>200]);
+    $campaigns = Campaign::with(['images', 'category'])->latest()->get();
+    return response()->json(['data' => $campaigns, 'message' => 'Campaigns retrieved successfully', 'status' => 200]);
 }
 
     public function store(Request $request)
@@ -39,9 +37,7 @@ return response()->json(['data'=>$campaigns,'message'=>'Campaigns retrieved succ
     }
 
 public function show($id){
-
-    $campaign = Campaign::findOrFail($id);
-
+    $campaign = Campaign::with(['images', 'category', 'user', 'donations'])->findOrFail($id);
     return response()->json(['data' => $campaign, 'message' => 'Campaign retrieved successfully', 'status' => 200]);
 }
 

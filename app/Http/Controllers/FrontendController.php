@@ -16,8 +16,7 @@ class FrontendController extends Controller
 
     public function campaigns()
     {
-        $campaigns = Campaign::with('images')->latest()->paginate(9);
-        return view('campaigns.index', compact('campaigns'));
+        return view('campaigns.index');
     }
 
     public function campaign($id)

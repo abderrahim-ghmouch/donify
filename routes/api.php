@@ -40,6 +40,12 @@ Route::middleware(['auth:api', 'check.banned'])->group(function () {
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('categories/{category}', [CategoryController::class, 'show']);
 
+// Public campaign routes (read-only)
+Route::get('campaigns', [CampaignController::class, 'index']);
+Route::get('campaigns/search', [CampaignController::class, 'search']);
+Route::get('campaigns/filter', [CampaignController::class, 'filter']);
+Route::get('campaigns/{id}', [CampaignController::class, 'show']);
+
 // Organisation public routes
 Route::get('organisations', [OrganisationController::class, 'index']);
 Route::post('organisations/register', [OrganisationController::class, 'register']);
