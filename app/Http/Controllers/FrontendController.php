@@ -50,4 +50,9 @@ class FrontendController extends Controller
     {
         return view('porter.dashboard');
     }
+
+    public function adminDashboard()
+    {
+        return view('admin.dashboard');
+    }
 }

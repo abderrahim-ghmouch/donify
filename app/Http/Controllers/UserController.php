@@ -10,6 +10,15 @@ use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 class UserController extends Controller
 {
 
+    /**
+     * Admin: list all users.
+     */
+    public function index()
+    {
+        $users = User::with('images')->latest()->get();
+        return response()->json(['status' => 'success', 'data' => $users]);
+    }
+
     public function register(Request $request)
     {
         $validated = $request->validate([

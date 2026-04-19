@@ -58,6 +58,7 @@ Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
     Route::delete('categories/{category}', [CategoryController::class, 'destroy']);
 
     // User Management
+    Route::get('users', [UserController::class, 'index']);
     Route::post('users/{user}/ban', [UserController::class, 'ban']);
     Route::post('users/{user}/unban', [UserController::class, 'unban']);
 
@@ -67,6 +68,7 @@ Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
     Route::post('organisations/{id}/reject', [OrganisationController::class, 'reject']);
 
     // Campaign moderation
+    Route::get('campaigns/all', [CampaignController::class, 'all']);
     Route::get('campaigns/pending', [CampaignController::class, 'pending']);
     Route::post('campaigns/{id}/approve', [CampaignController::class, 'approve']);
     Route::post('campaigns/{id}/reject', [CampaignController::class, 'reject']);

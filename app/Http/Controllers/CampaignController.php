@@ -110,6 +110,21 @@ class CampaignController extends Controller
     }
 
     /**
+     * Admin: list ALL campaigns (all statuses).
+     */
+    public function all()
+    {
+        $campaigns = Campaign::with(['images', 'category', 'user'])
+            ->latest()
+            ->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data'   => $campaigns,
+        ]);
+    }
+
+    /**
      * Admin: list all pending campaigns.
      */
     public function pending()
