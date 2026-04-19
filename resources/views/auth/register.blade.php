@@ -2,27 +2,27 @@
 
 @section('content')
 <div class="max-w-xl mx-auto my-10 animate-fade-in">
-    <div class="glass p-10 rounded-3xl shadow-xl border border-white/50">
+    <div class="glass p-10 rounded-3xl shadow-xl border border-white/0">
         <div class="text-center mb-10">
             <h1 class="text-3xl font-bold font-outfit mb-2 text-gradient">Join Donify</h1>
-            <p class="text-gray-500">Start your journey of giving and impact today.</p>
+            <p class="text-green-800">Start your journey of giving and impact today.</p>
         </div>
 
         <form id="registerForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div id="registerError" class="col-span-1 md:col-span-2 hidden bg-red-50 text-red-500 p-4 rounded-xl text-sm border border-red-100"></div>
 
             <div>
-                <label class="block text-xl font-semibold mb-2 ml-1">First Name</label>
+                <label class="block text-sm font-semibold mb-2 ml-1">First Name</label>
                 <input type="text" id="first_name" required
                     class="w-full px-5 py-4 rounded-2xl bg-white border border-gray-100 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none"
-                    placeholder="John">
+                    placeholder="abderrahim">
             </div>
 
             <div>
                 <label class="block text-sm font-semibold mb-2 ml-1">Last Name</label>
                 <input type="text" id="last_name" required
                     class="w-full px-5 py-4 rounded-2xl bg-white border border-gray-100 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none"
-                    placeholder="Doe">
+                    placeholder="ghmouch">
             </div>
 
             <div class="col-span-1 md:col-span-2">
@@ -73,7 +73,7 @@
 
         <div class="text-center mt-10">
             <p class="text-gray-500 text-sm">
-                Already have an account? 
+                Already have an account?
                 <a href="{{ route('login') }}" class="text-emerald-600 font-bold hover:underline">Sign in</a>
             </p>
         </div>
@@ -99,7 +99,7 @@
 
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const firstName = document.getElementById('first_name').value;
         const lastName = document.getElementById('last_name').value;
         const email = document.getElementById('email').value;
@@ -116,7 +116,7 @@
         if (imageFile) {
             formData.append('image', imageFile);
         }
-        
+
         const btn = document.getElementById('registerBtn');
         const errorDiv = document.getElementById('registerError');
 

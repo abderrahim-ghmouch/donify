@@ -41,4 +41,9 @@ class FrontendController extends Controller
     {
         return view('auth.register');
     }
+
+    public function profile()
+    {
+        return view('auth.profile');
+    }
 }
