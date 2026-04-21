@@ -3,26 +3,28 @@
 @section('content')
 <!-- Hero Section -->
 <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-6 pt-20 bg-[#fbf8f6] font-['Quicksand']">
+    <!-- Logo Watermark Background -->
+    <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none opacity-[0.2]">
+        <img src="{{ asset('images/donifylg.png') }}" alt="" class="w-[900px] h-auto grayscale select-none">
+    </div>
+
     <div class="max-w-5xl mx-auto w-full relative z-10 text-center">
         <div class="animate-fade-in">
         
             <h1 class="text-6xl md:text-8xl font-extrabold text-gray-800 leading-[1.1] mb-8 tracking-tight">
-                Amplify Impact. <br><span class="text-[#02a95c]">Empower Change.</span>
+                Donify <br><span class="text-[#02a95c]">Empower Change.</span>
             </h1>
             
             <p class="text-lg text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
                 The world's most trusted gateway for meaningful giving. <br class="hidden md:block"> Join a global network of changemakers and verified organizations today.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
-                <a href="{{ route('campaigns.index') }}" class="w-full sm:w-auto bg-[#02a95c] text-white px-10 py-4 rounded-full font-bold text-lg text-center shadow-lg shadow-[#02a95c]/30 hover:bg-[#028b4c] hover:scale-105 transition-all">
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="{{ route('campaigns.index') }}" class="w-full sm:w-auto bg-black text-white px-16 py-3 rounded-md font-bold text-sm uppercase tracking-[0.2em] text-center hover:bg-gray-800 transition-all shadow-xl shadow-black/10">
                     Explore Campaigns
                 </a>
-                <a href="{{ route('organisations.register') }}" class="w-full sm:w-auto bg-white text-gray-800 px-10 py-4 rounded-full font-bold text-lg text-center border-2 border-gray-200 hover:border-[#02a95c] hover:text-[#02a95c] transition-all flex items-center justify-center gap-2">
+                <a href="{{ route('organisations.register') }}" class="w-full sm:w-auto bg-white text-black px-16 py-3 rounded-md font-bold text-sm uppercase tracking-[0.2em] text-center border-2 border-black hover:bg-black hover:text-white transition-all">
                     Start as Organisation
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#02a95c]" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                    </svg>
                 </a>
             </div>
             
@@ -61,26 +63,30 @@
 
 
 <!-- Call to Action -->
-<section class="py-24 px-6 bg-[#fbf8f6] font-['Quicksand']">
-    <div class="max-w-5xl mx-auto">
-        <div class="bg-white rounded-[3rem] shadow-sm border border-gray-100 relative overflow-hidden p-12 md:p-20 flex flex-col items-center text-center">
-            
-            <div class="absolute top-0 left-0 w-full h-2 bg-[#02a95c]"></div>
+<section class="w-full font-['Quicksand'] relative overflow-hidden bg-gradient-to-b from-[#fbf8f6] to-[#0b1612]">
+    <div class="flex flex-col md:flex-row items-stretch">
+        
+        {{-- Left: Slogan Image --}}
+        <div class="w-full md:w-1/2 p-12 md:p-24 flex justify-center items-center">
+            <img src="{{ asset('images/slogan.png') }}" alt="Donify Slogan" class="w-full max-w-lg h-auto object-contain animate-fade-in drop-shadow-2xl">
+        </div>
 
-            <div class="relative z-10 max-w-2xl">
-                <h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6 leading-tight">
-                    Ready to lead <span class="text-[#02a95c]">the change?</span>
+        {{-- Right: Content --}}
+        <div class="w-full md:w-1/2 p-12 md:p-24 relative flex items-center">
+            <div class="max-w-xl mx-auto md:mx-0">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-800 mb-8 leading-tight transition-colors duration-1000 group-hover:text-white">
+                    Ready to lead <br><span class="text-[#02a95c]">the change?</span>
                 </h2>
                 
-                <p class="text-gray-600 text-lg md:text-xl mb-10 font-medium leading-relaxed">
+                <p class="text-gray-600 text-lg md:text-xl mb-12 font-medium leading-relaxed">
                     Join thousands of verified organizations and donors in building a more impactful future together. Every big change starts with a small step.
                 </p>
                 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('register') }}" class="bg-[#02a95c] text-white px-10 py-4 rounded-full font-bold text-lg hover:bg-[#028b4c] hover:scale-105 transition-all shadow-lg shadow-[#02a95c]/20">
-                        Get Started Now
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="{{ route('register') }}" class="bg-black text-white px-8 py-3 rounded-md font-bold text-sm border border-black hover:bg-transparent hover:text-black transition-all text-center uppercase tracking-[0.2em]">
+                        Get Started
                     </a>
-                    <a href="#" class="bg-white text-gray-800 px-10 py-4 rounded-full font-bold text-lg border-2 border-gray-200 hover:border-[#02a95c] hover:text-[#02a95c] transition-all">
+                    <a href="#" class="bg-transparent text-black px-8 py-3 rounded-md font-bold text-sm border border-black hover:bg-black hover:text-white transition-all text-center uppercase tracking-[0.2em]">
                         Our Vision
                     </a>
                 </div>
