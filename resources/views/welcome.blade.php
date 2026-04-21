@@ -11,19 +11,19 @@
     <div class="max-w-5xl mx-auto w-full relative z-10 text-center">
         <div class="animate-fade-in">
         
-            <h1 class="text-6xl md:text-8xl font-extrabold text-gray-800 leading-[1.1] mb-8 tracking-tight">
-                Donify <br><span class="text-[#02a95c]">Empower Change.</span>
+            <h1 class="text-4xl sm:text-5xl md:text-8xl font-extrabold text-[#1A1A1A] mb-8 leading-tight">
+                Donify <br><span class="text-[#064e3b]">Be the Change</span>
             </h1>
             
             <p class="text-lg text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
                 The world's most trusted gateway for meaningful giving. <br class="hidden md:block"> Join a global network of changemakers and verified organizations today.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <a href="{{ route('campaigns.index') }}" class="w-full sm:w-auto bg-black text-white px-16 py-3 rounded-md font-bold text-sm uppercase tracking-[0.2em] text-center hover:bg-gray-800 transition-all shadow-xl shadow-black/10">
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
+                <a href="{{ route('campaigns.index') }}" class="w-full sm:w-auto bg-black text-white px-8 md:px-16 py-3 rounded-md font-bold text-sm uppercase tracking-[0.2em] text-center hover:bg-[#996515] hover:border-[#996515] transition-all shadow-xl shadow-black/10">
                     Explore Campaigns
                 </a>
-                <a href="{{ route('organisations.register') }}" class="w-full sm:w-auto bg-white text-black px-16 py-3 rounded-md font-bold text-sm uppercase tracking-[0.2em] text-center border-2 border-black hover:bg-black hover:text-white transition-all">
+                <a href="{{ route('organisations.register') }}" class="w-full sm:w-auto bg-white text-black px-8 md:px-16 py-3 rounded-md font-bold text-sm uppercase tracking-[0.2em] text-center border-2 border-black hover:text-[#996515] hover:border-[#996515] transition-all duration-500">
                     Start as Organisation
                 </a>
             </div>
@@ -41,20 +41,20 @@
 <!-- Stats Section -->
 <section class="py-24 px-6 bg-[#fbf8f6] border-t border-gray-100">
     <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
-        <div class="text-center animate-fade-in">
-            <h3 class="text-5xl font-black text-gray-800 mb-3 tracking-tighter">$24M+</h3>
+        <div class="text-center group cursor-default p-8 transition-all duration-500">
+            <h3 class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">$24M+</h3>
             <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Total Raised</p>
         </div>
-        <div class="text-center animate-fade-in delay-100">
-            <h3 class="text-5xl font-black text-gray-800 mb-3 tracking-tighter">1,500</h3>
+        <div class="text-center group cursor-default p-8 transition-all duration-500 delay-100">
+            <h3 class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">1,500</h3>
             <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Active Campaigns</p>
         </div>
-        <div class="text-center animate-fade-in delay-200">
-            <h3 class="text-5xl font-black text-gray-800 mb-3 tracking-tighter">850</h3>
+        <div class="text-center group cursor-default p-8 transition-all duration-500 delay-200">
+            <h3 class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">850</h3>
             <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Organizations</p>
         </div>
-        <div class="text-center animate-fade-in delay-300">
-            <h3 class="text-5xl font-black text-gray-800 mb-3 tracking-tighter">12K+</h3>
+        <div class="text-center group cursor-default p-8 transition-all duration-500 delay-300">
+            <h3 class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">12K+</h3>
             <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Happy Donors</p>
         </div>
     </div>
@@ -74,8 +74,8 @@
         {{-- Right: Content --}}
         <div class="w-full md:w-1/2 p-12 md:p-24 relative flex items-center">
             <div class="max-w-xl mx-auto md:mx-0">
-                <h2 class="text-4xl md:text-6xl font-extrabold text-gray-800 mb-8 leading-tight transition-colors duration-1000 group-hover:text-white">
-                    Ready to lead <br><span class="text-[#02a95c]">the change?</span>
+                <h2 class="text-3xl md:text-6xl font-extrabold text-[#1A1A1A] mb-8 leading-tight transition-colors duration-1000 group-hover:text-white">
+                    Ready to lead <br><span class="text-[#064e3b]">the change?</span>
                 </h2>
                 
                 <p class="text-gray-600 text-lg md:text-xl mb-12 font-medium leading-relaxed">
@@ -83,10 +83,10 @@
                 </p>
                 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                    <a href="{{ route('register') }}" class="bg-black text-white px-8 py-3 rounded-md font-bold text-sm border border-black hover:bg-transparent hover:text-black transition-all text-center uppercase tracking-[0.2em]">
+                    <a href="{{ route('register') }}" class="bg-black text-white px-8 py-3 rounded-md font-bold text-sm border border-black hover:bg-[#996515] hover:text-white hover:border-[#996515] transition-all text-center uppercase tracking-[0.2em]">
                         Get Started
                     </a>
-                    <a href="#" class="bg-transparent text-black px-8 py-3 rounded-md font-bold text-sm border border-black hover:bg-black hover:text-white transition-all text-center uppercase tracking-[0.2em]">
+                    <a href="#" class="bg-transparent text-black px-8 py-3 rounded-md font-bold text-sm border border-black hover:text-[#996515] hover:border-[#996515] transition-all duration-500 text-center uppercase tracking-[0.2em]">
                         Our Vision
                     </a>
                 </div>

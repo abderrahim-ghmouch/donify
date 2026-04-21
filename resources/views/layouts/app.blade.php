@@ -83,43 +83,74 @@
 <body class="antialiased">
     <!-- Navbar -->
     @unless(isset($hide_nav) && $hide_nav)
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300 px-6 py-4" id="navbar">
-        <div class="max-w-[95%] mx-auto grid grid-cols-3 items-center bg-[#fbf8f6]/80 backdrop-blur-md border border-black rounded-[1.5rem] px-8 py-2 shadow-[0_15px_40px_rgba(0,0,0,0.08)]">
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 px-4 md:px-6 py-4" id="navbar">
+        <div class="max-w-[98%] md:max-w-[95%] mx-auto flex items-center justify-between md:grid md:grid-cols-3 bg-[#fbf8f6]/80 backdrop-blur-md border border-black/10 rounded-[1.2rem] md:rounded-[1.5rem] px-4 md:px-8 py-2 shadow-[0_15px_40px_rgba(0,0,0,0.05)]">
             
-            {{-- Left Side: Nav Links --}}
+            {{-- Mobile: Toggle --}}
+            <div class="flex md:hidden items-center">
+                <button id="mobile-menu-open" class="p-2.5 bg-black/5 hover:bg-black/10 rounded-xl text-[#1A1A1A] transition-all active:scale-95">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+                    </svg>
+                </button>
+            </div>
+
+            {{-- Left Side: Nav Links (Desktop Only) --}}
             <div class="hidden md:flex items-center space-x-10">
-                <a href="{{ route('campaigns.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-gray-800 hover:text-[#02a95c] transition-colors">Campaigns</a>
-                <a href="{{ route('organisations.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-gray-800 hover:text-[#02a95c] transition-colors">Organisations</a>
-                <a href="#" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-gray-800 hover:text-[#02a95c] transition-colors">Impact</a>
+                <a href="{{ route('campaigns.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Campaigns</a>
+                <a href="{{ route('organisations.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Organisations</a>
+                <a href="#" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Impact</a>
             </div>
 
             {{-- Center: Logo --}}
             <div class="flex justify-center">
                 <a href="{{ route('home') }}" class="group transition-transform hover:scale-105 active:scale-95">
-                    <img src="{{ asset('images/donifylg.png') }}?v={{ time() }}" alt="Donify Logo" class="h-12 w-auto object-contain">
+                    <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-8 md:h-12 w-auto object-contain">
                 </a>
             </div>
 
             {{-- Right Side: Auth --}}
-            <div class="flex items-center justify-end space-x-6">
-                <div class="auth-user hidden flex items-center space-x-6">
-                    <a href="{{ route('profile') }}" id="navProfileLink" class="text-gray-800 font-bold hover:text-[#02a95c] transition-colors text-xs uppercase tracking-widest">Profile</a>
-                    <a href="{{ route('dashboard') }}" id="navDashboardLink" class="hidden items-center gap-1.5 bg-[#02a95c] hover:bg-[#028b4c] text-white px-6 py-2.5 rounded-full font-bold text-xs transition-all shadow-lg shadow-[#02a95c]/20">
-                        Dashboard
+            <div class="flex items-center justify-end space-x-2 md:space-x-6">
+                {{-- Auth User --}}
+                <div class="auth-user hidden flex items-center space-x-3 md:space-x-6">
+                    <a href="{{ route('dashboard') }}" id="navDashboardLink" class="hidden items-center bg-[#064e3b] hover:bg-black text-white px-4 md:px-6 py-2 rounded-full font-bold text-[10px] md:text-xs transition-all tracking-widest">
+                        DASHBOARD
                     </a>
-                    <button onclick="handleLogout()" class="text-gray-400 hover:text-black transition-all p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button onclick="handleLogout()" class="text-gray-400 hover:text-black transition-all p-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" />
                         </svg>
                     </button>
                 </div>
                 
-                <div class="auth-guest flex items-center space-x-6">
-                    <a href="{{ route('login') }}" class="text-gray-800 font-bold hover:text-[#02a95c] transition-colors text-xs uppercase tracking-widest">Login</a>
-                    <a href="{{ route('register') }}" class="bg-black text-white px-8 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-gray-800 transition-all shadow-xl shadow-black/10">Get Started</a>
+                {{-- Auth Guest --}}
+                <div class="auth-guest flex items-center space-x-2 md:space-x-4">
+                    <a href="{{ route('login') }}" class="hidden sm:inline-block text-[#1A1A1A] font-bold hover:text-[#064e3b] transition-colors text-[10px] md:text-xs uppercase tracking-widest px-2">Login</a>
+                    <a href="{{ route('register') }}" class="bg-black text-white px-4 md:px-8 py-2 md:py-2.5 rounded-full font-bold text-[10px] md:text-xs uppercase tracking-widest hover:bg-[#996515] transition-all shadow-lg">JOIN</a>
                 </div>
             </div>
+        </div>
 
+        {{-- Mobile Slide-out Menu --}}
+        <div id="mobile-menu" class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-xl translate-x-full transition-transform duration-500 md:hidden">
+            <div class="flex flex-col h-full p-8">
+                <div class="flex justify-between items-center mb-16">
+                    <img src="{{ asset('images/donifylg.png') }}" class="h-8 w-auto brightness-0 invert">
+                    <button id="mobile-menu-close" class="text-white p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="flex flex-col space-y-8">
+                    <a href="{{ route('campaigns.index') }}" class="text-white text-2xl font-bold tracking-[0.2em] uppercase">Campaigns</a>
+                    <a href="{{ route('organisations.index') }}" class="text-white text-2xl font-bold tracking-[0.2em] uppercase">Organisations</a>
+                    <a href="#" class="text-white text-2xl font-bold tracking-[0.2em] uppercase">Impact</a>
+                    <hr class="border-white/10 my-4">
+                    <a href="{{ route('login') }}" class="text-gray-400 text-xl font-bold uppercase tracking-widest">Login</a>
+                </div>
+            </div>
         </div>
     </nav>
     @endunless
@@ -207,6 +238,19 @@
             }
         });
 
+        // Mobile Menu Toggle
+        const mobileMenuOpen = document.getElementById('mobile-menu-open');
+        const mobileMenuClose = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuOpen?.addEventListener('click', () => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+
+        mobileMenuClose?.addEventListener('click', () => {
+            mobileMenu.classList.add('translate-x-full');
+        });
+
         // Universal UI Auth Guard
         function updateAuthUI() {
             const guestElements = document.querySelectorAll('.auth-guest');
@@ -226,11 +270,11 @@
                 userNameElements.forEach(el => el.textContent = user.first_name);
 
                 if (user.images && user.images.url) {
-                    userAvatarElement.innerHTML = `<img src="${user.images.url}" class="w-full h-full object-cover">`;
+                    if (userAvatarElement) userAvatarElement.innerHTML = `<img src="${user.images.url}" class="w-full h-full object-cover">`;
                 }
 
                 // Role-aware links
-                if (user.role === 'porter') { 
+                if (user.role === 'porter' || user.role === 'organisation') { 
                     show(dashLink); 
                     hide(adminLink); 
                 } else if (user.role === 'admin') { 
