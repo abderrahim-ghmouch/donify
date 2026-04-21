@@ -84,44 +84,39 @@
     <!-- Navbar -->
     @unless(isset($hide_nav) && $hide_nav)
     <nav class="fixed w-full z-50 top-0 transition-all duration-300 px-6 py-4" id="navbar">
-        <div class="max-w-7xl mx-auto grid grid-cols-3 items-center glass rounded-2xl px-6 py-2 shadow-sm">
+        <div class="max-w-[95%] mx-auto grid grid-cols-3 items-center bg-[#fbf8f6]/80 backdrop-blur-md border border-black rounded-[1.5rem] px-8 py-2 shadow-[0_15px_40px_rgba(0,0,0,0.08)]">
             
             {{-- Left Side: Nav Links --}}
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ route('campaigns.index') }}" class="nav-link text-sm uppercase tracking-wider">Campaigns</a>
-                <a href="{{ route('organisations.index') }}" class="nav-link text-sm uppercase tracking-wider">Organisations</a>
-                <a href="#" class="nav-link text-sm uppercase tracking-wider">Impact</a>
+            <div class="hidden md:flex items-center space-x-10">
+                <a href="{{ route('campaigns.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-gray-800 hover:text-[#02a95c] transition-colors">Campaigns</a>
+                <a href="{{ route('organisations.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-gray-800 hover:text-[#02a95c] transition-colors">Organisations</a>
+                <a href="#" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-gray-800 hover:text-[#02a95c] transition-colors">Impact</a>
             </div>
 
             {{-- Center: Logo --}}
             <div class="flex justify-center">
-                <a href="{{ route('home') }}" class="flex items-center space-x-3 group transition-transform hover:scale-105">
-                    <div class="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-emerald-200/50 group-hover:bg-emerald-600 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </div>
-                    <span class="text-3xl font-black font-outfit tracking-tighter text-slate-800">Donify</span>
+                <a href="{{ route('home') }}" class="group transition-transform hover:scale-105 active:scale-95">
+                    <img src="{{ asset('images/donifylg.png') }}?v={{ time() }}" alt="Donify Logo" class="h-12 w-auto object-contain">
                 </a>
             </div>
 
             {{-- Right Side: Auth --}}
-            <div class="flex items-center justify-end space-x-4">
-                <div class="auth-user hidden flex items-center space-x-4">
-                    <a href="{{ route('profile') }}" id="navProfileLink" class="text-gray-600 font-bold hover:text-emerald-500 transition-colors text-sm">Profile</a>
-                    <a href="{{ route('dashboard') }}" id="navDashboardLink" class="hidden items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-lg shadow-emerald-100">
+            <div class="flex items-center justify-end space-x-6">
+                <div class="auth-user hidden flex items-center space-x-6">
+                    <a href="{{ route('profile') }}" id="navProfileLink" class="text-gray-800 font-bold hover:text-[#02a95c] transition-colors text-xs uppercase tracking-widest">Profile</a>
+                    <a href="{{ route('dashboard') }}" id="navDashboardLink" class="hidden items-center gap-1.5 bg-[#02a95c] hover:bg-[#028b4c] text-white px-6 py-2.5 rounded-full font-bold text-xs transition-all shadow-lg shadow-[#02a95c]/20">
                         Dashboard
                     </a>
-                    <button onclick="handleLogout()" class="text-gray-400 hover:text-red-500 transition-all p-2">
+                    <button onclick="handleLogout()" class="text-gray-400 hover:text-black transition-all p-2">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" />
                         </svg>
                     </button>
                 </div>
                 
-                <div class="auth-guest flex items-center space-x-3">
-                    <a href="{{ route('login') }}" class="text-slate-600 font-bold hover:text-emerald-500 transition-colors text-sm">Login</a>
-                    <a href="{{ route('register') }}" class="bg-slate-900 text-white px-6 py-2.5 rounded-[1.2rem] font-bold text-sm hover:bg-emerald-500 transition-all shadow-xl shadow-slate-200">Get Started</a>
+                <div class="auth-guest flex items-center space-x-6">
+                    <a href="{{ route('login') }}" class="text-gray-800 font-bold hover:text-[#02a95c] transition-colors text-xs uppercase tracking-widest">Login</a>
+                    <a href="{{ route('register') }}" class="bg-black text-white px-8 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-gray-800 transition-all shadow-xl shadow-black/10">Get Started</a>
                 </div>
             </div>
 
@@ -139,13 +134,9 @@
     <footer class="bg-slate-900 text-white py-20 px-6 mt-20">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
             <div class="col-span-1 md:col-span-1">
-                <div class="flex items-center space-x-2 mb-6">
-                    <div class="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </div>
-                    <span class="text-xl font-bold font-outfit">Donify</span>
+                <div class="flex items-center space-x-3 mb-6">
+                    <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-10 w-auto">
+                    <span class="text-2xl font-bold font-outfit tracking-tighter">Donify</span>
                 </div>
                 <p class="text-slate-400 leading-relaxed">
                     Donify is a global crowdfunding platform empowering individuals and organizations to raise funds for what matters most.
