@@ -2,30 +2,38 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="relative h-[80vh] flex items-center overflow-hidden px-6">
-    <div class="absolute inset-0 z-0">
-        <img src="{{ asset('images/hero.png') }}" alt="Community" class="w-full h-full object-cover">
-        <div class="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/40 to-transparent"></div>
-    </div>
-
-    <div class="max-w-7xl mx-auto w-full relative z-10">
-        <div class="max-w-2xl animate-fade-in">
-            <span class="inline-block px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-sm mb-6 border border-emerald-500/30">
-                Together We Are Stronger
-            </span>
-            <h1 class="text-5xl md:text-7xl font-extrabold text-white font-outfit leading-tight mb-6">
-                Change the world, <br><span class="text-emerald-400">one donation</span> at a time.
+<section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-6 pt-20">
+    <!-- Sophisticated Background -->
+ 
+    <div class="max-w-5xl mx-auto w-full relative z-10 text-center">
+        <div class="animate-fade-in">
+        
+            <h1 class="text-6xl md:text-8xl font-black text-slate-900 font-outfit leading-[1.1] mb-8 tracking-tighter">
+                Amplify Impact. <br><span class="text-emerald-500">Empower Change.</span>
             </h1>
-            <p class="text-xl text-slate-200 mb-10 leading-relaxed max-w-xl">
-                Donify connects you with meaningful causes and verified organizations. Start your own campaign or support community heroes today.
+            
+            <p class="text-sm text-slate-500 mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
+                The world's most trusted gateway for meaningful giving. <br class="hidden md:block"> Join a global network of changemakers and verified organizations today.
             </p>
-            <div class="flex flex-col sm:flex-row gap-4">
-                <a href="{{ route('campaigns.index') }}" class="btn-primary px-8 py-4 rounded-2xl font-bold text-lg text-center shadow-2xl shadow-emerald-500/20">
+            
+            <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+                <a href="{{ route('campaigns.index') }}" class="w-full sm:w-auto bg-slate-900 text-white px-10 py-5 rounded-[1.5rem] font-bold text-lg text-center shadow-2xl shadow-slate-900/20 hover:scale-105 transition-all">
                     Explore Campaigns
                 </a>
-                <a href="{{ route('register') }}" class="px-8 py-4 rounded-2xl font-bold text-lg text-center glass text-white hover:bg-white/20 transition-all border border-white/30">
-                    Start a Fundraiser
+                <a href="{{ route('organisations.register') }}" class="w-full sm:w-auto bg-white text-slate-900 px-10 py-5 rounded-[1.5rem] font-bold text-lg text-center border-2 border-slate-100 hover:border-emerald-500 transition-all flex items-center justify-center gap-2">
+                    Start as Organisation
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
                 </a>
+            </div>
+            
+            <!-- Trust Badges -->
+            <div class="mt-20 pt-10 border-t border-slate-100 flex flex-wrap justify-center gap-8 opacity-40 grayscale hover:grayscale-0 transition-all">
+                <span class="font-black text-2xl tracking-tighter text-slate-800">TRUSTED</span>
+                <span class="font-black text-2xl tracking-tighter text-slate-800">SECURE</span>
+                <span class="font-black text-2xl tracking-tighter text-slate-800">IMPACTFUL</span>
+                <span class="font-black text-2xl tracking-tighter text-slate-800">GLOBAL</span>
             </div>
         </div>
     </div>

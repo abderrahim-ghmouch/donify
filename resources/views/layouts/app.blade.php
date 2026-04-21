@@ -84,61 +84,44 @@
     <!-- Navbar -->
     @unless(isset($hide_nav) && $hide_nav)
     <nav class="fixed w-full z-50 top-0 transition-all duration-300 px-6 py-4" id="navbar">
-        <div class="max-w-7xl mx-auto flex items-center justify-between glass rounded-2xl px-6 py-3 shadow-sm">
-            <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                <div class="w-10 h-10 bg-emerald-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                </div>
-                <span class="text-2xl font-bold font-outfit tracking-tight">Donify</span>
-            </a>
-
+        <div class="max-w-7xl mx-auto grid grid-cols-3 items-center glass rounded-2xl px-6 py-2 shadow-sm">
+            
+            {{-- Left Side: Nav Links --}}
             <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ route('campaigns.index') }}" class="nav-link">Campaigns</a>
-                <a href="{{ route('organisations.index') }}" class="nav-link">Organisations</a>
-                <a href="#" class="nav-link">About Us</a>
+                <a href="{{ route('campaigns.index') }}" class="nav-link text-sm uppercase tracking-wider">Campaigns</a>
+                <a href="{{ route('organisations.index') }}" class="nav-link text-sm uppercase tracking-wider">Organisations</a>
+                <a href="#" class="nav-link text-sm uppercase tracking-wider">Impact</a>
             </div>
 
-            <div class="flex items-center space-x-4">
-                <div class="auth-user hidden flex items-center space-x-4">
-                    <div class="flex items-center space-x-3 bg-white/50 p-1.5 pr-4 rounded-2xl border border-white/50">
-                        <div id="userAvatar" class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center overflow-hidden border border-emerald-200">
-                            <!-- Image will be injected by JS -->
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                            </svg>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="text-xs text-gray-500 font-medium leading-tight">Welcome back</span>
-                            <span class="user-name text-sm font-bold text-gray-800 leading-tight">User</span>
-                        </div>
-                    </div>
-                    <div class="h-8 w-px bg-gray-200 mx-1"></div>
-                    <!-- Role-aware nav links injected by JS -->
-                    <a href="{{ route('profile') }}" id="navProfileLink" class="text-gray-600 font-semibold hover:text-emerald-500 transition-colors">Profile</a>
-                    <a href="{{ route('dashboard') }}" id="navDashboardLink" class="hidden items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-sm shadow-emerald-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM14 13a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/>
+            {{-- Center: Logo --}}
+            <div class="flex justify-center">
+                <a href="{{ route('home') }}" class="flex items-center space-x-3 group transition-transform hover:scale-105">
+                    <div class="w-12 h-12 bg-emerald-500 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-emerald-200/50 group-hover:bg-emerald-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
+                    </div>
+                    <span class="text-3xl font-black font-outfit tracking-tighter text-slate-800">Donify</span>
+                </a>
+            </div>
+
+            {{-- Right Side: Auth --}}
+            <div class="flex items-center justify-end space-x-4">
+                <div class="auth-user hidden flex items-center space-x-4">
+                    <a href="{{ route('profile') }}" id="navProfileLink" class="text-gray-600 font-bold hover:text-emerald-500 transition-colors text-sm">Profile</a>
+                    <a href="{{ route('dashboard') }}" id="navDashboardLink" class="hidden items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-lg shadow-emerald-100">
                         Dashboard
                     </a>
-                    <a href="{{ route('admin.dashboard') }}" id="navAdminLink" class="hidden items-center gap-1.5 bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-xl font-bold text-sm transition-all">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                        </svg>
-                        Admin
-                    </a>
-                    <button onclick="handleLogout()" class="w-10 h-10 rounded-xl flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all" title="Logout">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    <button onclick="handleLogout()" class="text-gray-400 hover:text-red-500 transition-all p-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" />
                         </svg>
                     </button>
                 </div>
                 
-                <div class="auth-guest flex items-center space-x-4">
-                    <a href="{{ route('login') }}" class="text-gray-600 font-semibold hover:text-emerald-500 transition-colors">Login</a>
-                    <a href="{{ route('register') }}" class="btn-primary px-6 py-2.5 rounded-xl font-bold">Get Started</a>
+                <div class="auth-guest flex items-center space-x-3">
+                    <a href="{{ route('login') }}" class="text-slate-600 font-bold hover:text-emerald-500 transition-colors text-sm">Login</a>
+                    <a href="{{ route('register') }}" class="bg-slate-900 text-white px-6 py-2.5 rounded-[1.2rem] font-bold text-sm hover:bg-emerald-500 transition-all shadow-xl shadow-slate-200">Get Started</a>
                 </div>
             </div>
 
