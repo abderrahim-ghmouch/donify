@@ -1,6 +1,3 @@
-@extends('layouts.app')
-
-@section('content')
 <div class="max-w-xl mx-auto my-10 animate-fade-in">
     <div class="glass p-10 rounded-3xl shadow-xl border border-white/0">
         <div class="text-center mb-10">
@@ -9,7 +6,9 @@
         </div>
 
         <form id="registerForm" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div id="registerError" class="col-span-1 md:col-span-2 hidden bg-red-50 text-red-500 p-4 rounded-xl text-sm border border-red-100"></div>
+            <div id="registerError"
+                class="col-span-1 md:col-span-2 hidden bg-red-50 text-red-500 p-4 rounded-xl text-sm border border-red-100">
+            </div>
 
             <div>
                 <label class="block text-sm font-semibold mb-2 ml-1">First Name</label>
@@ -42,9 +41,12 @@
             <div class="col-span-1 md:col-span-2">
                 <label class="block text-sm font-semibold mb-2 ml-1">Profile Picture</label>
                 <div class="flex items-center space-x-4">
-                    <div id="imagePreview" class="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-dashed border-gray-200">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    <div id="imagePreview"
+                        class="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-dashed border-gray-200">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
                     </div>
                     <div class="flex-1">
@@ -57,7 +59,8 @@
 
             <div class="col-span-1 md:col-span-2">
                 <label class="block text-sm font-semibold mb-2 ml-1">I want to join as</label>
-                <select id="role" class="w-full px-5 py-4 rounded-2xl bg-white border border-gray-100 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none appearance-none">
+                <select id="role"
+                    class="w-full px-5 py-4 rounded-2xl bg-white border border-gray-100 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 transition-all outline-none appearance-none">
                     <option value="donor">Donor (Support causes)</option>
                     <option value="porter">Campaign Porter (Create causes)</option>
                 </select>
@@ -121,7 +124,8 @@
         const errorDiv = document.getElementById('registerError');
 
         btn.disabled = true;
-        btn.innerHTML = '<span class="flex items-center justify-center"><svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Creating account...</span>';
+        btn.innerHTML =
+            '<span class="flex items-center justify-center"><svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Creating account...</span>';
         errorDiv.classList.add('hidden');
 
         try {
@@ -131,7 +135,8 @@
             window.location.href = '/';
         } catch (error) {
             console.error(error);
-            const message = error.message || (error.errors ? Object.values(error.errors)[0][0] : 'Registration failed. Please check your details.');
+            const message = error.message || (error.errors ? Object.values(error.errors)[0][0] :
+                'Registration failed. Please check your details.');
             errorDiv.textContent = message;
             errorDiv.classList.remove('hidden');
             btn.disabled = false;
