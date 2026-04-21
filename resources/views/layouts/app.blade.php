@@ -14,12 +14,12 @@
     <!-- Custom Design Tokens & Utilities -->
     <style>
         :root {
-            --primary: #2fd91cff;
-            --primary-dark: #185f49ff;
+            --primary: #02a95c;
+            --primary-dark: #028b4c;
             --primary-light: #D1FAE5;
             --secondary: #6366F1;
             --dark: #0F172A;
-            --light: #F8FAFC;
+            --light: #fbf8f6;
         }
 
         body {
@@ -131,52 +131,65 @@
 
     <!-- Footer -->
     @unless(isset($hide_nav) && $hide_nav)
-    <footer class="bg-slate-900 text-white py-20 px-6 mt-20">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div class="col-span-1 md:col-span-1">
-                <div class="flex items-center space-x-3 mb-6">
-                    <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-10 w-auto">
-                    <span class="text-2xl font-bold font-outfit tracking-tighter">Donify</span>
+    <footer class="bg-gradient-to-br from-[#0b1612] via-[#012418] to-black border-t border-white/5 pt-24 pb-12 px-6 font-['Quicksand'] relative overflow-hidden">
+    <!-- Decorative Glow -->
+    <div class="absolute top-0 right-0 w-80 h-80 bg-[#02a95c]/10 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
+    
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+            <div class="md:col-span-1">
+                <div class="flex items-center gap-3 mb-8">
+                    <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-10 w-auto brightness-0 invert opacity-90">
+                    <span class="font-extrabold text-2xl text-white tracking-tight">Donify</span>
                 </div>
-                <p class="text-slate-400 leading-relaxed">
-                    Donify is a global crowdfunding platform empowering individuals and organizations to raise funds for what matters most.
+                <p class="text-gray-400 font-medium leading-relaxed">
+                    The world's most trusted gateway for meaningful giving. Change the world, one donation at a time.
                 </p>
             </div>
+            
             <div>
-                <h4 class="font-bold mb-6 text-lg">Platform</h4>
-                <ul class="space-y-4 text-slate-400">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">How it Works</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Campaigns</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Organisations</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Safety</a></li>
+                <h4 class="font-bold text-white text-lg mb-6">Discover</h4>
+                <ul class="space-y-4 text-gray-500 font-medium">
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">Medical</a></li>
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">Emergency</a></li>
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">Education</a></li>
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">Nonprofits</a></li>
                 </ul>
             </div>
+
             <div>
-                <h4 class="font-bold mb-6 text-lg">Support</h4>
-                <ul class="space-y-4 text-slate-400">
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Help Center</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Privacy Policy</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Terms of Service</a></li>
-                    <li><a href="#" class="hover:text-emerald-400 transition-colors">Contact Us</a></li>
+                <h4 class="font-bold text-white text-lg mb-6">Donify</h4>
+                <ul class="space-y-4 text-gray-500 font-medium">
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">About Us</a></li>
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">How it Works</a></li>
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">Pricing</a></li>
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">Careers</a></li>
                 </ul>
             </div>
+
             <div>
-                <h4 class="font-bold mb-6 text-lg">Newsletter</h4>
-                <p class="text-slate-400 mb-4">Get updates on impactful campaigns.</p>
-                <div class="flex">
-                    <input type="email" placeholder="Email" class="bg-slate-800 border-none rounded-l-xl px-4 py-2 w-full focus:ring-1 focus:ring-emerald-500">
-                    <button class="bg-emerald-500 px-4 py-2 rounded-r-xl hover:bg-emerald-600 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                </div>
+                <h4 class="font-bold text-white text-lg mb-6">Support</h4>
+                <ul class="space-y-4 text-gray-500 font-medium">
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">Help Center</a></li>
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">Trust & Safety</a></li>
+                    <li><a href="#" class="hover:text-[#02a95c] transition-colors">Contact Us</a></li>
+                </ul>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto pt-12 mt-12 border-t border-slate-800 text-center text-slate-500 text-sm">
-            &copy; {{ date('Y') }} Donify. All rights reserved.
+        
+        <div class="border-t border-white/5 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-gray-500 font-medium text-sm">
+                &copy; {{ date('Y') }} Donify. Empowerment through giving.
+            </p>
+            <div class="flex gap-8 text-sm font-medium text-gray-500">
+                <a href="#" class="hover:text-white transition-all underline decoration-emerald-500/30 underline-offset-4">Terms</a>
+                <a href="#" class="hover:text-white transition-all underline decoration-emerald-500/30 underline-offset-4">Privacy</a>
+                <a href="#" class="hover:text-white transition-all underline decoration-emerald-500/30 underline-offset-4">Legal</a>
+            </div>
         </div>
-    </footer>
+    </div>
+</footer>
+    
     @endunless
 
     <!-- Native JavaScript for Interactions -->
