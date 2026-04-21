@@ -469,7 +469,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    if (user.role !== 'porter') {
+    if (user.role !== 'porter' && user.role !== 'organisation') {
         loading.style.display   = 'none';
         wrongRole.style.display = 'flex';
         return;
