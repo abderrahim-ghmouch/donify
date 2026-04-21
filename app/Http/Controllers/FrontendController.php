@@ -55,4 +55,14 @@ class FrontendController extends Controller
     {
         return view('admin.dashboard');
     }
+
+    public function organisationLogin()
+    {
+        return view('organisations.login');
+    }
+
+    public function organisationRegister()
+    {
+        return view('organisations.register');
+    }
 }

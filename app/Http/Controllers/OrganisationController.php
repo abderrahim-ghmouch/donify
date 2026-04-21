@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Organisation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 
 class OrganisationController extends Controller
 {
@@ -42,10 +44,11 @@ class OrganisationController extends Controller
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
             'email'       => 'required|email|unique:organisations,email',
+            'password'    => 'required|string|min:9',
             'phone'       => 'required|string|max:20',
             'address'     => 'required|string',
             'logo'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'document'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'document'    => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
         ]);
 
         // Handle logo (profile image)
@@ -64,6 +67,7 @@ class OrganisationController extends Controller
             'name'          => $validated['name'],
             'description'   => $validated['description'] ?? null,
             'email'         => $validated['email'],
+            'password'      => Hash::make($validated['password']),
             'phone'         => $validated['phone'],
             'address'       => $validated['address'],
             'logo'          => $logoPath,
@@ -115,6 +119,35 @@ class OrganisationController extends Controller
         return response()->json([
             'status' => 'success',
             'data'   => $organisations
+        ]);
+    }
+    /**
+     * Login for organisations
+     */
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        if (!$token = auth('organisation')->attempt($credentials)) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+        $organisation = auth('organisation')->user();
+
+        if (!$organisation->is_verified) {
+            return response()->json([
+                'error' => 'Your account is pending verification.',
+                'status' => 'pending'
+            ], 403);
+        }
+
+        return response()->json([
+            'status'       => 'success',
+            'access_token' => $token,
+            'organisation' => $organisation
         ]);
     }
 }

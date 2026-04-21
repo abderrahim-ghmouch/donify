@@ -13,6 +13,8 @@ Route::get('/admin', [FrontendController::class, 'adminDashboard'])->name('admin
 Route::middleware('guest')->group(function () {
     Route::get('/login', [FrontendController::class, 'login'])->name('login');
     Route::get('/register', [FrontendController::class, 'register'])->name('register');
+    Route::get('/organisations/login', [FrontendController::class, 'organisationLogin'])->name('organisations.login');
+    Route::get('/organisations/register', [FrontendController::class, 'organisationRegister'])->name('organisations.register');
 });
 
 

@@ -49,6 +49,7 @@ Route::get('campaigns/{id}', [CampaignController::class, 'show']);
 // Organisation public routes
 Route::get('organisations', [OrganisationController::class, 'index']);
 Route::post('organisations/register', [OrganisationController::class, 'register']);
+Route::post('organisations/login', [OrganisationController::class, 'login']);
 Route::get('organisations/{id}', [OrganisationController::class, 'show']);
 
 // ==================== Admin Routes ====================

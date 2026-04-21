@@ -36,8 +36,15 @@ class CampaignController extends Controller
             'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
         ]);
 
-        $validateData['user_id'] = auth()->id();
-        $validateData['status']  = 'pending'; // Always pending until admin approves
+        if (auth('organisation')->check()) {
+            $validateData['organisation_id'] = auth('organisation')->id();
+            $validateData['user_id'] = null;
+        } else {
+            $validateData['user_id'] = auth('api')->id();
+            $validateData['organisation_id'] = null;
+        }
+        
+        $validateData['status']  = 'pending';
 
         $campaign = Campaign::create($validateData);
 
@@ -68,10 +75,15 @@ class CampaignController extends Controller
      */
     public function myCampaigns()
     {
-        $campaigns = Campaign::with(['images', 'category'])
-            ->where('user_id', auth()->id())
-            ->latest()
-            ->get();
+        $query = Campaign::with(['images', 'category'])->latest();
+
+        if (auth('organisation')->check()) {
+            $query->where('organisation_id', auth('organisation')->id());
+        } else {
+            $query->where('user_id', auth('api')->id());
+        }
+
+        $campaigns = $query->get();
 
         return response()->json([
             'status' => 'success',
@@ -147,7 +159,14 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::findOrFail($id);
 
-        if ($campaign->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
+        $isOwner = false;
+        if (auth('organisation')->check()) {
+            $isOwner = $campaign->organisation_id === auth('organisation')->id();
+        } else {
+            $isOwner = $campaign->user_id === auth('api')->id();
+        }
+
+        if (!$isOwner && auth('api')->user()?->role !== 'admin') {
             return response()->json(['status' => 'error', 'message' => 'Unauthorized.'], 403);
         }
 
@@ -173,7 +192,14 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::findOrFail($id);
 
-        if ($campaign->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
+        $isOwner = false;
+        if (auth('organisation')->check()) {
+            $isOwner = $campaign->organisation_id === auth('organisation')->id();
+        } else {
+            $isOwner = $campaign->user_id === auth('api')->id();
+        }
+
+        if (!$isOwner && auth('api')->user()?->role !== 'admin') {
             return response()->json(['status' => 'error', 'message' => 'Unauthorized.'], 403);
         }
 
@@ -189,7 +215,14 @@ class CampaignController extends Controller
     {
         $campaign = Campaign::findOrFail($id);
 
-        if ($campaign->user_id !== auth()->id() && auth()->user()->role !== 'admin') {
+        $isOwner = false;
+        if (auth('organisation')->check()) {
+            $isOwner = $campaign->organisation_id === auth('organisation')->id();
+        } else {
+            $isOwner = $campaign->user_id === auth('api')->id();
+        }
+
+        if (!$isOwner && auth('api')->user()?->role !== 'admin') {
             return response()->json(['status' => 'error', 'message' => 'Unauthorized.'], 403);
         }
 
