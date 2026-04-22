@@ -51,12 +51,6 @@
             box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
         }
 
-        .text-gradient {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
         .nav-link {
             position: relative;
             color: var(--dark);
@@ -113,6 +107,9 @@
             <div class="flex items-center justify-end space-x-2 md:space-x-6">
                 {{-- Auth User --}}
                 <div class="auth-user hidden flex items-center space-x-4 md:space-x-6">
+                    <a id="navDashboardLink" href="/porter/dashboard" class="hidden text-[10px] font-black uppercase tracking-[0.3em] text-[#1A1A1A]/60 hover:text-[#064e3b] transition-all px-4">Dashboard</a>
+                    <a id="navAdminLink" href="/admin" class="hidden text-[10px] font-black uppercase tracking-[0.3em] text-[#1A1A1A]/60 hover:text-[#064e3b] transition-all px-4">Admin Console</a>
+                    
                     <a href="{{ route('profile') }}" class="text-[#1A1A1A] hover:text-[#064e3b] transition-all p-1.5 bg-gray-50 rounded-full hover:bg-gray-100">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -147,8 +144,6 @@
                 
                 <div class="flex flex-col space-y-8">
                     <a href="{{ route('campaigns.index') }}" class="text-white text-2xl font-bold tracking-[0.2em] uppercase">Campaigns</a>
-                    <a href="{{ route('organisations.index') }}" class="text-white text-2xl font-bold tracking-[0.2em] uppercase">Organisations</a>
-                    <a href="#" class="text-white text-2xl font-bold tracking-[0.2em] uppercase">Impact</a>
                     <hr class="border-white/10 my-4">
                     <a href="{{ route('login') }}" class="text-gray-400 text-xl font-bold uppercase tracking-widest">Login</a>
                 </div>
@@ -316,4 +311,3 @@
     @yield('scripts')
 </body>
 </html>
-
