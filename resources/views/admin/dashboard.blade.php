@@ -6,9 +6,11 @@
     .font-quicksand { font-family: 'Quicksand', sans-serif; }
     
     .admin-sidebar {
-        background: #1A1A1A;
-        border-right: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: 20px 0 60px rgba(0,0,0,0.05);
+        background: linear-gradient(to right, rgba(2, 44, 34, 0.98), rgba(6, 78, 59, 0.7));
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: none;
+        box-shadow: 20px 0 80px rgba(0,0,0,0.3);
     }
 
     .nav-btn {
@@ -98,44 +100,47 @@
     </div>
 
     {{-- ── MAIN ADMIN ARCHITECTURE ── --}}
-    <div id="adminContent" style="display:none" class="min-h-screen bg-[#fbf8f6] flex font-quicksand">
+    <div id="adminContent" style="display:none" class="min-h-screen bg-[#fbf8f6] flex font-quicksand relative overflow-hidden">
+
+        {{-- Decorative Aurora for Glass SideBar --}}
+        <div class="absolute top-0 left-0 w-[400px] h-screen bg-gradient-to-br from-[#DAA520]/5 to-transparent pointer-events-none z-0"></div>
 
         {{-- Mobile Overlay --}}
         <div id="sidebarOverlay" class="fixed inset-0 bg-black/10 backdrop-blur-sm z-40 lg:hidden hidden" onclick="closeSidebar()"></div>
 
         {{-- ── COMMAND SIDEBAR ── --}}
         <aside id="sidebar" class="fixed top-0 left-0 z-50 h-full w-80 admin-sidebar flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-500 ease-in-out">
-            <div class="p-10 mb-10">
-                <div class="flex items-center gap-4">
-                    <img src="{{ asset('images/donifylg.png') }}" class="h-8 w-auto brightness-0 invert">
-                    <span class="text-xl font-black text-white italic tracking-tighter">Admin</span>
+            <div class="p-10 mb-6">
+                <div class="flex flex-col items-center gap-4">
+                    <img src="{{ asset('images/slogan.png') }}" class="w-48 h-auto shadow-sm">
+                    <div class="w-full h-px bg-white/10 mt-4"></div>
                 </div>
             </div>
 
             <nav class="flex-1 px-6 space-y-2">
-                <div class="px-4 mb-4 text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Operations</div>
+                <div class="px-4 mb-4 text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Operations</div>
                 
-                <button onclick="goTab('overview',this)" class="nav-btn active w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                <button onclick="goTab('overview',this)" class="nav-btn active w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
                     <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>
                     Intelligence
                 </button>
                 
-                <button onclick="goTab('campaigns',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                <button onclick="goTab('campaigns',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
                     <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0l-2-2m2 2l-2 2M5 11l2-2m-2 2l2 2"/></svg>
                     Moderation
                 </button>
                 
-                <button onclick="goTab('users',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                <button onclick="goTab('users',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
                     <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8 7a4 4 0 100-8 4 4 0 000 8z"/></svg>
                     Identities
                 </button>
                 
-                <button onclick="goTab('organisations',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                <button onclick="goTab('organisations',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
                     <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     Partners
                 </button>
                 
-                <button onclick="goTab('categories',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                <button onclick="goTab('categories',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
                     <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 7h.01M7 3h5c.5 0 1 .2 1.4.6l7 7a2 2 0 010 2.8l-7 7a2 2 0 01-2.8 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
                     Domains
                 </button>
