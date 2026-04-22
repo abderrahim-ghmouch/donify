@@ -25,7 +25,7 @@
         </div>
 
         <!-- Form Content -->
-        <div class="h-full flex flex-col px-12 md:px-32 py-10 relative z-10 overflow-hidden">
+        <div class="h-full flex flex-col px-12 md:px-44 py-10 relative z-10 overflow-hidden">
             <!-- Back Arrow -->
             <div class="mb-6">
                 <a href="{{ route('home') }}" class="inline-flex items-center text-[#1A1A1A] hover:text-[#064e3b] transition-all group">
