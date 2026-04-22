@@ -33,7 +33,8 @@ class CampaignController extends Controller
             'target_amount' => 'required|numeric|min:1',
             'start_date'    => 'nullable|date',
             'end_date'      => 'nullable|date|after_or_equal:start_date',
-            'image'         => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
+            'images'        => 'nullable|array',
+            'images.*'      => 'image|mimes:jpeg,png,jpg,gif|max:4096',
         ]);
 
         if (auth('organisation')->check()) {
@@ -48,15 +49,17 @@ class CampaignController extends Controller
 
         $campaign = Campaign::create($validateData);
 
-        // Handle optional cover image
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('campaigns', 'public');
-            $campaign->images()->create(['url' => asset('storage/' . $path)]);
+        // Handle multiple mission assets
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('campaigns', 'public');
+                $campaign->images()->create(['url' => asset('storage/' . $path)]);
+            }
         }
 
         return response()->json([
             'status'  => 'success',
-            'message' => 'Campaign submitted for review. An admin will approve it shortly.',
+            'message' => 'Mission submitted for review with gallery assets.',
             'data'    => $campaign->load('images'),
         ], 201);
     }
