@@ -1,10 +1,17 @@
 @extends('layouts.app', ['hide_nav' => true])
 
 @section('content')
-<!-- Hero Section -->
-<section class="relative min-h-[95vh] flex items-center justify-center overflow-hidden px-6 pt-10 bg-[#fbf8f6] font-quicksand">
-    <!-- Logo Watermark Background -->
-    <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none opacity-[0.2]">
+<div class="relative overflow-hidden bg-[#fbf8f6]">
+    {{-- Full-Depth Atmospheric Gradient (Footer to absolute Top) --}}
+    <div class="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-[#064e3b]/40 via-[#064e3b]/10 to-transparent pointer-events-none z-0"></div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[95vh] flex items-center justify-center overflow-hidden px-10 pt-10 z-10 font-quicksand bg-transparent">
+        {{-- Mirrored Top-Down Gradient (Specifically for Hero) --}}
+        <div class="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-[#064e3b]/40 via-[#064e3b]/10 to-transparent pointer-events-none -z-10"></div>
+
+        <!-- Logo Watermark Background (Shifted Left) -->
+    <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none opacity-[0.2] -translate-x-16">
         <img src="{{ asset('images/donifylg.png') }}" alt="" class="w-[900px] h-auto grayscale select-none">
     </div>
 
@@ -32,19 +39,20 @@
                 </a>
             </div>
             
-            <div class="mt-20 pt-10 border-t border-gray-200 flex flex-wrap justify-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all">
-                <span class="font-bold text-xl tracking-tight text-gray-400">TRUSTED</span>
-                <span class="font-bold text-xl tracking-tight text-gray-400">SECURE</span>
-                <span class="font-bold text-xl tracking-tight text-gray-400">IMPACTFUL</span>
-               
-                
+            <div class="mt-20 pt-10 flex flex-wrap justify-center gap-8 md:gap-12 transition-all">
+                <span class="font-black text-2xl tracking-tighter text-[#059669] hover:text-[#1A1A1A] transition-all duration-300 cursor-default hover:scale-110 transform">TRUSTED.</span>
+                <span class="font-black text-2xl tracking-tighter text-[#059669] hover:text-[#1A1A1A] transition-all duration-300 cursor-default hover:scale-110 transform">SECURE.</span>
+                <span class="font-black text-2xl tracking-tighter text-[#059669] hover:text-[#1A1A1A] transition-all duration-300 cursor-default hover:scale-110 transform">GLOBAL.</span>
+                <span class="font-black text-2xl tracking-tighter text-[#059669] hover:text-[#1A1A1A] transition-all duration-300 cursor-default hover:scale-110 transform">VERIFIED.</span>
+                <span class="font-black text-2xl tracking-tighter text-[#059669] hover:text-[#1A1A1A] transition-all duration-300 cursor-default hover:scale-110 transform">AUTHENTIC.</span>
+                <span class="font-black text-2xl tracking-tighter text-[#059669] hover:text-[#1A1A1A] transition-all duration-300 cursor-default hover:scale-110 transform">IMPACTFUL.</span>
             </div>
         </div>
     </div>
 </section>  
 
 <!-- Stats Section -->
-<section class="py-24 px-6 bg-[#fbf8f6] border-t border-gray-100">
+<section class="py-24 px-6 bg-transparent z-10 relative">
     <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
         <div class="text-center group cursor-default p-8 transition-all duration-500">
             <h3 class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">$24M+</h3>
@@ -68,7 +76,7 @@
 
 
 <!-- Call to Action -->
-<section class="w-full font-['Quicksand'] relative overflow-hidden bg-gradient-to-b from-[#fbf8f6] to-[#0b1612]">
+<section class="w-full font-['Quicksand'] relative overflow-hidden bg-transparent z-10">
     <div class="flex flex-col md:flex-row items-stretch">
         
         {{-- Left: Slogan Image --}}
@@ -99,4 +107,5 @@
         </div>
     </div>
 </section>
+</div>
 @endsection
