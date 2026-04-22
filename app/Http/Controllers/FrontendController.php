@@ -58,7 +58,12 @@ class FrontendController extends Controller
 
     public function adminDashboard()
     {
-        return view('admin.dashboard');
+        $users = \App\Models\User::all();
+        $campaigns = \App\Models\Campaign::with('images')->get();
+        $organisations = \App\Models\Organisation::all();
+        $categories = \App\Models\Category::all();
+
+        return view('admin.dashboard', compact('users', 'campaigns', 'organisations', 'categories'));
     }
 
     public function organisationLogin()
@@ -69,5 +74,13 @@ class FrontendController extends Controller
     public function organisationRegister()
     {
         return view('organisations.register');
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }
