@@ -6,7 +6,8 @@
 <div class="min-h-screen bg-[#fbf8f6] font-quicksand relative overflow-hidden">
     
     {{-- Global Atmospheric Green Gradient (Footer based) --}}
-    <div class="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-[#064e3b]/30 via-[#064e3b]/10 to-transparent pointer-events-none z-0"></div>
+    {{-- REACHES THE TITLE: Increased height and opacity shift --}}
+    <div class="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-[#064e3b]/40 via-[#064e3b]/15 to-transparent pointer-events-none z-0"></div>
 
     {{-- Hero Section: Discovery Identity --}}
     <section class="relative pt-40 pb-20 px-8 z-10 overflow-hidden">
@@ -14,13 +15,6 @@
         <div class="max-w-7xl mx-auto text-center">
             <div class="animate-fade-in flex flex-col items-center">
                 
-                {{-- Platform Registry ID --}}
-                <div class="mb-12">
-                    <span class="inline-block px-4 py-1.5 rounded-full bg-[#1A1A1A] text-white font-black text-[10px] uppercase tracking-widest border border-white/10">
-                        Registry 01
-                    </span>
-                </div>
-
                 <h1 class="text-5xl md:text-8xl font-black text-[#1A1A1A] leading-[0.95] mb-8 tracking-tighter shadow-sm mx-auto">
                     Global<br>
                     <span class="text-[#064e3b]">Mission Hall.</span>
@@ -46,7 +40,7 @@
                         <select id="categorySelect" onchange="handleCategoryChange()" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
                             <option value="all">All Sectors</option>
                         </select>
-                        <div id="categoryLabel" class="text-sm font-black text-[#1A1A1A] uppercase tracking-widest">All Sectors</div>
+                        <div id="categoryLabel" class="text-sm font-black text-[#1A1A1A] uppercase tracking-widest leading-none">All Sectors</div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     </div>
 
