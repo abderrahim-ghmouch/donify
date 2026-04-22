@@ -248,10 +248,6 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1v-4zM14 13a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"/></svg>
                         Overview
                     </button>
-                    <button class="dash-tab" data-panel="create" onclick="switchTab('create', this)">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                        New Campaign
-                    </button>
                     <button class="dash-tab" data-panel="my-campaigns" onclick="switchTab('my-campaigns', this); loadMyCampaigns();">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
                         My Campaigns
@@ -271,15 +267,16 @@
                 {{-- Recent campaigns --}}
                 <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
                     <div class="flex items-center justify-between px-8 py-6 border-b border-gray-100">
-                        <div>
-                            <h2 class="text-xl font-bold font-outfit">Recent Campaigns</h2>
-                            <p class="text-gray-400 text-sm mt-0.5">Your latest campaign submissions</p>
-                        </div>
-                        <button onclick="switchTab('create', document.querySelector('[data-panel=create]'))"
-                            class="btn-primary px-5 py-2.5 rounded-xl text-sm font-bold" style="padding:.65rem 1.25rem;font-size:.85rem;">
-                            + New Campaign
-                        </button>
-                    </div>
+                <div>
+                    <h2 class="text-xl font-bold font-outfit">Recent Campaigns</h2>
+                    <p class="text-gray-400 text-sm mt-0.5">Your latest campaign submissions</p>
+                </div>
+                <a href="/porter/campaign/create"
+                    class="btn-primary px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2" style="padding:.65rem 1.25rem;font-size:.85rem;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                    + New Campaign
+                </a>
+            </div>
                     <div id="recentList" class="p-8">
                         <div class="text-center py-10 text-gray-400">
                             <div class="w-7 h-7 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
