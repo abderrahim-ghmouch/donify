@@ -6,7 +6,7 @@
     <title>Donify - Empowering Communities through Giving</title>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Tailwind CDN (using for layout) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,13 +23,14 @@
         }
 
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Quicksand', sans-serif;
             background-color: var(--light);
             color: var(--dark);
             overflow-x: hidden;
         }
 
         .font-outfit { font-family: 'Outfit', sans-serif; }
+        .font-quicksand { font-family: 'Quicksand', sans-serif; }
 
         .glass {
             background: rgba(255, 255, 255, 0.7);

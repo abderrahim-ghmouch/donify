@@ -147,7 +147,7 @@
             errorDiv.classList.remove('hidden');
             btn.disabled = false;
             btn.innerHTML = 'SIGN IN';
-        }
+        }   
     });
 </script>
 @endsection
