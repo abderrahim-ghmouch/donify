@@ -7,7 +7,8 @@
     
     {{-- Global Atmospheric Green Gradient (Footer based) --}}
     {{-- REACHES THE TITLE: Increased height and opacity shift --}}
-    <div class="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-[#064e3b]/40 via-[#064e3b]/15 to-transparent pointer-events-none z-0"></div>
+    {{-- Sync Global Atmosphere: Ultimate Static Rise (Porter Dashboard Spec) --}}
+    <div class="absolute bottom-0 left-0 right-0 h-[1200px] bg-gradient-to-t from-[#064e3b]/90 via-[#064e3b]/20 via-40% to-transparent pointer-events-none z-0"></div>
 
     {{-- Hero Section: Discovery Identity --}}
     <section class="relative pt-40 pb-20 px-8 z-10 overflow-hidden">

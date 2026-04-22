@@ -13,7 +13,8 @@
 <div id="profilePage" class="min-h-screen bg-[#fbf8f6] font-quicksand relative overflow-hidden" style="display:none">
     
     {{-- Refined Atmospheric Gradient (Footer based, slightly deeper/longer) --}}
-    <div class="absolute inset-x-0 bottom-0 h-[75%] bg-gradient-to-t from-[#064e3b]/55 via-[#064e3b]/15 to-transparent pointer-events-none z-0"></div>
+    {{-- Sync Global Atmosphere: Ultimate Static Rise (Porter Dashboard Spec) --}}
+    <div class="absolute bottom-0 left-0 right-0 h-[1200px] bg-gradient-to-t from-[#064e3b]/90 via-[#064e3b]/20 via-40% to-transparent pointer-events-none z-0"></div>
 
     {{-- Hero Section (Bright Top) --}}
     <section class="relative pt-32 pb-20 px-8 z-10">
