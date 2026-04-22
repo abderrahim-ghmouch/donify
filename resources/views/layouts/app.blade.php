@@ -99,13 +99,12 @@
             {{-- Left Side: Nav Links (Desktop Only) --}}
             <div class="hidden md:flex items-center space-x-10">
                 <a href="{{ route('campaigns.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Campaigns</a>
-                <a href="{{ route('organisations.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Organisations</a>
-                <a href="#" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Impact</a>
+                <a href="#" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Favourites</a>
             </div>
 
             {{-- Center: Logo --}}
             <div class="flex justify-center">
-                <a href="{{ route('home') }}" class="group transition-transform hover:scale-105 active:scale-95">
+                <a href="javascript:void(0)" class="group transition-transform hover:scale-105 active:scale-95 cursor-default">
                     <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-8 md:h-12 w-auto object-contain">
                 </a>
             </div>
@@ -113,12 +112,14 @@
             {{-- Right Side: Auth --}}
             <div class="flex items-center justify-end space-x-2 md:space-x-6">
                 {{-- Auth User --}}
-                <div class="auth-user hidden flex items-center space-x-3 md:space-x-6">
-                    <a href="{{ route('dashboard') }}" id="navDashboardLink" class="hidden items-center bg-[#064e3b] hover:bg-black text-white px-4 md:px-6 py-2 rounded-full font-bold text-[10px] md:text-xs transition-all tracking-widest">
-                        DASHBOARD
+                <div class="auth-user hidden flex items-center space-x-4 md:space-x-6">
+                    <a href="{{ route('profile') }}" class="text-[#1A1A1A] hover:text-[#064e3b] transition-all p-1.5 bg-gray-50 rounded-full hover:bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
                     </a>
-                    <button onclick="handleLogout()" class="text-gray-400 hover:text-black transition-all p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <button onclick="handleLogout()" class="text-red-500 hover:text-red-600 transition-all p-1.5 bg-red-50 rounded-full hover:bg-red-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7" />
                         </svg>
                     </button>
