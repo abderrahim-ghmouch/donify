@@ -5,12 +5,14 @@
 {{-- Porter Command Dashboard (Ultra-Premium Glass Modal) --}}
 <div class="min-h-screen bg-[#fbf8f6] font-quicksand relative overflow-hidden flex flex-col">
     
-    {{-- Classic Linear Gradient: Bottom to Top --}}
-    <div class="absolute inset-0 bg-gradient-to-t from-[#064e3b]/15 via-transparent to-transparent pointer-events-none z-0"></div>
+    {{-- Subtle Atmospheric Rise: Low Opacity Forest Green Gradient --}}
+    {{-- Ultimate Static Rise: Max-Depth Forest Green Gradient --}}
+    <div class="absolute bottom-0 left-0 right-0 h-[1200px] bg-gradient-to-t from-[#064e3b]/90 via-[#064e3b]/20 via-40% to-transparent pointer-events-none z-0"></div>
 
     {{-- Hero Section --}}
     <section class="relative pt-40 pb-16 px-8 z-10 text-center">
         <div class="max-w-7xl mx-auto flex flex-col items-center animate-show">
+            <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-24 w-auto mb-12 opacity-90 drop-shadow-2xl">
             <h1 class="text-6xl md:text-8xl font-black text-[#1A1A1A] leading-tight mb-4 tracking-tighter">
                 Campaign Dashboard.
             </h1>
@@ -44,85 +46,84 @@
         {{-- High-Intensity Backdrop Blur --}}
         <div class="absolute inset-0 bg-[#064e3b]/10 backdrop-blur-xl transition-all" onclick="closeMissionModal()"></div>
         
-        {{-- Refined Support Console: Expanded to 4xl for breathing room --}}
-        <div class="relative w-full max-w-4xl bg-[#fdfdfd]/98 backdrop-blur-3xl rounded-xl border border-black/5 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] transform transition-all duration-500 translate-y-10 scale-95 opacity-0 overflow-hidden font-quicksand" id="modalContainer">
+        {{-- High-Intensity Console: Maximized Shadow Impact --}}
+        <div class="relative w-full max-w-3xl bg-[#fdfdfd]/98 backdrop-blur-3xl rounded-xl border border-[#996515]/20 shadow-[0_70px_110px_-15px_rgba(5,150,105,0.65),35px_0_60px_-20px_rgba(5,150,105,0.2),-35px_0_60px_-20px_rgba(5,150,105,0.2)] transform transition-all duration-500 translate-y-10 scale-95 opacity-0 overflow-hidden font-quicksand" id="modalContainer">
             
-            {{-- Modular Header: Softer look --}}
-            <div class="relative flex flex-col items-center p-8 border-b border-black/5 bg-white text-center">
-                <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-10 w-auto mb-4 opacity-80">
-                <h5 class="text-3xl font-bold text-[#1A1A1A] tracking-tight">Spread a Little Joy Today.</h5>
-                <p class="text-xs font-semibold text-[#996515] uppercase tracking-[0.3em] mt-2">Together, let's make a difference</p>
+            {{-- Modular Header: Tighter on mobile --}}
+            <div class="relative flex flex-col items-center p-4 md:p-6 border-b border-black/5 bg-white text-center">
+                <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-6 md:h-10 w-auto mb-2 md:mb-4 opacity-80">
+                <h5 class="text-xl md:text-3xl font-bold text-[#1A1A1A] tracking-tight">Spread Joy.</h5>
                 
-                <button onclick="closeMissionModal()" class="absolute top-8 right-8 w-10 h-10 rounded-xl hover:bg-black/5 flex items-center justify-center transition-all group">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300 group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                <button onclick="closeMissionModal()" class="absolute top-4 right-4 md:top-8 md:right-8 w-8 h-8 md:w-10 md:h-10 rounded-xl hover:bg-black/5 flex items-center justify-center transition-all group">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 text-gray-300 group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
             {{-- Split Form Body to Break White Space --}}
-            <div class="p-0 max-h-[80vh] overflow-y-auto">
+            <div class="p-0 max-h-[80vh] overflow-y-auto scrollbar-hide">
                 <form id="createCampaignForm" class="grid grid-cols-1 md:grid-cols-12">
                     
                     {{-- Left Column: Core Narrative --}}
-                    <div class="md:col-span-12 lg:col-span-7 p-10 space-y-7 bg-white">
-                        <div class="space-y-2 text-label">
-                            <label class="text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Mission Title</label>
-                            <input type="text" id="cTitle" placeholder="Give your mission a name..."
-                                class="w-full bg-white border border-black/10 rounded-xl outline-none py-4 px-6 text-lg font-medium text-[#1A1A1A] focus:border-[#996515] focus:shadow-[0_10px_30px_rgba(153,101,21,0.08)] transition-all">
+                    <div class="md:col-span-12 lg:col-span-7 p-6 md:p-10 space-y-5 md:space-y-7 bg-white">
+                        <div class="space-y-1.5 md:space-y-2 text-label">
+                            <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Mission Title</label>
+                            <input type="text" id="cTitle" placeholder="Goal name..."
+                                class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 md:py-4 px-5 md:px-6 text-sm md:text-lg font-medium text-[#1A1A1A] focus:border-[#996515] transition-all">
                         </div>
 
-                        <div class="space-y-2 text-label">
-                            <label class="text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Description</label>
-                            <textarea id="cDesc" placeholder="Tell the story of how you'll help..."
-                                class="w-full bg-white border border-black/10 rounded-xl outline-none py-4 px-6 text-base font-medium text-[#1A1A1A] focus:border-[#996515] focus:shadow-[0_10px_30px_rgba(153,101,21,0.08)] transition-all h-48 resize-none leading-relaxed"></textarea>
+                        <div class="space-y-1.5 md:space-y-2 text-label">
+                            <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Description</label>
+                            <textarea id="cDesc" placeholder="The impact and story..."
+                                class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 md:py-4 px-5 md:px-6 text-sm font-medium text-[#1A1A1A] focus:border-[#996515] h-32 md:h-48 resize-none leading-relaxed"></textarea>
                         </div>
                     </div>
 
-                    {{-- Right Column: Setup (Breaking white space with neutral tint) --}}
-                    <div class="md:col-span-12 lg:col-span-5 p-10 space-y-7 bg-[#fbf8f6] border-l border-black/5">
-                        <div class="space-y-2 text-label">
-                            <label class="text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Select Sector</label>
-                            <select id="cCategory" class="w-full bg-white border border-black/10 rounded-xl outline-none py-4 px-6 text-sm font-bold text-[#1A1A1A] focus:border-[#996515] transition-all cursor-pointer">
-                                <option value="">SELECT CATEGORY</option>
+                    {{-- Right Column: Setup --}}
+                    <div class="md:col-span-12 lg:col-span-5 p-6 md:p-10 space-y-5 md:space-y-7 bg-[#fbf8f6] border-l border-black/5">
+                        <div class="space-y-1.5 md:space-y-2 text-label">
+                            <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Sector</label>
+                            <select id="cCategory" class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 md:py-4 px-5 md:px-6 text-xs font-bold text-[#1A1A1A] focus:border-[#996515] transition-all cursor-pointer">
+                                <option value="">SELECT SECTOR</option>
                             </select>
                         </div>
                         
-                        <div class="space-y-2 text-label">
-                            <label class="text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Target Amount (MAD)</label>
-                            <input type="number" id="cTarget" placeholder="Amount needed"
-                                class="w-full bg-white border border-black/10 rounded-xl outline-none py-4 px-6 text-lg font-bold text-[#1A1A1A] focus:border-[#996515] transition-all">
+                        <div class="space-y-1.5 md:space-y-2 text-label">
+                            <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Target (MAD)</label>
+                            <input type="number" id="cTarget" placeholder="Amount"
+                                class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 md:py-4 px-5 md:px-6 text-sm font-bold text-[#1A1A1A] focus:border-[#996515] transition-all">
                         </div>
 
                         <div class="grid grid-cols-2 gap-4">
-                            <div class="space-y-2 text-label">
-                                <label class="text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Start Date</label>
+                            <div class="space-y-1.5 md:space-y-2 text-label">
+                                <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Start</label>
                                 <input type="date" id="cStartDate" 
-                                    class="w-full bg-white border border-black/10 rounded-xl outline-none py-4 px-4 text-xs font-medium text-[#1A1A1A] focus:border-[#996515] transition-all">
+                                    class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 px-3 text-[10px] font-medium text-[#1A1A1A] focus:border-[#996515] transition-all">
                             </div>
-                            <div class="space-y-2 text-label">
-                                <label class="text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">End Date</label>
+                            <div class="space-y-1.5 md:space-y-2 text-label">
+                                <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">End</label>
                                 <input type="date" id="cEndDate" 
-                                    class="w-full bg-white border border-black/10 rounded-xl outline-none py-4 px-4 text-xs font-medium text-[#1A1A1A] focus:border-[#996515] transition-all">
+                                    class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 px-3 text-[10px] font-bold text-[#1A1A1A] focus:border-[#996515] transition-all">
                             </div>
                         </div>
 
                         <div class="space-y-2">
-                            <label class="text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Cover Image</label>
+                            <label class="text-[10px] font-bold text-[#996515] uppercase tracking-widest pl-1">Photo</label>
                             <label class="block relative cursor-pointer group">
                                 <input type="file" id="cImages" class="absolute inset-0 opacity-0 z-10" accept="image/*">
-                                <div class="w-full py-5 border-2 border-dashed border-black/10 rounded-xl flex flex-col items-center justify-center transition-all group-hover:border-[#996515] bg-white hover:bg-gray-50">
-                                    <p id="dropText" class="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-[#996515]">Choose a photo (+)</p>
+                                <div class="w-full py-3 md:py-5 border-2 border-dashed border-black/10 rounded-xl flex flex-col items-center justify-center transition-all group-hover:border-[#996515] bg-white hover:bg-gray-50">
+                                    <p id="dropText" class="text-[9px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-[#996515]">Add (+)</p>
                                 </div>
                             </label>
                         </div>
                     </div>
 
-                    {{-- Footer --}}
-                    <div class="md:col-span-12 p-10 bg-white border-t border-black/5 flex flex-col items-center gap-8">
-                        <div id="galleryPreview" class="h-28 w-28 rounded-xl bg-[#fdfdfd] border border-black/5 overflow-hidden shadow-sm flex items-center justify-center group relative cursor-pointer" onclick="document.getElementById('cImages').click()">
-                            <span class="text-[8px] font-bold text-gray-300 uppercase tracking-widest text-center">Preview Area</span>
+                    {{-- Footer: Compact on mobile --}}
+                    <div class="md:col-span-12 p-6 md:p-10 bg-white border-t border-black/5 flex flex-col items-center gap-4 md:gap-8">
+                        <div id="galleryPreview" class="h-16 w-16 md:h-28 md:w-28 rounded-xl bg-[#fdfdfd] border border-black/5 overflow-hidden shadow-sm flex items-center justify-center group relative cursor-pointer" onclick="document.getElementById('cImages').click()">
+                            <span class="text-[7px] font-bold text-gray-300 uppercase tracking-widest text-center">Preview</span>
                         </div>
 
-                        <button type="submit" id="submitBtn" class="px-20 py-6 bg-[#1A1A1A] text-white rounded-xl text-xs font-bold uppercase tracking-[0.4em] hover:bg-black transition-all shadow-xl active:scale-95 transform">
+                        <button type="submit" id="submitBtn" class="w-full md:w-auto px-12 md:px-20 py-4 md:py-6 bg-[#1A1A1A] text-white rounded-xl text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] hover:bg-black transition-all shadow-xl active:scale-95 transform">
                             Confirm Mission.
                         </button>
                     </div>
@@ -261,6 +262,19 @@ imageInput.addEventListener('change', () => {
     }
 });
 
+function showToast(msg) {
+    const t = document.createElement('div');
+    t.className = 'fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] bg-[#1A1A1A] text-white px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] shadow-2xl flex items-center gap-4 animate-fade-up';
+    t.innerHTML = `<div class="w-2 h-2 rounded-full bg-[#059669] animate-pulse"></div><span>${msg}</span>`;
+    document.body.appendChild(t);
+    setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transform = 'translate(-50%, 20px)';
+        t.style.transition = 'all 0.5s ease-in-out';
+        setTimeout(() => t.remove(), 500);
+    }, 4000);
+}
+
 document.getElementById('createCampaignForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
@@ -282,12 +296,20 @@ document.getElementById('createCampaignForm').addEventListener('submit', async (
 
     try {
         await ApiClient.request('/campaigns', { method: 'POST', body: fd, headers: { 'Content-Type': null } });
+        
+        // Reset form
+        e.target.reset();
+        gallery.innerHTML = '';
+        dropText.textContent = 'GALLERY (+)';
+
         closeMissionModal();
-        alert('MISSION DEPLOYED.');
-        window.location.reload();
+        showToast('MISSION DEPLOYED TO REGISTRY.');
+        
+        // Live Refresh instead of reload
+        await loadOverview();
     } catch(err) {
-        alert(err.message || 'Transmition failed.');
-        btn.disabled = false; btn.textContent = 'Confirm.';
+        showToast(err.message || 'Transmission failed.');
+        btn.disabled = false; btn.textContent = 'Confirm Mission.';
     }
 });
 

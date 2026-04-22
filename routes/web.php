@@ -7,7 +7,7 @@ Route::get('/campaigns', [FrontendController::class, 'campaigns'])->name('campai
 Route::get('/campaigns/{id}', [FrontendController::class, 'campaigns'])->name('campaigns.show');
 Route::get('/organisations', [FrontendController::class, 'organisations'])->name('organisations.index');
 Route::get('/profile', [FrontendController::class, 'profile'])->name('profile');
-Route::get('/dashboard', [FrontendController::class, 'dashboard'])->name('dashboard');
+Route::get('/porter/dashboard', [FrontendController::class, 'dashboard'])->name('dashboard');
 Route::get('/porter/campaign/create', [FrontendController::class, 'createCampaign'])->name('porter.campaign.create');
 Route::get('/admin', [FrontendController::class, 'adminDashboard'])->name('admin.dashboard');
 
@@ -17,5 +17,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/organisations/login', [FrontendController::class, 'organisationLogin'])->name('organisations.login');
     Route::get('/organisations/register', [FrontendController::class, 'organisationRegister'])->name('organisations.register');
 });
+
+Route::post('/logout', [FrontendController::class, 'logout'])->name('logout');
 
 
