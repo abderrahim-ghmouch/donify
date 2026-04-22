@@ -1,4 +1,4 @@
-// ── Donify Admin Console JS 4.0 ────────────────────────────
+// ── Donify Admin Console JS 7.0 (Luxury Raja Standard) ───────────────────────────
 let AC = [], AU = [], ACAT = [], AORG_ALL = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     let u;
     try { u = await ApiClient.request('/auth/me'); } catch { return splash('adminGuest'); }
-    if (u.role !== 'admin') return splash('adminWrongRole');
+    if (u.role !== 'admin') return splash('adminGuest');
 
     document.getElementById('adminLoading').style.display = 'none';
     document.getElementById('adminContent').style.display = 'flex';
@@ -28,7 +28,7 @@ async function loadUsers(r = true) {
         const res = await ApiClient.request('/users'); 
         AU = res.data || res || [];
         if(r) renderUT();
-    } catch { tst('User sync failed', 'error'); }
+    } catch { tst('Operational error: User sync failed', 'error'); }
 }
 
 async function loadCamps(r = true) {
@@ -36,7 +36,7 @@ async function loadCamps(r = true) {
         const res = await ApiClient.request('/campaigns/all'); 
         AC = res.data || res || [];
         if(r) renderCT();
-    } catch { tst('Campaign sync failed', 'error'); }
+    } catch { tst('Operational error: Campaign sync failed', 'error'); }
 }
 
 async function loadOrgs(r = true) {
@@ -49,7 +49,7 @@ async function loadOrgs(r = true) {
         const seen = new Set();
         AORG_ALL = [...pOrgs, ...(a.data || a || [])].filter(o => !seen.has(o.id) && seen.add(o.id));
         if(r) renderOT();
-    } catch { tst('Partner sync failed', 'error'); }
+    } catch { tst('Operational error: Partner sync failed', 'error'); }
 }
 
 async function loadCats() {
@@ -57,32 +57,32 @@ async function loadCats() {
         const res = await ApiClient.request('/categories'); 
         ACAT = res.data || res || [];
         renderCatG();
-    } catch { tst('Category sync failed', 'error'); }
+    } catch { tst('Operational error: Domain sync failed', 'error'); }
 }
 
 // ── Renders ───────────────────────────────────────────
 function renderOV() {
     const cp = AC.filter(c => c.status === 'pending').slice(0, 5);
     document.getElementById('ovPend').innerHTML = cp.length 
-        ? cp.map(c => ovItem(c.id, c.title, c.user?.first_name, c.images?.[0]?.url, 'approveC', 'rejectC', 'Approve')).join('')
-        : empty('All campaigns processed.');
+        ? cp.map(c => ovItem(c.id, c.title, (c.user?.first_name || 'Anonymous'), c.images?.[0]?.url, 'approveC', 'rejectC', 'Authorize')).join('')
+        : empty('Neutralized: No pending verifications.');
 
     const op = AORG_ALL.filter(o => !o.is_verified).slice(0, 5);
     document.getElementById('ovOrgs').innerHTML = op.length
-        ? op.map(o => ovItem(o.id, o.name, o.email, o.logo, 'verifyOrg', 'rejectOrg', 'Verify')).join('')
-        : empty('No partners pending.');
+        ? op.map(o => ovItem(o.id, o.name, o.email, o.logo, 'verifyOrg', 'rejectOrg', 'Verify Partner')).join('')
+        : empty('Neutralized: Partner waitlist clear.');
 }
 
 function renderCT() {
     document.getElementById('campWrap').innerHTML = tbl(
-        ['Campaign', 'Target', 'Status', 'Magic'],
+        ['Campaign Cause', 'Target', 'Status', 'Actions'],
         (AC || []).map(c => [
-            `<div class="flex items-center gap-4 text-left">${thumb(c.images?.[0]?.url, c.title)}<div><div class="font-bold text-black text-xs">${x(c.title)}</div><div class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">${x(c.category?.category_name || 'Cause')}</div></div></div>`,
-            `<div class="font-bold text-black text-[11px]">$${fmt(c.target_amount)}</div>`,
+            `<div class="flex items-center gap-5 text-left">${thumb(c.images?.[0]?.url, c.title)}<div><div class="font-black text-[#1A1A1A] text-sm italic tracking-tight">${x(c.title)}</div><div class="text-[9px] text-gray-400 font-black uppercase tracking-[0.2em] mt-1">${x(c.category?.category_name || 'Legacy Cause')}</div></div></div>`,
+            `<div class="font-black text-[#1A1A1A] text-sm">${fmt(c.target_amount)}</div>`,
             badge(c.status),
             c.status === 'pending' 
-                ? btnGrp(c.id, 'approveC', 'rejectC', 'Approve')
-                : `<span class="text-[9px] font-black text-slate-200 uppercase tracking-widest">${c.status}</span>`
+                ? btnGrp(c.id, 'approveC', 'rejectC', 'Authorize')
+                : `<span class="text-[9px] font-black text-gray-300 uppercase tracking-widest italic">${c.status}</span>`
         ])
     );
 }
@@ -90,34 +90,34 @@ function renderCT() {
 function renderUT() {
     const wrap = document.getElementById('userWrap'); if(!wrap) return;
     wrap.innerHTML = tbl(
-        ['Identity', 'Role', 'Status', 'Magic'],
+        ['Identity', 'Role', 'Security Status', 'Actions'],
         (AU || []).map(u => [
-            `<div class="flex items-center gap-4 text-left">${thumb(u.images?.url, u.first_name)}<div><div class="font-bold text-black text-xs">${x(u.first_name + ' ' + u.last_name)}</div><div class="text-[9px] text-slate-400 font-medium">${x(u.email)}</div></div></div>`,
-            `<div class="text-[9px] font-black uppercase tracking-widest text-[#059669]">${u.role}</div>`,
-            u.is_banned ? badge('cancelled', 'Banned') : badge('active', 'Safe'),
-            u.role === 'admin' ? '-' : (u.is_banned ? mBtn(u.id, 'unbanU', 'Unban', '#059669') : mBtn(u.id, 'banU', 'Ban', '#f59e0b'))
+            `<div class="flex items-center gap-5 text-left">${thumb(u.images?.url, u.first_name)}<div><div class="font-black text-[#1A1A1A] text-sm italic tracking-tight">${x(u.first_name + ' ' + u.last_name)}</div><div class="text-[10px] text-gray-400 font-bold italic">${x(u.email)}</div></div></div>`,
+            `<div class="text-[10px] font-black uppercase tracking-widest text-[#064e3b] italic">${u.role}</div>`,
+            u.is_banned ? badge('cancelled', 'BANNED') : badge('active', 'VERIFIED'),
+            u.role === 'admin' ? '-' : (u.is_banned ? mBtn(u.id, 'unbanU', 'Unlock', '#064e3b') : mBtn(u.id, 'banU', 'Restrict', '#DAA520'))
         ])
     );
 }
 
 function renderOT() {
     document.getElementById('orgWrap').innerHTML = tbl(
-        ['Partner Entity', 'Status', 'Magic'],
+        ['Partner Entity', 'Credentials', 'Actions'],
         (AORG_ALL || []).map(o => [
-            `<div class="flex items-center gap-4 text-left font-bold text-black text-xs tracking-tight">${thumb(o.logo, o.name)}${x(o.name)}</div>`,
-            badge(o.is_verified ? 'active' : 'pending', o.is_verified ? 'Verified' : 'Waitlist'),
-            !o.is_verified ? btnGrp(o.id, 'verifyOrg', 'rejectOrg', 'Verify') : '-'
+            `<div class="flex items-center gap-5 text-left font-black text-[#1A1A1A] text-sm italic tracking-tight">${thumb(o.logo, o.name)}${x(o.name)}</div>`,
+            badge(o.is_verified ? 'active' : 'pending', o.is_verified ? 'OFFICIAL PARTNER' : 'VERIFICATION REQUIRED'),
+            !o.is_verified ? btnGrp(o.id, 'verifyOrg', 'rejectOrg', 'Authorize Partner') : '-'
         ])
     );
 }
 
 function renderCatG() {
-    const e = document.getElementById('catCount'); if(e) e.textContent = `${ACAT.length} Items`;
+    const e = document.getElementById('catCount'); if(e) e.textContent = `${ACAT.length} Total Domains`;
     document.getElementById('catGrid').innerHTML = (ACAT || []).map(c => `
-        <div class="flex items-center justify-between bg-slate-50/50 border border-slate-100 rounded-lg px-5 py-4 transition-all duration-300 hover:scale-[1.02] group">
-            <span class="font-bold text-black text-xs">${x(c.category_name)}</span>
-            <button onclick="deleteCat(${c.id},this)" class="opacity-0 group-hover:opacity-100 p-2 text-red-400 hover:text-red-600 transition-all border-none cursor-pointer bg-transparent">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+        <div class="flex items-center justify-between bg-white border border-black/5 rounded-2xl px-6 py-4 transition-all duration-500 hover:shadow-lg group">
+            <span class="font-black text-[#1A1A1A] text-xs uppercase tracking-widest italic">${x(c.category_name)}</span>
+            <button onclick="deleteCat(${c.id},this)" class="opacity-0 group-hover:opacity-100 p-2 text-red-300 hover:text-red-500 transition-all border-none cursor-pointer bg-transparent">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
     `).join('');
@@ -128,17 +128,17 @@ async function act(id, btn, ep, mut, msg) {
     if(btn) { btn.disabled = true; btn.style.opacity = '0.5'; }
     try {
         await ApiClient.request(ep, { method: 'POST' });
-        mut(id); tst(msg);
-    } catch { tst('Matrix error', 'error'); }
+        mut(id); tst(`${msg}: Completed`);
+    } catch { tst('Operational error: Action denied', 'error'); }
     finally { if(btn) { btn.disabled = false; btn.style.opacity = '1'; } }
 }
 
-window.approveC  = (id, b) => act(id, b, `/campaigns/${id}/approve`, i => { const c=AC.find(x=>x.id===i); if(c) c.status='active'; renderCT(); renderOV(); }, 'Authorized');
-window.rejectC   = (id, b) => act(id, b, `/campaigns/${id}/reject`,  i => { const c=AC.find(x=>x.id===i); if(c) c.status='cancelled'; renderCT(); renderOV(); }, 'Rejected');
-window.banU      = (id, b) => act(id, b, `/users/${id}/ban`,          i => { const u=AU.find(x=>x.id===i); if(u) u.is_banned=true; renderUT(); }, 'Locked');
-window.unbanU    = (id, b) => act(id, b, `/users/${id}/unban`,        i => { const u=AU.find(x=>x.id===i); if(u) u.is_banned=false; renderUT(); }, 'Unlocked');
-window.verifyOrg = (id, b) => act(id, b, `/organisations/${id}/verify`, i => { const o=AORG_ALL.find(x=>x.id===i); if(o) o.is_verified=true; renderOT(); renderOV(); }, 'Verified');
-window.rejectOrg = (id, b) => act(id, b, `/organisations/${id}/reject`, i => { AORG_ALL = AORG_ALL.filter(x=>x.id!==i); renderOT(); renderOV(); }, 'Removed');
+window.approveC  = (id, b) => act(id, b, `/campaigns/${id}/approve`, i => { const c=AC.find(x=>x.id===i); if(c) c.status='active'; renderCT(); renderOV(); }, 'Authorization Granted');
+window.rejectC   = (id, b) => act(id, b, `/campaigns/${id}/reject`,  i => { const c=AC.find(x=>x.id===i); if(c) c.status='cancelled'; renderCT(); renderOV(); }, 'Authorization Denied');
+window.banU      = (id, b) => act(id, b, `/users/${id}/ban`,          i => { const u=AU.find(x=>x.id===i); if(u) u.is_banned=true; renderUT(); }, 'Credentials Locked');
+window.unbanU    = (id, b) => act(id, b, `/users/${id}/unban`,        i => { const u=AU.find(x=>x.id===i); if(u) u.is_banned=false; renderUT(); }, 'Credentials Restored');
+window.verifyOrg = (id, b) => act(id, b, `/organisations/${id}/verify`, i => { const o=AORG_ALL.find(x=>x.id===i); if(o) o.is_verified=true; renderOT(); renderOV(); }, 'Partner Authorized');
+window.rejectOrg = (id, b) => act(id, b, `/organisations/${id}/reject`, i => { AORG_ALL = AORG_ALL.filter(x=>x.id!==i); renderOT(); renderOV(); }, 'Partner Decoupled');
 
 window.createCat = async () => {
     const input = document.getElementById('catName');
@@ -146,29 +146,29 @@ window.createCat = async () => {
     const btn = document.getElementById('catBtn'); btn.disabled = true;
     try {
         await ApiClient.request('/categories', { method: 'POST', body: JSON.stringify({ category_name: n }) });
-        input.value = ''; await loadCats(); tst('Success');
+        input.value = ''; await loadCats(); tst('New Domain Established');
     } finally { btn.disabled = false; }
 };
 
 window.deleteCat = async (id, btn) => {
-    if(!confirm('Delete domain?')) return;
-    try { await ApiClient.request(`/categories/${id}`, { method: 'DELETE' }); ACAT = ACAT.filter(x=>x.id!==id); renderCatG(); tst('Deleted'); } catch(e){}
+    if(!confirm('Decommission this domain?')) return;
+    try { await ApiClient.request(`/categories/${id}`, { method: 'DELETE' }); ACAT = ACAT.filter(x=>x.id!==id); renderCatG(); tst('Domain Decommissioned'); } catch(e){}
 };
 
 // ── Components ─────────────────────────────────────────
 function tbl(hs, rs) {
-    if(!rs.length) return empty('No data available in this matrix.');
+    if(!rs.length) return empty('The matrix is currently empty.');
     return `
         <div class="overflow-x-auto"><table class="w-full border-collapse">
             <thead>
-                <tr class="bg-slate-50/50 border-b border-slate-100">
-                    ${hs.map(h => `<th class="px-8 py-5 text-left text-[9px] font-black uppercase tracking-widest text-slate-400">${h}</th>`).join('')}
+                <tr class="bg-[#fbf8f6] border-b border-black/5">
+                    ${hs.map(h => `<th class="px-10 py-6 text-left">${h}</th>`).join('')}
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-50">
+            <tbody class="divide-y divide-black/5">
                 ${rs.map(r => `
-                    <tr class="hover:bg-slate-50/30 transition-all">
-                        ${r.map(c => `<td class="px-8 py-6 text-xs align-middle">${c}</td>`).join('')}
+                    <tr class="hover:bg-[#fbf8f6]/30 transition-all">
+                        ${r.map(c => `<td class="px-10 py-8 text-xs align-middle text-[#1A1A1A]">${c}</td>`).join('')}
                     </tr>
                 `).join('')}
             </tbody>
@@ -178,47 +178,49 @@ function tbl(hs, rs) {
 
 function ovItem(id, t, s, img, ok, no, okT) {
     return `
-        <div class="px-8 py-5 flex items-center justify-between hover:bg-slate-50/50 transition-all group">
-            <div class="flex items-center gap-4">
+        <div class="px-10 py-6 flex items-center justify-between hover:bg-[#fbf8f6]/50 transition-all group">
+            <div class="flex items-center gap-5">
                 ${thumb(img, t)}
                 <div>
-                    <div class="font-bold text-black text-xs leading-tight">${x(t)}</div>
-                    <div class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">${x(s || 'Owner')}</div>
+                    <div class="font-black text-[#1A1A1A] text-sm italic leading-tight">${x(t)}</div>
+                    <div class="text-[9px] text-gray-400 font-black uppercase tracking-[0.2em] mt-1.5">${x(s || 'Primary Instance')}</div>
                 </div>
             </div>
-            <div class="flex gap-2">
-                <button onclick="${ok}(${id},this)" class="bg-black text-white px-4 py-2 rounded-lg text-[10px] font-bold transition-all duration-300 hover:scale-[1.05] active:scale-95 border-none cursor-pointer">${okT}</button>
-                <button onclick="${no}(${id},this)" class="bg-white text-slate-300 hover:text-red-500 border border-slate-100 px-3 py-2 rounded-lg transition-all cursor-pointer">X</button>
+            <div class="flex gap-4">
+                <button onclick="${ok}(${id},this)" class="bg-[#1A1A1A] hover:bg-[#064e3b] text-white px-6 py-3 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all duration-300 hover:scale-[1.05] active:scale-95 border-none cursor-pointer">${okT}</button>
+                <button onclick="${no}(${id},this)" class="bg-white text-gray-300 hover:text-red-500 border border-black/5 px-4 py-3 rounded-xl transition-all cursor-pointer shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
             </div>
         </div>
     `;
 }
 
 function mBtn(id, fn, t, color) {
-    return `<button onclick="${fn}(${id},this)" class="bg-white border text-[10px] font-bold px-4 py-2 rounded-lg transition-all duration-300 hover:scale-[1.02] active:scale-95 cursor-pointer shadow-sm" style="color:${color}; border-color: ${color}20">${t}</button>`;
+    return `<button onclick="${fn}(${id},this)" class="bg-white border-2 text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-xl transition-all duration-300 hover:scale-[1.05] active:scale-95 cursor-pointer shadow-sm" style="color:${color}; border-color: ${color}15">${t}</button>`;
 }
 
 function btnGrp(id, ok, no, okT) {
-    return `<div class="flex gap-2">${mBtn(id, ok, okT, '#059669')}${mBtn(id, no, 'Reject', '#ef4444')}</div>`;
+    return `<div class="flex gap-3">${mBtn(id, ok, okT, '#064e3b')}${mBtn(id, no, 'Deny', '#ef4444')}</div>`;
 }
 
 function badge(s, over) {
-    const c = s==='pending' ? 'text-amber-600 bg-amber-50' : (s==='active' ? 'text-emerald-600 bg-emerald-50' : 'text-red-500 bg-red-50');
-    return `<span class="px-2.5 py-1 rounded-md text-[9px] font-bold uppercase tracking-widest ${c}">${over || s}</span>`;
+    const c = s==='pending' ? 'text-amber-500 bg-amber-500/10' : (s==='active' ? 'text-[#064e3b] bg-[#064e3b]/10' : 'text-red-500 bg-red-50');
+    return `<span class="px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.15em] italic ${c}">${over || s}</span>`;
 }
 
 function thumb(u, t) {
-    const cls = "w-10 h-10 rounded-lg bg-slate-100 border border-slate-200 object-cover shrink-0 flex items-center justify-center font-bold text-slate-400 text-xs";
+    const cls = "w-12 h-12 rounded-2xl bg-white border border-black/5 object-cover shrink-0 flex items-center justify-center font-black text-gray-200 text-sm shadow-sm";
     return u ? `<img src="${u}" class="${cls}">` : `<div class="${cls}">${(t||'?')[0].toUpperCase()}</div>`;
 }
 
 // ── Utils ──────────────────────────────────────────────
 function x(s) { const d=document.createElement('div'); d.innerText=s || ''; return d.innerHTML; }
-function fmt(n) { return Number(n || 0).toLocaleString(); }
-function empty(m) { return `<div class="p-12 text-center text-slate-300 font-bold text-[10px] tracking-widest uppercase">${m}</div>`; }
+function fmt(n) { return '$' + Number(n || 0).toLocaleString(); }
+function empty(m) { return `<div class="p-20 text-center text-gray-200 font-black text-[12px] tracking-[0.3em] uppercase italic">${m}</div>`; }
 
 function tst(m, tp = 'success') {
     const t = document.getElementById('toast'); t.textContent = m;
-    t.className = `fixed bottom-10 right-10 z-[100] ${tp=='error'?'bg-red-500':'bg-black'} text-white px-8 py-4 rounded-lg text-xs font-bold shadow-2xl translate-y-0 opacity-100 transition-all duration-500 pointer-events-none`;
+    t.className = `fixed bottom-10 right-10 z-[100] ${tp=='error'?'bg-red-500':'bg-[#1A1A1A]'} text-white px-10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl transition-all duration-700 opacity-100 translate-y-0 pointer-events-none italic border-l-4 border-[#DAA520]`;
     setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(80px)'; }, 4000);
 }

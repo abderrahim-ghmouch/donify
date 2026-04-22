@@ -294,7 +294,20 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', updateAuthUI);
+        document.addEventListener('DOMContentLoaded', () => {
+            updateAuthUI();
+            
+            // Strict Admin Guard: Admins cannot access the public site
+            if (ApiClient.isAuthenticated()) {
+                const user = ApiClient.getUser();
+                if (user && user.role === 'admin') {
+                    const path = window.location.pathname;
+                    if (!path.startsWith('/admin') && path !== '/logout') {
+                        window.location.href = '/admin';
+                    }
+                }
+            }
+        });
 
         function handleLogout() {
             ApiClient.logout();

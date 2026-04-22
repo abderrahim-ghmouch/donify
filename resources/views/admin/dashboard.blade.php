@@ -1,148 +1,262 @@
 @php $hide_nav = true; @endphp
 @extends('layouts.app')
 
+@section('styles')
+<style>
+    .font-quicksand { font-family: 'Quicksand', sans-serif; }
+    
+    .admin-sidebar {
+        background: #1A1A1A;
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 20px 0 60px rgba(0,0,0,0.05);
+    }
+
+    .nav-btn {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        margin: 0.25rem 1rem;
+        border-radius: 1.5rem;
+    }
+
+    .nav-btn.active {
+        color: #DAA520 !important;
+        background: rgba(218, 165, 32, 0.05);
+    }
+
+    .nav-btn.active svg {
+        color: #DAA520;
+    }
+
+    .nav-btn.active::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 25%;
+        bottom: 25%;
+        width: 3px;
+        background: #DAA520;
+        border-radius: 0 4px 4px 0;
+    }
+
+    .panel-card {
+        background: white;
+        border: 1px solid #f0f0f0;
+        border-radius: 3rem;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.02);
+        transition: transform 0.4s ease;
+    }
+
+    .panel-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-badge {
+        font-family: 'Quicksand', sans-serif;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        font-size: 0.6rem;
+        padding: 0.4rem 1rem;
+        border-radius: 0.75rem;
+    }
+
+    /* Modern Table */
+    thead th {
+        font-family: 'Quicksand', sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.65rem;
+        font-weight: 900;
+        color: #94a3b8;
+        padding: 1.5rem 2.5rem;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+</style>
+@endsection
+
 @section('content')
 
     {{-- ── SCREEN SHIELDS ── --}}
-    <div id="adminLoading" class="fixed inset-0 z-[100] bg-slate-50 flex items-center justify-center">
+    <div id="adminLoading" class="fixed inset-0 z-[100] bg-[#fbf8f6] flex items-center justify-center font-quicksand">
         <div class="flex flex-col items-center">
-            <div class="w-12 h-12 border-2 border-slate-200 border-t-black rounded-full animate-spin"></div>
-            <p class="mt-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">Admin Console Init</p>
+            <div class="w-12 h-12 border-2 border-[#064e3b]/20 border-t-[#064e3b] rounded-full animate-spin"></div>
+            <p class="mt-8 text-[10px] font-black text-gray-300 uppercase tracking-[0.4em]">Initializing Core</p>
         </div>
     </div>
 
-    <div id="adminGuest" class="hidden min-h-screen bg-slate-50 flex items-center justify-center p-6">
-        <div class="bg-white border-2 border-slate-200 rounded-lg p-12 text-center shadow-sm max-w-sm w-full">
-            <h2 class="text-2xl font-bold text-black mb-8">Access Restricted</h2>
-            <a href="{{ route('login') }}" class="inline-block w-full bg-black text-white py-4 rounded-lg font-bold transition-all duration-300 hover:opacity-80 active:scale-95">Sign In</a>
+    <div id="adminGuest" class="hidden min-h-screen bg-[#fbf8f6] flex items-center justify-center p-8 font-quicksand">
+        <div class="bg-white rounded-[3.5rem] p-20 text-center shadow-2xl border border-black/5 max-w-sm">
+            <img src="{{ asset('images/donifylg.png') }}" class="h-20 mx-auto opacity-10 mb-10 grayscale">
+            <h2 class="text-3xl font-black text-[#1A1A1A] mb-4 italic tracking-tight">Clearance Required.</h2>
+            <p class="text-gray-400 text-sm mb-10 leading-relaxed font-medium">Please sign in with administrative credentials.</p>
+            <a href="{{ route('login') }}" class="inline-block w-full bg-[#1A1A1A] text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:bg-[#064e3b]">Establish Link</a>
         </div>
     </div>
 
-    {{-- ── MAIN ADMIN LAYOUT ── --}}
-    <div id="adminContent" style="display:none" class="min-h-screen bg-gradient-to-tr from-slate-50 to-emerald-50/30 flex">
+    {{-- ── MAIN ADMIN ARCHITECTURE ── --}}
+    <div id="adminContent" style="display:none" class="min-h-screen bg-[#fbf8f6] flex font-quicksand">
 
         {{-- Mobile Overlay --}}
-        <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/10 backdrop-blur-sm z-40 lg:hidden hidden" onclick="closeSidebar()"></div>
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black/10 backdrop-blur-sm z-40 lg:hidden hidden" onclick="closeSidebar()"></div>
 
-        {{-- ── SIDEBAR ── --}}
-        <aside id="sidebar" class="fixed top-0 left-0 z-50 h-full w-64 bg-white border-r-2 border-slate-100 flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
-            <div class="p-8 border-b border-slate-50">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center text-white">
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.6C6.37 16.06 1 11.3 1 7.19 1 3.4 4.07 2 6.28 2c1.31 0 4.15.5 5.72 4.46C13.59 2.49 16.46 2 17.72 2 20.26 2 23 3.62 23 7.18c0 4.07-5.14 8.63-11 14.42z"/></svg>
-                    </div>
-                    <span class="text-xl font-bold text-black">Donify</span>
+        {{-- ── COMMAND SIDEBAR ── --}}
+        <aside id="sidebar" class="fixed top-0 left-0 z-50 h-full w-80 admin-sidebar flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-500 ease-in-out">
+            <div class="p-10 mb-10">
+                <div class="flex items-center gap-4">
+                    <img src="{{ asset('images/donifylg.png') }}" class="h-8 w-auto brightness-0 invert">
+                    <span class="text-xl font-black text-white italic tracking-tighter">Admin</span>
                 </div>
             </div>
 
-            <nav class="flex-1 px-4 py-6 space-y-1">
-                <button onclick="goTab('overview',this)" class="nav-btn nav-active w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold text-black bg-slate-50 border-none cursor-pointer text-left transition-all duration-300 hover:bg-slate-50">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>
-                    Dashboard
+            <nav class="flex-1 px-6 space-y-2">
+                <div class="px-4 mb-4 text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Operations</div>
+                
+                <button onclick="goTab('overview',this)" class="nav-btn active w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>
+                    Intelligence
                 </button>
-                <button onclick="goTab('campaigns',this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-500 bg-transparent border-none cursor-pointer text-left transition-all duration-300 hover:bg-slate-50 hover:text-black">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0l-2-2m2 2l-2 2M5 11l2-2m-2 2l2 2"/></svg>
-                    Campaigns
+                
+                <button onclick="goTab('campaigns',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0l-2-2m2 2l-2 2M5 11l2-2m-2 2l2 2"/></svg>
+                    Moderation
                 </button>
-                <button onclick="goTab('users',this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-500 bg-transparent border-none cursor-pointer text-left transition-all duration-300 hover:bg-slate-50 hover:text-black">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8 7a4 4 0 100-8 4 4 0 000 8z"/></svg>
-                    Users
+                
+                <button onclick="goTab('users',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8 7a4 4 0 100-8 4 4 0 000 8z"/></svg>
+                    Identities
                 </button>
-                <button onclick="goTab('organisations',this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-500 bg-transparent border-none cursor-pointer text-left transition-all duration-300 hover:bg-slate-50 hover:text-black">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                
+                <button onclick="goTab('organisations',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
                     Partners
                 </button>
-                <button onclick="goTab('categories',this)" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-slate-500 bg-transparent border-none cursor-pointer text-left transition-all duration-300 hover:bg-slate-50 hover:text-black">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 7h.01M7 3h5c.5 0 1 .2 1.4.6l7 7a2 2 0 010 2.8l-7 7a2 2 0 01-2.8 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-                    Categories
+                
+                <button onclick="goTab('categories',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/40 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
+                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 7h.01M7 3h5c.5 0 1 .2 1.4.6l7 7a2 2 0 010 2.8l-7 7a2 2 0 01-2.8 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+                    Domains
                 </button>
             </nav>
 
-            <div class="p-4 border-t border-slate-50">
-                <button onclick="ApiClient.logout()" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold text-red-500 bg-transparent border-none cursor-pointer text-left transition-all duration-300 hover:bg-red-50">
+            <div class="p-8 border-t border-white/5">
+                <button onclick="ApiClient.logout()" class="w-full flex items-center gap-4 px-5 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest text-red-500 hover:bg-red-500/10 active:scale-95 transition-all text-left border-none cursor-pointer">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7"/></svg>
-                    Logout
+                    Terminate Session
                 </button>
             </div>
         </aside>
 
-        {{-- ── MAIN AREA ── --}}
-        <div class="lg:ml-64 flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
+        {{-- ── WORKSPACE AREA ── --}}
+        <div class="lg:ml-80 flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
             
-            {{-- Top Nav Bar --}}
-            <header class="sticky top-6 z-40 mx-8 bg-white/70 backdrop-blur-md border-2 border-slate-100 rounded-xl shadow-sm h-16 flex items-center justify-between px-8 transition-all">
-                <div class="flex items-center gap-4">
-                    <button onclick="openSidebar()" class="p-2 rounded-lg hover:bg-slate-50 lg:hidden border-none cursor-pointer">
-                        <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            {{-- Modern Header --}}
+            <header class="sticky top-0 z-40 bg-[#fbf8f6]/80 backdrop-blur-xl h-24 flex items-center justify-between px-10 border-b border-black/5">
+                <div class="flex items-center gap-6">
+                    <button onclick="openSidebar()" class="p-3 rounded-xl hover:bg-white lg:hidden border border-black/5 cursor-pointer bg-white shadow-sm">
+                        <svg class="w-6 h-6 text-[#1A1A1A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
                     </button>
-                    <h1 id="panelTitle" class="text-sm font-bold text-black uppercase tracking-widest">Dashboard</h1>
+                    <div>
+                        <h1 id="panelTitle" class="text-2xl font-black text-[#1A1A1A] tracking-tight italic">Intelligence.</h1>
+                        <span class="text-[9px] font-black uppercase tracking-[0.3em] text-[#064e3b]">System Operational</span>
+                    </div>
                 </div>
-                <div class="flex items-center gap-4">
-                    <div id="sbAv" class="w-8 h-8 rounded-lg bg-black text-white font-bold flex items-center justify-center text-[10px] overflow-hidden uppercase">A</div>
+                
+                {{-- Profile Pill --}}
+                <div class="flex items-center gap-4 bg-white pl-2 pr-6 py-2 rounded-2xl border border-black/5 shadow-sm">
+                    <div id="sbAv" class="w-10 h-10 rounded-xl bg-[#1A1A1A] text-white font-black flex items-center justify-center text-[11px] overflow-hidden uppercase">A</div>
                     <div class="hidden sm:block">
-                        <p id="sbName" class="text-[11px] font-bold text-black truncate">Admin</p>
-                        <p class="text-[9px] text-slate-400 font-medium uppercase tracking-widest">Master Console</p>
+                        <p id="sbName" class="text-[11px] font-black text-[#1A1A1A] uppercase tracking-wider">Admin</p>
+                        <p class="text-[9px] text-[#DAA520] font-black uppercase tracking-widest">Master Console</p>
                     </div>
                 </div>
             </header>
 
             {{-- Main Content --}}
-            <main class="flex-1 p-8 max-w-7xl w-full mx-auto pb-20">
+            <main class="flex-1 p-10 max-w-7xl w-full mx-auto pb-32">
 
-                {{-- Pages --}}
-                
-                <div id="panel-overview" class="view-panel space-y-8 animate-in fade-in duration-500">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-white border-2 border-slate-100 rounded-lg shadow-sm">
-                            <div class="px-8 py-6 border-b border-slate-50 flex items-center justify-between">
-                                <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Pending Review</h3>
-                                <button onclick="goTab('campaigns')" class="text-[10px] font-bold text-black hover:underline cursor-pointer border-none bg-transparent">View Matrix</button>
+                {{-- Overview Tabs --}}
+                <div id="panel-overview" class="view-panel space-y-10 animate-fade-up">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        
+                        <div class="panel-card overflow-hidden">
+                            <div class="px-10 py-8 border-b border-black/5 flex items-center justify-between bg-white">
+                                <h3 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Pending Verification</h3>
+                                <div class="w-2 h-2 rounded-full bg-[#DAA520]"></div>
                             </div>
-                            <div id="ovPend" class="divide-y divide-slate-50"></div>
-                        </div>
-                        <div class="bg-white border-2 border-slate-100 rounded-lg shadow-sm">
-                            <div class="px-8 py-6 border-b border-slate-50 flex items-center justify-between">
-                                <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">New Partners</h3>
-                                <button onclick="goTab('organisations')" class="text-[10px] font-bold text-black hover:underline cursor-pointer border-none bg-transparent">Verify All</button>
-                            </div>
-                            <div id="ovOrgs" class="divide-y divide-slate-50"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="panel-campaigns" class="hidden view-panel space-y-6">
-                    <div class="bg-white border-2 border-slate-100 rounded-lg shadow-sm overflow-hidden">
-                        <div id="campWrap" class="min-h-[300px]"></div>
-                    </div>
-                </div>
-
-                <div id="panel-users" class="hidden view-panel space-y-6">
-                    <div class="bg-white border-2 border-slate-100 rounded-lg shadow-sm overflow-hidden">
-                        <div id="userWrap" class="min-h-[300px]"></div>
-                    </div>
-                </div>
-
-                <div id="panel-organisations" class="hidden view-panel space-y-6">
-                    <div class="bg-white border-2 border-slate-100 rounded-lg shadow-sm overflow-hidden">
-                        <div id="orgWrap" class="min-h-[300px]"></div>
-                    </div>
-                </div>
-
-                <div id="panel-categories" class="hidden view-panel space-y-8">
-                    <div class="flex flex-col xl:flex-row gap-8 items-start">
-                        <div class="w-full xl:w-[380px] bg-white border-2 border-slate-100 rounded-lg p-8 shadow-sm">
-                            <h3 class="text-lg font-bold text-black mb-6">Add Domain</h3>
-                            <div class="space-y-4">
-                                <input id="catName" type="text" placeholder="Health, Tech..." class="w-full border border-slate-200 rounded-lg px-4 py-3 text-sm font-medium outline-none focus:border-black transition-all">
-                                <button id="catBtn" onclick="createCat()" class="w-full bg-black text-white py-3 rounded-lg font-bold text-sm transition-all duration-300 hover:opacity-80 active:scale-95 border-none cursor-pointer">Create Category</button>
+                            <div id="ovPend" class="divide-y divide-black/5"></div>
+                            <div class="p-6 text-center">
+                                <button onclick="goTab('campaigns')" class="text-[9px] font-black text-[#064e3b] hover:underline tracking-widest uppercase cursor-pointer border-none bg-transparent">Access Full Moderation Matrix</button>
                             </div>
                         </div>
-                        <div class="flex-1 w-full bg-white border-2 border-slate-100 rounded-lg shadow-sm overflow-hidden min-h-[400px]">
-                            <div class="px-8 py-5 border-b border-slate-50 flex items-center justify-between">
-                                <h3 class="text-sm font-bold text-black">Active Domains</h3>
-                                <div id="catCount" class="text-[10px] font-bold text-slate-400">0 Items</div>
+
+                        <div class="panel-card overflow-hidden">
+                            <div class="px-10 py-8 border-b border-black/5 flex items-center justify-between bg-white">
+                                <h3 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Partner Requests</h3>
+                                <div class="w-2 h-2 rounded-full bg-[#064e3b]"></div>
                             </div>
-                            <div id="catGrid" class="p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                            <div id="ovOrgs" class="divide-y divide-black/5"></div>
+                            <div class="p-6 text-center">
+                                <button onclick="goTab('organisations')" class="text-[9px] font-black text-[#064e3b] hover:underline tracking-widest uppercase cursor-pointer border-none bg-transparent">Explore Partner Network</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {{-- Campaigns --}}
+                <div id="panel-campaigns" class="hidden view-panel space-y-8 animate-fade-up">
+                    <div class="panel-card overflow-hidden">
+                        <div id="campWrap" class="min-h-[400px]"></div>
+                    </div>
+                </div>
+
+                {{-- Users --}}
+                <div id="panel-users" class="hidden view-panel space-y-8 animate-fade-up">
+                    <div class="panel-card overflow-hidden">
+                        <div id="userWrap" class="min-h-[400px]"></div>
+                    </div>
+                </div>
+
+                {{-- Organisations --}}
+                <div id="panel-organisations" class="hidden view-panel space-y-8 animate-fade-up">
+                    <div class="panel-card overflow-hidden">
+                        <div id="orgWrap" class="min-h-[400px]"></div>
+                    </div>
+                </div>
+
+                {{-- Categories --}}
+                <div id="panel-categories" class="hidden view-panel space-y-10 animate-fade-up">
+                    <div class="flex flex-col xl:flex-row gap-10 items-start">
+                        
+                        <div class="w-full xl:w-[400px] bg-[#1A1A1A] rounded-[3rem] p-12 shadow-2xl relative overflow-hidden group">
+                           <div class="absolute inset-0 bg-[#064e3b] translate-y-full group-hover:translate-y-[92%] transition-transform duration-700"></div>
+                           <div class="relative z-10">
+                                <h3 class="text-2xl font-black text-white mb-2 italic tracking-tight">New Domain.</h3>
+                                <p class="text-white/40 text-[10px] mb-10 font-bold uppercase tracking-widest">Expansion Protocol</p>
+                                
+                                <div class="space-y-6">
+                                    <div>
+                                        <label class="block text-[9px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">Domain Identity</label>
+                                        <input id="catName" type="text" placeholder="e.g. Humanitarian" 
+                                            class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm font-bold text-white outline-none focus:border-[#DAA520] transition-all">
+                                    </div>
+                                    <button id="catBtn" onclick="createCat()" 
+                                        class="w-full bg-[#DAA520] text-[#1A1A1A] py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-[1.02] active:scale-95 border-none cursor-pointer">
+                                        Establish Domain
+                                    </button>
+                                </div>
+                           </div>
+                        </div>
+
+                        <div class="flex-1 w-full panel-card overflow-hidden min-h-[500px]">
+                            <div class="px-12 py-8 border-b border-black/5 flex items-center justify-between">
+                                <h3 class="text-[11px] font-black text-[#1A1A1A] uppercase tracking-[0.2em]">Active Matrix Domains</h3>
+                                <div id="catCount" class="text-[10px] font-black text-[#DAA520] bg-[#DAA520]/5 px-3 py-1 rounded-lg">0 Total</div>
+                            </div>
+                            <div id="catGrid" class="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5 text-left"></div>
                         </div>
                     </div>
                 </div>
@@ -151,8 +265,8 @@
         </div>
     </div>
 
-    {{-- Notification Toast --}}
-    <div id="toast" class="fixed bottom-10 right-10 z-[100] bg-black text-white px-8 py-4 rounded-lg text-xs font-bold shadow-2xl transition-all duration-500 opacity-0 translate-y-20 pointer-events-none"></div>
+    {{-- Tactical Feedback (Toast) --}}
+    <div id="toast" class="fixed bottom-10 right-10 z-[100] bg-[#1A1A1A] text-white px-10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl transition-all duration-700 opacity-0 translate-y-20 pointer-events-none italic border-l-4 border-[#DAA520]"></div>
 
 @endsection
 
@@ -168,11 +282,11 @@
         }
 
         const VIEW_CONFIG = {
-            overview: 'Dashboard',
-            campaigns: 'Campaign Moderation',
-            users: 'Citizen Database',
-            organisations: 'Partner Network',
-            categories: 'Domain Mapping'
+            overview: 'Intelligence.',
+            campaigns: 'Moderation.',
+            users: 'Identities.',
+            organisations: 'Partners.',
+            categories: 'Domains.'
         };
 
         function goTab(name, btn) {
@@ -180,28 +294,20 @@
             const p = document.getElementById('panel-' + name);
             if(p) p.classList.remove('hidden');
 
-            document.getElementById('panelTitle').textContent = VIEW_CONFIG[name] || 'Admin';
+            document.getElementById('panelTitle').textContent = VIEW_CONFIG[name] || 'Intelligence.';
 
-            document.querySelectorAll('.nav-btn').forEach(b => {
-                b.classList.remove('nav-active', 'bg-slate-50', 'text-black');
-                b.classList.add('bg-transparent', 'text-slate-500', 'font-medium');
-            });
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             
-            const target = btn || document.querySelectorAll('.nav-btn')[0];
-            if(target) {
-                target.classList.add('nav-active', 'bg-slate-50', 'text-black');
-                target.classList.remove('bg-transparent', 'text-slate-500', 'font-medium');
+            if(btn) {
+                btn.classList.add('active');
+            } else {
+                const first = document.querySelector('.nav-btn');
+                if(first) first.classList.add('active');
             }
+            
             closeSidebar();
         }
         window.goTab = goTab;
     </script>
     <script src="{{ asset('js/admin-dashboard.js') }}"></script>
-@endsection
-
-@section('styles')
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    {{-- TAILWIND ONLY - NO CUSTOM CSS BLOCKS --}}
 @endsection

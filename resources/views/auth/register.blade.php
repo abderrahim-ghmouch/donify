@@ -14,7 +14,7 @@
     <div class="absolute inset-y-0 left-0 w-[80%] bg-gradient-to-r from-[#064e3b]/40 to-transparent z-0"></div>
 
     <!-- Left Side: Form Container -->
-    <div class="w-full md:w-3/5 flex flex-col relative z-20 overflow-hidden">
+    <div class="w-full md:w-2/5 flex flex-col relative z-20 overflow-hidden">
         
         <!-- Background Quotes (Left) -->
         <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]">
@@ -25,7 +25,7 @@
         </div>
 
         <!-- Form Content -->
-        <div class="h-full flex flex-col px-12 md:px-44 py-10 relative z-10 overflow-hidden">
+        <div class="h-full flex flex-col px-8 md:px-16 py-10 relative z-10 overflow-hidden">
             <!-- Back Arrow -->
             <div class="mb-6">
                 <a href="{{ route('home') }}" class="inline-flex items-center text-[#1A1A1A] hover:text-[#064e3b] transition-all group">
@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="mb-8">
-                    <h1 class="text-4xl md:text-6xl font-black text-[#1A1A1A] mb-3 leading-tight">Join Donify</h1>
+                    <h1 class="text-4xl md:text-5xl font-black text-[#1A1A1A] mb-3 leading-tight">Join Donify</h1>
                     <p class="text-gray-500 font-medium text-lg leading-relaxed">Start your journey of giving and impact today.</p>
                 </div>
 
@@ -134,7 +134,7 @@
     </div>
 
     <!-- Right Side: Visual Asset overlay -->
-    <div class="hidden md:block w-2/5 relative bg-transparent overflow-hidden">
+    <div class="hidden md:block w-3/5 relative bg-transparent overflow-hidden">
         <!-- Main Asset Overlay (Logo centered) -->
         <div class="absolute inset-x-0 bottom-0 h-1/2 flex items-end justify-center pb-12 z-0 opacity-10 grayscale brightness-150">
              <img src="{{ asset('images/donifylg.png') }}" class="w-full h-auto object-contain">
