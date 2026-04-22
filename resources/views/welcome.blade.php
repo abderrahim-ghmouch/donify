@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.app', ['hide_nav' => true])
 
 @section('content')
 <!-- Hero Section -->
-<section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden px-6 pt-20 bg-[#fbf8f6] font-['Quicksand']">
+<section class="relative min-h-[95vh] flex items-center justify-center overflow-hidden px-6 pt-10 bg-[#fbf8f6] font-quicksand">
     <!-- Logo Watermark Background -->
     <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none opacity-[0.2]">
         <img src="{{ asset('images/donifylg.png') }}" alt="" class="w-[900px] h-auto grayscale select-none">
@@ -10,21 +10,25 @@
 
     <div class="max-w-5xl mx-auto w-full relative z-10 text-center">
         <div class="animate-fade-in">
+            <!-- Branded Logo Above Hero -->
+            <div class="mb-10 flex justify-center">
+                <img src="{{ asset('images/donifylg.png') }}" class="h-20 w-auto object-contain">
+            </div>
         
-            <h1 class="text-4xl sm:text-5xl md:text-8xl font-extrabold text-[#1A1A1A] mb-8 leading-tight">
+            <h1 class="text-4xl sm:text-5xl md:text-8xl font-black text-[#1A1A1A] mb-8 leading-tight">
                 Donify <br><span class="text-[#064e3b]">Be the Change</span>
             </h1>
             
             <p class="text-lg text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
-                The world's most trusted gateway for meaningful giving. <br class="hidden md:block"> Join a global network of changemakers and verified organizations today.
+                The world's most trusted gateway for meaningful giving. Join a global network of changemakers today.
             </p>
             
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
-                <a href="{{ route('campaigns.index') }}" class="w-full sm:w-auto bg-black text-white px-8 md:px-16 py-3 rounded-md font-bold text-sm uppercase tracking-[0.2em] text-center hover:bg-[#996515] hover:border-[#996515] transition-all shadow-xl shadow-black/10">
-                    Explore Campaigns
+            <div class="flex flex-col sm:flex-row gap-5 justify-center items-center px-4">
+                <a href="{{ route('login') }}" class="w-full sm:w-auto bg-transparent text-black px-12 md:px-20 py-4 rounded-xl font-bold text-sm uppercase tracking-[0.2em] text-center border-2 border-black hover:bg-black hover:text-white transition-all transform hover:scale-[1.02]">
+                    Login
                 </a>
-                <a href="{{ route('organisations.register') }}" class="w-full sm:w-auto bg-white text-black px-8 md:px-16 py-3 rounded-md font-bold text-sm uppercase tracking-[0.2em] text-center border-2 border-black hover:text-[#996515] hover:border-[#996515] transition-all duration-500">
-                    Start as Organisation
+                <a href="{{ route('register') }}" class="w-full sm:w-auto bg-[#1A1A1A] text-white px-12 md:px-20 py-4 rounded-xl font-bold text-sm uppercase tracking-[0.2em] text-center hover:bg-[#064e3b] transition-all transform hover:scale-[1.02] shadow-2xl">
+                    Join Now
                 </a>
             </div>
             
@@ -32,7 +36,8 @@
                 <span class="font-bold text-xl tracking-tight text-gray-400">TRUSTED</span>
                 <span class="font-bold text-xl tracking-tight text-gray-400">SECURE</span>
                 <span class="font-bold text-xl tracking-tight text-gray-400">IMPACTFUL</span>
-                <span class="font-bold text-xl tracking-tight text-gray-400">GLOBAL</span>
+               
+                
             </div>
         </div>
     </div>

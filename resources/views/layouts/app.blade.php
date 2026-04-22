@@ -162,8 +162,8 @@
     </main>
 
     <!-- Footer -->
-    @unless(isset($hide_nav) && $hide_nav)
-    <footer class="bg-gradient-to-br from-[#0b1612] via-[#012418] to-black border-t border-white/5 pt-24 pb-12 px-6 font-['Quicksand'] relative overflow-hidden">
+    @unless(isset($hide_footer) && $hide_footer)
+    <footer class="bg-gradient-to-br from-[#0b1612] via-[#012418] to-black border-t border-white/5 pt-24 pb-12 px-6 font-quicksand relative overflow-hidden">
     <!-- Decorative Glow -->
     <div class="absolute top-0 right-0 w-80 h-80 bg-[#02a95c]/10 blur-[120px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
     

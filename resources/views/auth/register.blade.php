@@ -1,4 +1,4 @@
-@extends('layouts.app', ['hide_nav' => true])
+@extends('layouts.app', ['hide_nav' => true, 'hide_footer' => true])
 
 @section('styles')
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -133,10 +133,12 @@
         </div>
     </div>
 
-    <!-- Right Side: Visual Asset -->
+    <!-- Right Side: Visual Asset overlay -->
     <div class="hidden md:block w-2/5 relative bg-transparent overflow-hidden">
-        <!-- Main Asset -->
-        <div class="absolute inset-0 bg-center bg-no-repeat bg-contain z-0 opacity-100" style="background-image: url('{{ asset('images/signup-bg.png') }}'); background-position: center left;"></div>
+        <!-- Main Asset Overlay (Logo centered) -->
+        <div class="absolute inset-x-0 bottom-0 h-1/2 flex items-end justify-center pb-12 z-0 opacity-10 grayscale brightness-150">
+             <img src="{{ asset('images/donifylg.png') }}" class="w-full h-auto object-contain">
+        </div>
         
         <!-- Floating Quotes Overlay -->
         <div class="absolute inset-0 z-10 pointer-events-none p-12">
@@ -155,17 +157,6 @@
             <div class="absolute top-1/4 left-10 text-left max-w-[350px] opacity-90">
                 <h3 class="text-3xl font-black text-[#DAA520] leading-tight italic mb-2">"Happiness comes from your own actions."</h3>
                 <p class="text-[#1A1A1A] font-bold uppercase tracking-widest text-[12px]">Dalai Lama</p>
-            </div>
-
-            <div class="absolute top-1/2 right-10 text-right max-w-[350px] opacity-80">
-                <h3 class="text-3xl font-black text-[#996515] leading-tight italic mb-2">"Only by giving are you able to receive more."</h3>
-                <p class="text-[#1A1A1A] font-bold uppercase tracking-widest text-[12px]">Jim Rohn</p>
-            </div>
-
-            <!-- Accent -->
-            <div class="absolute bottom-1/4 left-12 text-left max-w-[300px] opacity-90">
-                <h3 class="text-3xl font-black text-[#064e3b] leading-tight italic mb-2">"Be the change you wish to see."</h3>
-                <p class="text-[#1A1A1A] font-bold uppercase tracking-widest text-[12px]">Gandhi</p>
             </div>
 
             <!-- New Quote -->
@@ -226,7 +217,7 @@
         try {
             await ApiClient.register(formData);
             await ApiClient.login(email, password);
-            window.location.href = '/';
+            window.location.href = '/campaigns';
         } catch (error) {
             console.error(error);
             const message = error.message || (error.errors ? Object.values(error.errors)[0][0] :

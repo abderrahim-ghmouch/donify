@@ -49,9 +49,7 @@ const ApiClient = {
             const data = await response.json();
 
             if (!response.ok) {
-                // Auto-logout on 401 Unauthorized, UNLESS we are already attempting to login
-                const isAuthEndpoint = endpoint.includes('/auth/') || endpoint.includes('/login');
-                if (response.status === 401 && !isAuthEndpoint) {
+                if (response.status === 401) {
                     this.logout();
                 }
                 throw data;

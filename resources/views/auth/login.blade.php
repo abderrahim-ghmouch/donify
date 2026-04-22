@@ -1,4 +1,4 @@
-@extends('layouts.app', ['hide_nav' => true])
+@extends('layouts.app', ['hide_nav' => true, 'hide_footer' => true])
 
 @section('styles')
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -139,7 +139,7 @@
 
         try {
             await ApiClient.login(email, password);
-            window.location.href = '/';
+            window.location.href = '/campaigns';
         } catch (error) {
             console.error(error);
             const message = error.error || 'Invalid email or password. Please try again.';
