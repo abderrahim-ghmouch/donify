@@ -113,6 +113,12 @@
                 <h3 class="text-3xl font-black text-[#DAA520] leading-tight italic mb-2">"Happiness comes from your actions."</h3>
                 <p class="text-[#1A1A1A] font-bold uppercase tracking-widest text-[12px]">Dalai Lama</p>
             </div>
+
+            <!-- New Quote -->
+            <div class="absolute bottom-[20%] left-10 text-left max-w-[350px] opacity-100">
+                <h3 class="text-4xl font-black text-[#064e3b] leading-tight italic mb-2">"Allah ydawmha naama"</h3>
+                <p class="text-[#1A1A1A] font-bold uppercase tracking-widest text-[14px]">Sirajdin</p>
+            </div>
         </div>
     </div>
 </div>
