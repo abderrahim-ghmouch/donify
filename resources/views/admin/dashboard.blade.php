@@ -1,318 +1,228 @@
 @php $hide_nav = true; @endphp
 @extends('layouts.app')
 
-@section('styles')
-<style>
-    .font-quicksand { font-family: 'Quicksand', sans-serif; }
-    
-    .admin-sidebar {
-        background: linear-gradient(to right, rgba(2, 44, 34, 0.98), rgba(6, 78, 59, 0.7));
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
-        border: none;
-        box-shadow: 20px 0 80px rgba(0,0,0,0.3);
-    }
-
-    .nav-btn {
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        margin: 0.25rem 1rem;
-        border-radius: 1.5rem;
-    }
-
-    .nav-btn.active {
-        color: #DAA520 !important;
-        background: rgba(218, 165, 32, 0.05);
-    }
-
-    .nav-btn.active svg {
-        color: #DAA520;
-    }
-
-    .nav-btn.active::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 25%;
-        bottom: 25%;
-        width: 3px;
-        background: #DAA520;
-        border-radius: 0 4px 4px 0;
-    }
-
-    .panel-card {
-        background: white;
-        border: 1px solid #f0f0f0;
-        border-radius: 3rem;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.02);
-        transition: transform 0.4s ease;
-    }
-
-    .panel-card:hover {
-        transform: translateY(-5px);
-    }
-
-    .stat-badge {
-        font-family: 'Quicksand', sans-serif;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        font-size: 0.6rem;
-        padding: 0.4rem 1rem;
-        border-radius: 0.75rem;
-    }
-
-    /* Modern Table */
-    thead th {
-        font-family: 'Quicksand', sans-serif;
-        text-transform: uppercase;
-        letter-spacing: 0.2em;
-        font-size: 0.65rem;
-        font-weight: 900;
-        color: #94a3b8;
-        padding: 1.5rem 2.5rem;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-</style>
-@endsection
-
 @section('content')
-
-    {{-- ── SCREEN SHIELDS ── --}}
-    <div id="adminLoading" class="fixed inset-0 z-[100] bg-[#fbf8f6] flex items-center justify-center font-quicksand">
-        <div class="flex flex-col items-center">
-            <div class="w-12 h-12 border-2 border-[#064e3b]/20 border-t-[#064e3b] rounded-full animate-spin"></div>
-            <p class="mt-8 text-[10px] font-black text-gray-300 uppercase tracking-[0.4em]">Initializing Core</p>
+<div class="min-h-screen bg-[#064e3b] font-quicksand text-white flex overflow-hidden">
+    
+    {{-- High-Density Green Sidebar --}}
+    <aside class="w-80 bg-black/20 backdrop-blur-3xl border-r border-white/10 flex flex-col h-screen fixed top-0 left-0 shadow-2xl">
+        <div class="p-16 flex flex-col items-center border-b border-white/5">
+            <img src="{{ asset('images/donifylg.png') }}" class="h-12 w-auto mb-6 brightness-0 invert">
+            <div class="text-[10px] font-black uppercase tracking-[0.5em] text-white/40">Command Center</div>
         </div>
-    </div>
 
-    <div id="adminGuest" class="hidden min-h-screen bg-[#fbf8f6] flex items-center justify-center p-8 font-quicksand">
-        <div class="bg-white rounded-[3.5rem] p-20 text-center shadow-2xl border border-black/5 max-w-sm">
-            <img src="{{ asset('images/donifylg.png') }}" class="h-20 mx-auto opacity-10 mb-10 grayscale">
-            <h2 class="text-3xl font-black text-[#1A1A1A] mb-4 italic tracking-tight">Clearance Required.</h2>
-            <p class="text-gray-400 text-sm mb-10 leading-relaxed font-medium">Please sign in with administrative credentials.</p>
-            <a href="{{ route('login') }}" class="inline-block w-full bg-[#1A1A1A] text-white py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:bg-[#064e3b]">Establish Link</a>
+        <nav class="flex-1 p-8 space-y-3 overflow-y-auto custom-scrollbar">
+            <div class="px-6 mb-10 text-[9px] font-black uppercase tracking-[0.6em] text-white/20">Operational Matrix</div>
+            
+            <button onclick="showTab('campaigns')" id="btn-campaigns" class="admin-nav-btn active group flex items-center gap-5 w-full px-8 py-5 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all hover:bg-white/10 border border-transparent hover:border-white/10">
+                <svg class="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0l-2-2m2 2l-2 2M5 11l2-2m-2 2l2 2"/></svg>
+                Campaigns
+            </button>
+            <button onclick="showTab('users')" id="btn-users" class="admin-nav-btn group flex items-center gap-5 w-full px-8 py-5 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all hover:bg-white/10 border border-transparent hover:border-white/10">
+                <svg class="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8 7a4 4 0 100-8 4 4 0 000 8z"/></svg>
+                Identities
+            </button>
+            <button onclick="showTab('partners')" id="btn-partners" class="admin-nav-btn group flex items-center gap-5 w-full px-8 py-5 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all hover:bg-white/10 border border-transparent hover:border-white/10">
+                <svg class="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                Partners
+            </button>
+            <button onclick="showTab('categories')" id="btn-categories" class="admin-nav-btn group flex items-center gap-5 w-full px-8 py-5 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all hover:bg-white/10 border border-transparent hover:border-white/10">
+                <svg class="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 7h.01M7 3h5c.5 0 1 .2 1.4.6l7 7a2 2 0 010 2.8l-7 7a2 2 0 01-2.8 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+                Categories
+            </button>
+        </nav>
+
+        <div class="p-10 border-t border-white/5 bg-black/10">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="w-full bg-white text-[#064e3b] py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] transition-all hover:bg-red-50 hover:text-red-600 shadow-xl">Terminate Session</button>
+            </form>
         </div>
-    </div>
+    </aside>
 
-    {{-- ── MAIN ADMIN ARCHITECTURE ── --}}
-    <div id="adminContent" style="display:none" class="min-h-screen bg-[#fbf8f6] flex font-quicksand relative overflow-hidden">
-
-        {{-- Decorative Aurora for Glass SideBar --}}
-        <div class="absolute top-0 left-0 w-[400px] h-screen bg-gradient-to-br from-[#DAA520]/5 to-transparent pointer-events-none z-0"></div>
-
-        {{-- Mobile Overlay --}}
-        <div id="sidebarOverlay" class="fixed inset-0 bg-black/10 backdrop-blur-sm z-40 lg:hidden hidden" onclick="closeSidebar()"></div>
-
-        {{-- ── COMMAND SIDEBAR ── --}}
-        <aside id="sidebar" class="fixed top-0 left-0 z-50 h-full w-80 admin-sidebar flex flex-col transform -translate-x-full lg:translate-x-0 transition-transform duration-500 ease-in-out">
-            <div class="p-10 mb-6">
-                <div class="flex flex-col items-center gap-4">
-                    <img src="{{ asset('images/slogan.png') }}" class="w-48 h-auto shadow-sm">
-                    <div class="w-full h-px bg-white/10 mt-4"></div>
+    {{-- Main Production Workspace --}}
+    <main class="ml-80 flex-1 p-20 overflow-y-auto h-screen bg-[#05392d]">
+        
+        {{-- Campaigns Registry --}}
+        <div id="tab-campaigns" class="admin-tab space-y-12 animate-in fade-in slide-in-from-bottom-5 duration-500">
+            <div class="flex items-end justify-between">
+                <div>
+                    <h1 class="text-6xl font-black tracking-tighter mb-2">Missions.</h1>
+                    <p class="text-white/40 text-xs font-bold uppercase tracking-[0.3em]">Campaign Registry Statistics</p>
+                </div>
+                <div class="flex gap-4">
+                    <div class="bg-white/5 border border-white/10 px-8 py-4 rounded-2xl">
+                        <div class="text-[9px] font-black text-white/30 uppercase tracking-widest">Total Volume</div>
+                        <div class="text-xl font-black">{{ count($campaigns) }}</div>
+                    </div>
                 </div>
             </div>
 
-            <nav class="flex-1 px-6 space-y-2">
-                <div class="px-4 mb-4 text-[10px] font-black uppercase tracking-[0.3em] text-white/40">Operations</div>
-                
-                <button onclick="goTab('overview',this)" class="nav-btn active w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
-                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/></svg>
-                    Intelligence
-                </button>
-                
-                <button onclick="goTab('campaigns',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
-                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0l-2-2m2 2l-2 2M5 11l2-2m-2 2l2 2"/></svg>
-                    Moderation
-                </button>
-                
-                <button onclick="goTab('users',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
-                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8 7a4 4 0 100-8 4 4 0 000 8z"/></svg>
-                    Identities
-                </button>
-                
-                <button onclick="goTab('organisations',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
-                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                    Partners
-                </button>
-                
-                <button onclick="goTab('categories',this)" class="nav-btn w-full flex items-center gap-4 px-5 py-4 text-[11px] font-black uppercase tracking-widest text-white/60 hover:text-white hover:bg-white/5 cursor-pointer text-left border-none outline-none">
-                    <svg class="w-5 h-5 opacity-60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 7h.01M7 3h5c.5 0 1 .2 1.4.6l7 7a2 2 0 010 2.8l-7 7a2 2 0 01-2.8 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-                    Domains
-                </button>
-            </nav>
-
-            <div class="p-8 border-t border-white/5">
-                <button onclick="ApiClient.logout()" class="w-full flex items-center gap-4 px-5 py-4 rounded-2xl text-[11px] font-black uppercase tracking-widest text-red-500 hover:bg-red-500/10 active:scale-95 transition-all text-left border-none cursor-pointer">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M17 16l4-4m0 0l-4-4m4 4H7"/></svg>
-                    Terminate Session
-                </button>
+            <div class="bg-white/5 rounded-[2.5rem] border border-white/10 overflow-hidden backdrop-blur-3xl shadow-2xl">
+                <table class="w-full text-left">
+                    <thead class="bg-white/5 text-[9px] uppercase tracking-[0.4em] font-black text-white/30">
+                        <tr>
+                            <th class="px-12 py-8">Operational Name</th>
+                            <th class="px-12 py-8">Target Allocation</th>
+                            <th class="px-12 py-8">Current Mode</th>
+                            <th class="px-12 py-8 text-right">Protocol</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                        @foreach($campaigns as $c)
+                        <tr class="hover:bg-white/[0.03] transition-all group border-none">
+                            <td class="px-12 py-10 font-black text-sm tracking-tight">{{ $c->title }}</td>
+                            <td class="px-12 py-10 font-bold text-xs opacity-60">{{ number_format($c->target_amount) }} <span class="text-[9px]">MAD</span></td>
+                            <td class="px-12 py-10">
+                                <span class="px-5 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest {{ $c->status == 'active' ? 'bg-emerald-500 text-[#064e3b]' : 'bg-amber-500 text-[#064e3b]' }}">
+                                    {{ $c->status }}
+                                </span>
+                            </td>
+                            <td class="px-12 py-10 text-right">
+                                <button class="bg-white/10 hover:bg-white hover:text-[#064e3b] px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border border-white/10">Manage</button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
-        </aside>
-
-        {{-- ── WORKSPACE AREA ── --}}
-        <div class="lg:ml-80 flex-1 flex flex-col min-w-0 h-screen overflow-y-auto">
-            
-            {{-- Modern Header --}}
-            <header class="sticky top-0 z-40 bg-[#fbf8f6]/80 backdrop-blur-xl h-24 flex items-center justify-between px-10 border-b border-black/5">
-                <div class="flex items-center gap-6">
-                    <button onclick="openSidebar()" class="p-3 rounded-xl hover:bg-white lg:hidden border border-black/5 cursor-pointer bg-white shadow-sm">
-                        <svg class="w-6 h-6 text-[#1A1A1A]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-                    </button>
-                    <div>
-                        <h1 id="panelTitle" class="text-2xl font-black text-[#1A1A1A] tracking-tight italic">Intelligence.</h1>
-                        <span class="text-[9px] font-black uppercase tracking-[0.3em] text-[#064e3b]">System Operational</span>
-                    </div>
-                </div>
-                
-                {{-- Profile Pill --}}
-                <div class="flex items-center gap-4 bg-white pl-2 pr-6 py-2 rounded-2xl border border-black/5 shadow-sm">
-                    <div id="sbAv" class="w-10 h-10 rounded-xl bg-[#1A1A1A] text-white font-black flex items-center justify-center text-[11px] overflow-hidden uppercase">A</div>
-                    <div class="hidden sm:block">
-                        <p id="sbName" class="text-[11px] font-black text-[#1A1A1A] uppercase tracking-wider">Admin</p>
-                        <p class="text-[9px] text-[#DAA520] font-black uppercase tracking-widest">Master Console</p>
-                    </div>
-                </div>
-            </header>
-
-            {{-- Main Content --}}
-            <main class="flex-1 p-10 max-w-7xl w-full mx-auto pb-32">
-
-                {{-- Overview Tabs --}}
-                <div id="panel-overview" class="view-panel space-y-10 animate-fade-up">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                        
-                        <div class="panel-card overflow-hidden">
-                            <div class="px-10 py-8 border-b border-black/5 flex items-center justify-between bg-white">
-                                <h3 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Pending Verification</h3>
-                                <div class="w-2 h-2 rounded-full bg-[#DAA520]"></div>
-                            </div>
-                            <div id="ovPend" class="divide-y divide-black/5"></div>
-                            <div class="p-6 text-center">
-                                <button onclick="goTab('campaigns')" class="text-[9px] font-black text-[#064e3b] hover:underline tracking-widest uppercase cursor-pointer border-none bg-transparent">Access Full Moderation Matrix</button>
-                            </div>
-                        </div>
-
-                        <div class="panel-card overflow-hidden">
-                            <div class="px-10 py-8 border-b border-black/5 flex items-center justify-between bg-white">
-                                <h3 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Partner Requests</h3>
-                                <div class="w-2 h-2 rounded-full bg-[#064e3b]"></div>
-                            </div>
-                            <div id="ovOrgs" class="divide-y divide-black/5"></div>
-                            <div class="p-6 text-center">
-                                <button onclick="goTab('organisations')" class="text-[9px] font-black text-[#064e3b] hover:underline tracking-widest uppercase cursor-pointer border-none bg-transparent">Explore Partner Network</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                {{-- Campaigns --}}
-                <div id="panel-campaigns" class="hidden view-panel space-y-8 animate-fade-up">
-                    <div class="panel-card overflow-hidden">
-                        <div id="campWrap" class="min-h-[400px]"></div>
-                    </div>
-                </div>
-
-                {{-- Users --}}
-                <div id="panel-users" class="hidden view-panel space-y-8 animate-fade-up">
-                    <div class="panel-card overflow-hidden">
-                        <div id="userWrap" class="min-h-[400px]"></div>
-                    </div>
-                </div>
-
-                {{-- Organisations --}}
-                <div id="panel-organisations" class="hidden view-panel space-y-8 animate-fade-up">
-                    <div class="panel-card overflow-hidden">
-                        <div id="orgWrap" class="min-h-[400px]"></div>
-                    </div>
-                </div>
-
-                {{-- Categories --}}
-                <div id="panel-categories" class="hidden view-panel space-y-10 animate-fade-up">
-                    <div class="flex flex-col xl:flex-row gap-10 items-start">
-                        
-                        <div class="w-full xl:w-[400px] bg-[#1A1A1A] rounded-[3rem] p-12 shadow-2xl relative overflow-hidden group">
-                           <div class="absolute inset-0 bg-[#064e3b] translate-y-full group-hover:translate-y-[92%] transition-transform duration-700"></div>
-                           <div class="relative z-10">
-                                <h3 class="text-2xl font-black text-white mb-2 italic tracking-tight">New Domain.</h3>
-                                <p class="text-white/40 text-[10px] mb-10 font-bold uppercase tracking-widest">Expansion Protocol</p>
-                                
-                                <div class="space-y-6">
-                                    <div>
-                                        <label class="block text-[9px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">Domain Identity</label>
-                                        <input id="catName" type="text" placeholder="e.g. Humanitarian" 
-                                            class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm font-bold text-white outline-none focus:border-[#DAA520] transition-all">
-                                    </div>
-                                    <button id="catBtn" onclick="createCat()" 
-                                        class="w-full bg-[#DAA520] text-[#1A1A1A] py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all hover:scale-[1.02] active:scale-95 border-none cursor-pointer">
-                                        Establish Domain
-                                    </button>
-                                </div>
-                           </div>
-                        </div>
-
-                        <div class="flex-1 w-full panel-card overflow-hidden min-h-[500px]">
-                            <div class="px-12 py-8 border-b border-black/5 flex items-center justify-between">
-                                <h3 class="text-[11px] font-black text-[#1A1A1A] uppercase tracking-[0.2em]">Active Matrix Domains</h3>
-                                <div id="catCount" class="text-[10px] font-black text-[#DAA520] bg-[#DAA520]/5 px-3 py-1 rounded-lg">0 Total</div>
-                            </div>
-                            <div id="catGrid" class="p-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5 text-left"></div>
-                        </div>
-                    </div>
-                </div>
-
-            </main>
         </div>
-    </div>
 
-    {{-- Tactical Feedback (Toast) --}}
-    <div id="toast" class="fixed bottom-10 right-10 z-[100] bg-[#1A1A1A] text-white px-10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl transition-all duration-700 opacity-0 translate-y-20 pointer-events-none italic border-l-4 border-[#DAA520]"></div>
+        {{-- Identities Matrix --}}
+        <div id="tab-users" class="admin-tab hidden space-y-12 animate-in fade-in slide-in-from-bottom-5 duration-500">
+            <div>
+                <h1 class="text-6xl font-black tracking-tighter mb-2">Identities.</h1>
+                <p class="text-white/40 text-xs font-bold uppercase tracking-[0.3em]">Access Protocol Management</p>
+            </div>
+            <div class="bg-white/5 rounded-[2.5rem] border border-white/10 overflow-hidden backdrop-blur-3xl shadow-2xl">
+                <table class="w-full text-left">
+                    <thead class="bg-white/5 text-[9px] uppercase tracking-[0.4em] font-black text-white/30">
+                        <tr>
+                            <th class="px-12 py-8">Entity Identity</th>
+                            <th class="px-12 py-8">Role Assigned</th>
+                            <th class="px-12 py-8">Access Level</th>
+                            <th class="px-12 py-8 text-right">Control</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                        @foreach($users as $u)
+                        <tr class="hover:bg-white/[0.03] transition-all group border-none">
+                            <td class="px-12 py-10 font-black text-sm tracking-tight">{{ $u->first_name }} {{ $u->last_name }}</td>
+                            <td class="px-12 py-10 font-bold text-[10px] opacity-40 uppercase tracking-widest">{{ $u->role }}</td>
+                            <td class="px-12 py-10">
+                                <span class="px-5 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest {{ !$u->is_banned ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300 border border-red-500/30' }}">
+                                    {{ !$u->is_banned ? 'Authorized' : 'Blacklisted' }}
+                                </span>
+                            </td>
+                            <td class="px-12 py-10 text-right">
+                                <button class="bg-white/10 hover:bg-white hover:text-[#064e3b] px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Command</button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-@endsection
+        {{-- Partner Network --}}
+        <div id="tab-partners" class="admin-tab hidden space-y-12 animate-in fade-in slide-in-from-bottom-5 duration-500">
+            <div>
+                <h1 class="text-6xl font-black tracking-tighter mb-2">Partners.</h1>
+                <p class="text-white/40 text-xs font-bold uppercase tracking-[0.3em]">Organisation Network Registry</p>
+            </div>
+            <div class="bg-white/5 rounded-[2.5rem] border border-white/10 overflow-hidden backdrop-blur-3xl shadow-2xl">
+                <table class="w-full text-left">
+                    <thead class="bg-white/5 text-[9px] uppercase tracking-[0.4em] font-black text-white/30">
+                        <tr>
+                            <th class="px-12 py-8">Legal Entity</th>
+                            <th class="px-12 py-8">Verification Root</th>
+                            <th class="px-12 py-8 text-right">Interface</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-white/5">
+                        @foreach($organisations as $o)
+                        <tr class="hover:bg-white/[0.03] transition-all group border-none">
+                            <td class="px-12 py-10 font-black text-sm tracking-tight">{{ $o->name }}</td>
+                            <td class="px-12 py-10">
+                                <span class="px-5 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest {{ $o->is_verified ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300' }}">
+                                    {{ $o->is_verified ? 'Verified' : 'Validation Required' }}
+                                </span>
+                            </td>
+                            <td class="px-12 py-10 text-right">
+                                <button class="bg-white/10 hover:bg-white hover:text-[#064e3b] px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Audit</button>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-@section('scripts')
-    <script>
-        function openSidebar() {
-            document.getElementById('sidebar').classList.remove('-translate-x-full');
-            document.getElementById('sidebarOverlay').classList.remove('hidden');
-        }
-        function closeSidebar() {
-            document.getElementById('sidebar').classList.add('-translate-x-full');
-            document.getElementById('sidebarOverlay').classList.add('hidden');
-        }
+        {{-- Categories Domain --}}
+        <div id="tab-categories" class="admin-tab hidden space-y-12 animate-in fade-in slide-in-from-bottom-5 duration-500">
+            <div>
+                <h1 class="text-6xl font-black tracking-tighter mb-2">Domains.</h1>
+                <p class="text-white/40 text-xs font-bold uppercase tracking-[0.3em]">Operational Sector Expansion</p>
+            </div>
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-12">
+                <div class="xl:col-span-4 bg-white/5 p-12 rounded-[2.5rem] border border-white/10 backdrop-blur-3xl space-y-10 shadow-2xl">
+                    <div class="space-y-2">
+                        <h3 class="text-xl font-black">Expansion Protocol</h3>
+                        <p class="text-white/30 text-[9px] uppercase tracking-widest font-black">Register New Sector</p>
+                    </div>
+                    <form action="#" class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="text-[9px] font-black text-white/20 uppercase tracking-widest ml-1">Identity</label>
+                            <input type="text" placeholder="e.g. Healthcare" class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-sm font-bold outline-none focus:border-white transition-all">
+                        </div>
+                        <button class="w-full bg-white text-[#064e3b] py-5 rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] shadow-xl hover:scale-105 active:scale-95 transition-all">Deploy Domain</button>
+                    </form>
+                </div>
+                <div class="xl:col-span-8 bg-white/5 rounded-[2.5rem] border border-white/10 overflow-hidden backdrop-blur-3xl shadow-2xl">
+                    <table class="w-full text-left">
+                        <thead class="bg-white/5 text-[9px] uppercase tracking-[0.4em] font-black text-white/30">
+                            <tr><th class="px-12 py-8">Domain Identity</th></tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5 text-sm font-bold">
+                            @foreach($categories as $cat)
+                            <tr class="hover:bg-white/[0.03] transition-all"><td class="px-12 py-7 opacity-80">{{ $cat->category_name }}</td></tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
 
-        const VIEW_CONFIG = {
-            overview: 'Intelligence.',
-            campaigns: 'Moderation.',
-            users: 'Identities.',
-            organisations: 'Partners.',
-            categories: 'Domains.'
-        };
+{{-- Persistent Style Overrides for Active State --}}
+<style>
+    .admin-nav-btn.active {
+        background: rgba(255,255,255,0.1) !important;
+        color: white !important;
+        border-color: rgba(255,255,255,0.2);
+    }
+    .admin-nav-btn.active svg {
+        opacity: 1;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+</style>
 
-        function goTab(name, btn) {
-            document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
-            const p = document.getElementById('panel-' + name);
-            if(p) p.classList.remove('hidden');
-
-            document.getElementById('panelTitle').textContent = VIEW_CONFIG[name] || 'Intelligence.';
-
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            
-            if(btn) {
-                btn.classList.add('active');
-            } else {
-                const first = document.querySelector('.nav-btn');
-                if(first) first.classList.add('active');
-            }
-            
-            closeSidebar();
-        }
-        window.goTab = goTab;
-    </script>
-    <script src="{{ asset('js/admin-dashboard.js') }}"></script>
+<script>
+    function showTab(name) {
+        // Hide all tabs
+        document.querySelectorAll('.admin-tab').forEach(t => t.classList.add('hidden'));
+        // Show target tab
+        const target = document.getElementById('tab-' + name);
+        if(target) target.classList.remove('hidden');
+        
+        // Reset nav buttons
+        document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
+        // Activate current button
+        const btn = document.getElementById('btn-' + name);
+        if(btn) btn.classList.add('active');
+    }
+</script>
 @endsection

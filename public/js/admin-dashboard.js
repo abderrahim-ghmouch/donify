@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (u.images?.url) av.innerHTML = `<img src="${u.images.url}" class="w-full h-full object-cover">`;
     else av.textContent = (u.first_name || 'A')[0].toUpperCase();
 
-    await Promise.all([loadUsers(false), loadCamps(false), loadOrgs(false), loadCats()]);
+    await Promise.all([loadUsers(true), loadCamps(true), loadOrgs(true), loadCats()]);
     renderOV();
 });
 
@@ -82,7 +82,9 @@ function renderCT() {
             badge(c.status),
             c.status === 'pending' 
                 ? btnGrp(c.id, 'approveC', 'rejectC', 'Authorize')
-                : `<span class="text-[9px] font-black text-gray-300 uppercase tracking-widest italic">${c.status}</span>`
+                : (c.status === 'active' 
+                    ? mBtn(c.id, 'rejectC', 'De-Authorize', '#ef4444') 
+                    : mBtn(c.id, 'approveC', 'Re-Authorize', '#064e3b'))
         ])
     );
 }
@@ -160,15 +162,15 @@ function tbl(hs, rs) {
     if(!rs.length) return empty('The matrix is currently empty.');
     return `
         <div class="overflow-x-auto"><table class="w-full border-collapse">
-            <thead>
-                <tr class="bg-[#fbf8f6] border-b border-black/5">
-                    ${hs.map(h => `<th class="px-10 py-6 text-left">${h}</th>`).join('')}
+            <thead class="bg-black/5">
+                <tr class="border-b border-black/5">
+                    ${hs.map(h => `<th class="px-10 py-6 text-left text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">${h}</th>`).join('')}
                 </tr>
             </thead>
             <tbody class="divide-y divide-black/5">
                 ${rs.map(r => `
-                    <tr class="hover:bg-[#fbf8f6]/30 transition-all">
-                        ${r.map(c => `<td class="px-10 py-8 text-xs align-middle text-[#1A1A1A]">${c}</td>`).join('')}
+                    <tr class="hover:bg-white/40 transition-all duration-300">
+                        ${r.map(c => `<td class="px-10 py-8 text-xs align-middle text-[#1A1A1A] font-medium tracking-tight">${c}</td>`).join('')}
                     </tr>
                 `).join('')}
             </tbody>
@@ -178,16 +180,16 @@ function tbl(hs, rs) {
 
 function ovItem(id, t, s, img, ok, no, okT) {
     return `
-        <div class="px-10 py-6 flex items-center justify-between hover:bg-[#fbf8f6]/50 transition-all group">
+        <div class="px-10 py-6 flex items-center justify-between hover:bg-white/40 transition-all group">
             <div class="flex items-center gap-5">
                 ${thumb(img, t)}
                 <div>
-                    <div class="font-black text-[#1A1A1A] text-sm italic leading-tight">${x(t)}</div>
+                    <div class="font-black text-[#1A1A1A] text-sm leading-tight">${x(t)}</div>
                     <div class="text-[9px] text-gray-400 font-black uppercase tracking-[0.2em] mt-1.5">${x(s || 'Primary Instance')}</div>
                 </div>
             </div>
             <div class="flex gap-4">
-                <button onclick="${ok}(${id},this)" class="bg-[#1A1A1A] hover:bg-[#064e3b] text-white px-6 py-3 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all duration-300 hover:scale-[1.05] active:scale-95 border-none cursor-pointer">${okT}</button>
+                <button onclick="${ok}(${id},this)" class="bg-[#1A1A1A] hover:bg-[#064e3b] text-white px-6 py-3 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all duration-300 hover:scale-[1.05] active:scale-95 border-none cursor-pointer shadow-lg shadow-black/10">${okT}</button>
                 <button onclick="${no}(${id},this)" class="bg-white text-gray-300 hover:text-red-500 border border-black/5 px-4 py-3 rounded-xl transition-all cursor-pointer shadow-sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -197,7 +199,7 @@ function ovItem(id, t, s, img, ok, no, okT) {
 }
 
 function mBtn(id, fn, t, color) {
-    return `<button onclick="${fn}(${id},this)" class="bg-white border-2 text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-xl transition-all duration-300 hover:scale-[1.05] active:scale-95 cursor-pointer shadow-sm" style="color:${color}; border-color: ${color}15">${t}</button>`;
+    return `<button onclick="${fn}(${id},this)" class="bg-white border-2 text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-xl transition-all duration-300 hover:scale-[1.05] active:scale-95 cursor-pointer shadow-sm hover:shadow-md" style="color:${color}; border-color: ${color}20">${t}</button>`;
 }
 
 function btnGrp(id, ok, no, okT) {
@@ -206,11 +208,11 @@ function btnGrp(id, ok, no, okT) {
 
 function badge(s, over) {
     const c = s==='pending' ? 'text-amber-500 bg-amber-500/10' : (s==='active' ? 'text-[#064e3b] bg-[#064e3b]/10' : 'text-red-500 bg-red-50');
-    return `<span class="px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.15em] italic ${c}">${over || s}</span>`;
+    return `<span class="px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.15em] ${c}">${over || s}</span>`;
 }
 
 function thumb(u, t) {
-    const cls = "w-12 h-12 rounded-2xl bg-white border border-black/5 object-cover shrink-0 flex items-center justify-center font-black text-gray-200 text-sm shadow-sm";
+    const cls = "w-12 h-12 rounded-2xl bg-black/5 border border-black/5 object-cover shrink-0 flex items-center justify-center font-black text-gray-400 text-sm shadow-sm";
     return u ? `<img src="${u}" class="${cls}">` : `<div class="${cls}">${(t||'?')[0].toUpperCase()}</div>`;
 }
 
