@@ -22,9 +22,14 @@
                 <svg class="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M8 7a4 4 0 100-8 4 4 0 000 8z"/></svg>
                 Identities
             </button>
-            <button onclick="showTab('partners')" id="btn-partners" class="admin-nav-btn group flex items-center gap-5 w-full px-8 py-5 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all hover:bg-white/10 border border-transparent hover:border-white/10">
-                <svg class="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                Partners
+            @php 
+                $pendingOrgs = $organisations->where('is_verified', false)->count();
+            @endphp
+            <button onclick="showTab('partners')" id="btn-partners" class="admin-nav-btn group flex items-center justify-between gap-5 w-full px-8 py-5 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all hover:bg-white/10 border border-transparent hover:border-white/10">
+                <div class="flex items-center gap-5 text-left">
+                    <svg class="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    Partners
+                </div>
             </button>
             <button onclick="showTab('categories')" id="btn-categories" class="admin-nav-btn group flex items-center gap-5 w-full px-8 py-5 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all hover:bg-white/10 border border-transparent hover:border-white/10">
                 <svg class="w-5 h-5 opacity-40 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 7h.01M7 3h5c.5 0 1 .2 1.4.6l7 7a2 2 0 010 2.8l-7 7a2 2 0 01-2.8 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
@@ -71,12 +76,15 @@
                             <td class="px-12 py-10 font-black text-sm tracking-tight">{{ $c->title }}</td>
                             <td class="px-12 py-10 font-bold text-xs opacity-60">{{ number_format($c->target_amount) }} <span class="text-[9px]">MAD</span></td>
                             <td class="px-12 py-10">
-                                <span class="px-5 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest {{ $c->status == 'active' ? 'bg-emerald-500 text-[#064e3b]' : 'bg-amber-500 text-[#064e3b]' }}">
+                                <span class="px-5 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest {{ $c->status == 'active' ? 'bg-emerald-500 text-[#064e3b]' : 'bg-white/10 text-white/60' }}">
                                     {{ $c->status }}
                                 </span>
                             </td>
-                            <td class="px-12 py-10 text-right">
-                                <button class="bg-white/10 hover:bg-white hover:text-[#064e3b] px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all border border-white/10">Manage</button>
+                            <td class="px-12 py-10 text-right space-x-2">
+                                @if($c->status !== 'active')
+                                <button onclick="approveCampaign({{ $c->id }})" class="bg-emerald-500 text-[#064e3b] hover:bg-emerald-400 px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-lg active:scale-95">Approve</button>
+                                @endif
+                                <button onclick="rejectCampaign({{ $c->id }})" class="bg-red-500/20 text-red-300 hover:bg-red-500 hover:text-white px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all active:scale-95">Reject</button>
                             </td>
                         </tr>
                         @endforeach
@@ -123,9 +131,11 @@
 
         {{-- Partner Network --}}
         <div id="tab-partners" class="admin-tab hidden space-y-12 animate-in fade-in slide-in-from-bottom-5 duration-500">
-            <div>
-                <h1 class="text-6xl font-black tracking-tighter mb-2">Partners.</h1>
-                <p class="text-white/40 text-xs font-bold uppercase tracking-[0.3em]">Organisation Network Registry</p>
+            <div class="flex items-end justify-between">
+                <div>
+                    <h1 class="text-6xl font-black tracking-tighter mb-2">Partners.</h1>
+                    <p class="text-white/40 text-xs font-bold uppercase tracking-[0.3em]">Organisation Network Registry</p>
+                </div>
             </div>
             <div class="bg-white/5 rounded-[2.5rem] border border-white/10 overflow-hidden backdrop-blur-3xl shadow-2xl">
                 <table class="w-full text-left">
@@ -141,20 +151,22 @@
                         <tr class="hover:bg-white/[0.03] transition-all group border-none">
                             <td class="px-12 py-10 font-black text-sm tracking-tight">{{ $o->name }}</td>
                             <td class="px-12 py-10">
-                                <span class="px-5 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest {{ $o->is_verified ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300' }}">
-                                    {{ $o->is_verified ? 'Verified' : 'Validation Required' }}
+                                <span class="px-5 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest {{ $o->is_verified ? 'bg-emerald-500/20 text-emerald-300' : 'bg-white/10 text-white/40' }}">
+                                    {{ $o->is_verified ? 'Verified' : 'Verification Required' }}
                                 </span>
                             </td>
-                            <td class="px-12 py-10 text-right space-x-2">
-                                @if($o->document_path)
-                                <a href="{{ $o->document_path }}" target="_blank" class="bg-white/5 hover:bg-white/10 px-4 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest transition-all inline-block">Doc</a>
-                                @endif
-                                
-                                @if(!$o->is_verified)
-                                <button onclick="verifyOrg({{ $o->id }})" class="bg-emerald-500 text-[#064e3b] hover:bg-emerald-400 px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Verify</button>
-                                @else
-                                <button onclick="rejectOrg({{ $o->id }})" class="bg-red-500/20 text-red-300 hover:bg-red-500 hover:text-white px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Revoke</button>
-                                @endif
+                            <td class="px-12 py-10 text-right">
+                                <div class="flex items-center justify-end gap-3">
+                                    @if($o->document_path)
+                                    <a href="{{ $o->document_path }}" target="_blank" class="bg-white/5 hover:bg-white/10 px-4 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest transition-all border border-white/5">Doc</a>
+                                    @endif
+                                    
+                                    @if(!$o->is_verified)
+                                    <button onclick="verifyOrg({{ $o->id }})" class="bg-emerald-500 text-[#064e3b] hover:bg-emerald-400 px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all shadow-lg active:scale-95">Verify</button>
+                                    @else
+                                    <button onclick="rejectOrg({{ $o->id }})" class="bg-red-500/20 text-red-300 hover:bg-red-500 hover:text-white px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all active:scale-95">Revoke</button>
+                                    @endif
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -231,7 +243,6 @@
     }
 
     async function verifyOrg(id) {
-        if(!confirm('Authorize this entity for platform access?')) return;
         try {
             const resp = await fetch(`/api/organisations/${id}/verify`, { 
                 method: 'POST',
@@ -241,11 +252,10 @@
                 }
             });
             if(resp.ok) location.reload();
-        } catch(e) { alert('Verification failed.'); }
+        } catch(e) { console.error('Verification failed'); }
     }
 
     async function rejectOrg(id) {
-        if(!confirm('Revoke access for this entity?')) return;
         try {
             const resp = await fetch(`/api/organisations/${id}/reject`, { 
                 method: 'POST',
@@ -255,7 +265,33 @@
                 }
             });
             if(resp.ok) location.reload();
-        } catch(e) { alert('Action failed.'); }
+        } catch(e) { console.error('Reject failed'); }
+    }
+
+    async function approveCampaign(id) {
+        try {
+            const resp = await fetch(`/api/campaigns/${id}/approve`, { 
+                method: 'POST',
+                headers: { 
+                    'Authorization': `Bearer ${localStorage.getItem('donify_token')}`,
+                    'Accept': 'application/json'
+                }
+            });
+            if(resp.ok) location.reload();
+        } catch(e) { console.error('Approve failed'); }
+    }
+
+    async function rejectCampaign(id) {
+        try {
+            const resp = await fetch(`/api/campaigns/${id}/reject`, { 
+                method: 'POST',
+                headers: { 
+                    'Authorization': `Bearer ${localStorage.getItem('donify_token')}`,
+                    'Accept': 'application/json'
+                }
+            });
+            if(resp.ok) location.reload();
+        } catch(e) { console.error('Reject failed'); }
     }
 </script>
 @endsection
