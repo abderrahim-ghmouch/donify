@@ -93,7 +93,7 @@
             {{-- Left Side: Nav Links (Desktop Only) --}}
             <div class="hidden md:flex items-center space-x-10">
                 <a href="{{ route('campaigns.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Campaigns</a>
-                <a href="#" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Favourites</a>
+                <a href="{{ route('favourites') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Favourites</a>
             </div>
 
             {{-- Center: Logo --}}
