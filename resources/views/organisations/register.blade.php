@@ -1,310 +1,216 @@
-@extends('layouts.app')
-
-@section('styles')
-<style>
-    .auth-card {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-    }
-    .input-field {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        transition: all 0.3s ease;
-    }
-    .input-field:focus {
-        border-color: var(--primary);
-        background: white;
-        box-shadow: 0 0 0 4px rgba(47, 217, 28, 0.1);
-    }
-    .step-indicator {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 12px;
-        font-weight: 700;
-        transition: all 0.3s ease;
-    }
-    .step-active {
-        background: var(--primary);
-        color: white;
-        box-shadow: 0 10px 15px -3px rgba(47, 217, 28, 0.3);
-    }
-    .step-pending {
-        background: #f1f5f9;
-        color: #94a3b8;
-    }
-    .form-step {
-        display: none;
-        animation: slideIn 0.4s ease-out;
-    }
-    .form-step.active {
-        display: block;
-    }
-    @keyframes slideIn {
-        from { opacity: 0; transform: translateX(20px); }
-        to { opacity: 1; transform: translateX(0); }
-    }
-</style>
-@endsection
+@extends('layouts.app', ['hide_nav' => true, 'hide_footer' => true])
 
 @section('content')
-<div class="min-h-screen py-12 px-6 flex items-center justify-center bg-[#f8fafc] relative overflow-hidden">
-    <!-- Abstract background elements -->
-    <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-100 rounded-full blur-[100px] opacity-50 -mr-48 -mt-48"></div>
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-100 rounded-full blur-[100px] opacity-50 -ml-48 -mb-48"></div>
+<div class="flex flex-col md:flex-row h-screen bg-[#fbf8f6] font-quicksand overflow-hidden relative">
+    
+    {{-- Identity Zone (Left): Natural Perspective --}}
+    <div class="hidden md:flex md:w-1/2 relative overflow-hidden bg-[url('{{ asset('images/people.jpeg') }}')] bg-cover bg-center">
+        {{-- Right-to-Left Dark Emerald Transition --}}
+        <div class="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-l from-[#0d1f1a] via-transparent to-transparent z-10"></div>
+    </div>
+    
+    {{-- Form Zone (Right): Midnight Emerald Theme --}}
+    <div class="w-full md:w-1/2 overflow-y-auto custom-scrollbar relative z-20 shadow-lg" style="background: linear-gradient(to right, #163a30 0%, #163a30 40%, #253d36 70%, #8ca19b 90%, #e3e3e3 100%);">
+        <div class="max-w-xl mx-auto px-8 py-16 relative z-10">
+            {{-- Top Navigation --}}
+            <div class="mb-10 flex justify-between items-center relative z-10">
+                <a href="{{ route('home') }}" class="inline-flex items-center gap-3 text-white/70 hover:text-white transition-all group font-bold text-sm bg-white/5 px-5 py-2.5 rounded-full border border-white/10 hover:bg-white/10 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    Return to Home
+                </a>
+            </div>
 
-    <div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-        <!-- Left Side: Info -->
-        <div class="lg:col-span-5 hidden lg:block">
-            <h1 class="text-5xl font-extrabold font-outfit leading-tight mb-6">
-                Amplify your <span class="text-emerald-500">Organisation's</span> Impact.
-            </h1>
-            <p class="text-lg text-slate-500 mb-8 leading-relaxed">
-                Join Donify as a verified organization. Manage campaigns, build trust with donors, and transform more lives.
-            </p>
-
-            <div class="space-y-6">
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-emerald-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800">Verification Badge</h4>
-                        <p class="text-sm text-slate-500">Get a verified status to increase donor confidence.</p>
-                    </div>
+            {{-- Platform Slogan at Apex --}}
+            <div class="mb-16">
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="{{ asset('images/donifylg.png') }}" class="h-8 w-auto brightness-0 invert opacity-80">
+                    <div class="h-4 w-px bg-white/10"></div>
+                    <span class="text-[10px] font-black uppercase tracking-[0.4em] text-[#fbf8f6]/30">Empowering Impact.</span>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-blue-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800">Advanced Analytics</h4>
-                        <p class="text-sm text-slate-500">Track donations and campaign performance in detail.</p>
-                    </div>
+                <h1 class="text-3xl font-bold text-[#fbf8f6] leading-tight tracking-tight">Be the <span class="text-white/40">Change.</span></h1>
+            </div>
+
+            {{-- State Headers --}}
+            <div id="registerHeader">
+                <div class="mb-12 relative z-10">
+                    <h2 class="text-4xl font-extrabold text-white tracking-tight">Register Organisation.</h2>
+                    <p class="text-white/30 text-sm mt-1">Initialize your professional profile and global presence.</p>
                 </div>
             </div>
-            
-            <div class="mt-12 p-6 bg-white/50 rounded-3xl border border-white/50">
-                <p class="text-slate-600 italic">"Donify helped us reach 3x more supporters in just 6 months. The verification process is thorough but worth it."</p>
-                <div class="mt-4 flex items-center space-x-3">
-                    <div class="w-10 h-10 bg-slate-200 rounded-full"></div>
-                    <div>
-                        <p class="text-sm font-bold">Sarah Williams</p>
-                        <p class="text-xs text-slate-400">Director, GreenHope Foundation</p>
-                    </div>
+
+            <div id="loginHeader" class="hidden">
+                <div class="mb-12 relative z-10">
+                    <h2 class="text-4xl font-extrabold text-white tracking-tight">Partner Login.</h2>
+                    <p class="text-white/30 text-sm mt-1">Access your secure organisational dashboard.</p>
                 </div>
             </div>
-        </div>
 
-        <!-- Right Side: Form -->
-        <div class="lg:col-span-7">
-            <div class="auth-card rounded-[2rem] p-8 md:p-12">
-                <div class="mb-10">
-                    <h2 class="text-3xl font-bold font-outfit mb-2">Create Org Account</h2>
-                    <p class="text-slate-500">Already have an account? <a href="{{ route('organisations.login') }}" class="text-emerald-500 font-bold hover:underline">Log in</a></p>
-                </div>
+            <div id="registerFormContainer">
+                <form id="orgRegisterForm" class="space-y-8 relative z-10">
+                    <div id="registerError" class="hidden bg-red-50 text-red-600 p-6 rounded-2xl text-xs font-bold border border-red-100 animate-shake"></div>
 
-                <!-- Progress Steps -->
-                <div class="flex items-center space-x-4 mb-10">
-                    <div class="step-indicator step-active" id="stepIndicator-1">1</div>
-                    <div class="h-px flex-1 bg-slate-200"></div>
-                    <div class="step-indicator step-pending" id="stepIndicator-2">2</div>
-                    <div class="h-px flex-1 bg-slate-200"></div>
-                    <div class="step-indicator step-pending" id="stepIndicator-3">3</div>
-                </div>
+                {{-- Section 1: Identity --}}
+                <div class="space-y-6">
+                    {{-- Identification Section --}}
+                    <div class="space-y-2 relative">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Organisation Name</label>
+                        <input type="text" id="name" required placeholder="Official legal name" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
+                    </div>
 
-                <form id="orgRegisterForm">
-                    <!-- Step 1: Basic Account Info -->
-                    <div class="form-step active" id="step-1">
-                        <h3 class="font-bold text-lg mb-6">Basic Information</h3>
-                        <div class="space-y-5">
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Organisation Name</label>
-                                <input type="text" name="name" required class="w-full input-field px-5 py-3.5 rounded-2xl outline-none" placeholder="e.g. Red Cross International">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                                <input type="email" name="email" required class="w-full input-field px-5 py-3.5 rounded-2xl outline-none" placeholder="contact@organisation.org">
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Password</label>
-                                    <input type="password" name="password" required class="w-full input-field px-5 py-3.5 rounded-2xl outline-none" placeholder="•••••••••">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Confirm Password</label>
-                                    <input type="password" name="password_confirmation" required class="w-full input-field px-5 py-3.5 rounded-2xl outline-none" placeholder="•••••••••">
-                                </div>
-                            </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2 relative">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Official Email</label>
+                            <input type="email" id="email" required placeholder="name@organisation.org" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
                         </div>
-                        <div class="mt-10">
-                            <button type="button" onclick="nextStep(2)" class="w-full btn-primary py-4 rounded-2xl font-bold flex items-center justify-center space-x-2">
-                                <span>Next: Contact Details</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
+                        <div class="space-y-2 relative">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Contact Phone</label>
+                            <input type="text" id="phone" required placeholder="+1 (555) 000-0000" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
                         </div>
                     </div>
 
-                    <!-- Step 2: Contact & Description -->
-                    <div class="form-step" id="step-2">
-                        <h3 class="font-bold text-lg mb-6">Contact & Details</h3>
-                        <div class="space-y-5">
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Phone Number</label>
-                                    <input type="text" name="phone" required class="w-full input-field px-5 py-3.5 rounded-2xl outline-none" placeholder="+1 (555) 000-0000">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-2">Address</label>
-                                    <input type="text" name="address" required class="w-full input-field px-5 py-3.5 rounded-2xl outline-none" placeholder="123 Hope St, NY">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Description</label>
-                                <textarea name="description" rows="4" class="w-full input-field px-5 py-3.5 rounded-2xl outline-none resize-none" placeholder="Tell us about your mission..."></textarea>
-                            </div>
-                        </div>
-                        <div class="mt-10 flex space-x-4">
-                            <button type="button" onclick="nextStep(1)" class="w-1/3 bg-slate-100 text-slate-600 py-4 rounded-2xl font-bold hover:bg-slate-200 transition-all">Back</button>
-                            <button type="button" onclick="nextStep(3)" class="flex-1 btn-primary py-4 rounded-2xl font-bold flex items-center justify-center space-x-2">
-                                <span>Next: Verification</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </div>
+                    <div class="space-y-2 relative">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Physical Address</label>
+                        <input type="text" id="address" required placeholder="Full office address" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
                     </div>
 
-                    <!-- Step 3: Verification Documents -->
-                    <div class="form-step" id="step-3">
-                        <h3 class="font-bold text-lg mb-6">Official Verification</h3>
-                        <div class="space-y-6">
-                            <div class="p-6 bg-amber-50 rounded-2xl border border-amber-100 flex items-start space-x-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <p class="text-sm text-amber-800 leading-relaxed">
-                                    To protect our community, we require a formal document (Tax ID, Registration Certificate, or similar) to verify your organisation's identity.
-                                </p>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Verification Document (PDF, JPG, PNG)</label>
-                                <div class="relative group">
-                                    <div class="w-full py-10 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center group-hover:border-emerald-500 transition-all bg-slate-50">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300 mb-3 group-hover:text-emerald-500 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                                        </svg>
-                                        <p class="text-slate-500 text-sm font-medium">Click to upload document</p>
-                                        <p id="fileName" class="text-emerald-500 text-xs mt-2 font-bold"></p>
-                                    </div>
-                                    <input type="file" name="document" id="documentInput" required class="absolute inset-0 opacity-0 cursor-pointer" onchange="updateFileName(this)">
-                                </div>
-                            </div>
+                    <div class="space-y-2 relative">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Mission Description</label>
+                        <textarea id="description" placeholder="Briefly describe your purpose and goals..." class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20 h-32 resize-none"></textarea>
+                    </div>
 
-                            <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Logo (Optional)</label>
-                                <input type="file" name="logo" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer">
-                            </div>
-                        </div>
+                    <div class="space-y-2 relative">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Security Key (Password)</label>
+                        <input type="password" id="password" required placeholder="••••••••" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
+                    </div>
 
-                        <div class="mt-10 flex space-x-4">
-                            <button type="button" onclick="nextStep(2)" class="w-1/3 bg-slate-100 text-slate-600 py-4 rounded-2xl font-bold hover:bg-slate-200 transition-all">Back</button>
-                            <button type="submit" id="submitBtn" class="flex-1 bg-slate-800 text-white py-4 rounded-2xl font-bold hover:bg-slate-900 transition-all shadow-lg flex items-center justify-center space-x-2">
-                                <span>Submit Registration</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Brand Logo</label>
+                            <input type="file" id="logo" accept="image/*" class="w-full text-[10px] text-white/20 file:mr-4 file:py-2.5 file:px-5 file:rounded-lg file:border file:border-[#2d4d44] file:text-[10px] file:font-bold file:uppercase file:bg-[#1d352f] file:text-white hover:file:bg-[#25423b] transition-all cursor-pointer">
                         </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Legal Dossier (PDF)</label>
+                            <input type="file" id="document" required accept=".pdf,image/*" class="w-full text-[10px] text-white/20 file:mr-4 file:py-2.5 file:px-5 file:rounded-lg file:border file:border-[#2d4d44] file:text-[10px] file:font-bold file:uppercase file:bg-[#1d352f] file:text-white hover:file:bg-[#25423b] transition-all cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="pt-8">
+                        <button type="submit" id="registerBtn" class="w-full bg-[#b8860b] hover:bg-[#996515] text-white py-4 rounded-xl font-bold text-sm tracking-wide shadow-lg transition-all active:scale-[0.98]">Complete Registration</button>
+                        <p class="text-center mt-6 text-xs text-white/40">
+                            Already registered? <a href="javascript:void(0)" onclick="toggleMode('login')" class="text-[#b8860b] font-bold hover:underline ml-1">Switch to Login</a>
+                        </p>
                     </div>
                 </form>
+            </div>
 
-                <div id="successMessage" class="hidden mt-8 text-center animate-bounce">
-                    <div class="w-16 h-16 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                        </svg>
+            <div id="loginFormContainer" class="hidden">
+                <form id="orgLoginForm" class="space-y-8 relative z-10">
+                    <div id="loginError" class="hidden bg-red-50 text-red-600 p-6 rounded-2xl text-xs font-bold border border-red-100 animate-shake italic"></div>
+
+                    <div class="space-y-6">
+                        <div class="space-y-2 relative">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Official Email</label>
+                            <input type="email" id="loginEmail" required placeholder="name@organisation.org" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
+                        </div>
+
+                        <div class="space-y-2 relative">
+                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Security Key</label>
+                            <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
+                        </div>
                     </div>
-                    <h4 class="text-xl font-bold text-slate-800">Registration Submitted!</h4>
-                    <p class="text-slate-500 mt-2">We've received your application. Our team will verify your organization within 24-48 hours. Watch your email!</p>
-                    <a href="{{ route('home') }}" class="inline-block mt-6 text-emerald-500 font-bold">Back to Home</a>
-                </div>
 
-                <div id="errorMessage" class="hidden mt-6 p-4 bg-red-50 text-red-600 rounded-xl text-sm font-medium border border-red-100">
-                </div>
+                    <div class="pt-8">
+                        <button type="submit" id="loginBtn" class="w-full bg-[#b8860b] hover:bg-[#996515] text-white py-4 rounded-xl font-bold text-sm tracking-wide shadow-lg transition-all active:scale-[0.98]">Secure Login</button>
+                        <p class="text-center mt-6 text-xs text-white/40">
+                            New organisation? <a href="javascript:void(0)" onclick="toggleMode('register')" class="text-[#b8860b] font-bold hover:underline ml-1">Register Now</a>
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-@endsection
 
-@section('scripts')
 <script>
-    function nextStep(step) {
-        // Toggle steps
-        document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
-        document.getElementById('step-' + step).classList.add('active');
-        
-        // Update indicators
-        document.querySelectorAll('.step-indicator').forEach((el, index) => {
-            if (index + 1 === step) {
-                el.classList.add('step-active');
-                el.classList.remove('step-pending');
-            } else if (index + 1 < step) {
-                el.classList.add('step-active');
-                el.classList.remove('step-pending');
-            } else {
-                el.classList.remove('step-active');
-                el.classList.add('step-pending');
-            }
-        });
+    function toggleMode(mode) {
+        if (mode === 'login') {
+            document.getElementById('registerHeader').classList.add('hidden');
+            document.getElementById('registerFormContainer').classList.add('hidden');
+            document.getElementById('loginHeader').classList.remove('hidden');
+            document.getElementById('loginFormContainer').classList.remove('hidden');
+        } else {
+            document.getElementById('loginHeader').classList.add('hidden');
+            document.getElementById('loginFormContainer').classList.add('hidden');
+            document.getElementById('registerHeader').classList.remove('hidden');
+            document.getElementById('registerFormContainer').classList.remove('hidden');
+        }
     }
 
-    function updateFileName(input) {
-        const fileName = input.files[0] ? input.files[0].name : '';
-        document.getElementById('fileName').textContent = fileName ? 'Selected: ' + fileName : '';
-    }
-
+    // Registration Handler
     document.getElementById('orgRegisterForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const form = e.target;
-        const btn = document.getElementById('submitBtn');
-        const errorEl = document.getElementById('errorMessage');
-        const successEl = document.getElementById('successMessage');
         
-        errorEl.classList.add('hidden');
-        btn.disabled = true;
-        btn.innerHTML = 'Processing...';
+        const btn = document.getElementById('registerBtn');
+        const errorDiv = document.getElementById('registerError');
+        
+        const fd = new FormData();
+        fd.append('name', document.getElementById('name').value);
+        fd.append('email', document.getElementById('email').value);
+        fd.append('password', document.getElementById('password').value);
+        fd.append('description', document.getElementById('description').value);
+        fd.append('phone', document.getElementById('phone').value);
+        fd.append('address', document.getElementById('address').value);
+        
+        const logo = document.getElementById('logo').files[0];
+        if(logo) fd.append('logo', logo);
+        
+        const doc = document.getElementById('document').files[0];
+        if(doc) fd.append('document', doc);
 
-        const fd = new FormData(form);
+        btn.disabled = true;
+        btn.innerHTML = '<span class="flex items-center justify-center animate-pulse tracking-widest">INITIALIZING PROTOCOL...</span>';
+        errorDiv.classList.add('hidden');
 
         try {
-            const data = await ApiClient.registerOrganisation(fd);
-            console.log('Success:', data);
-            form.classList.add('hidden');
-            successEl.classList.remove('hidden');
-            
-            // Scroll to success message
-            successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } catch (err) {
-            console.error('Error:', err);
-            errorEl.textContent = err.error || err.message || (err.errors ? Object.values(err.errors).flat()[0] : 'An error occurred. Please try again.');
-            errorEl.classList.remove('hidden');
-        } finally {
+            await ApiClient.registerOrganisation(fd);
+            alert('Application Deployed. Access will be authorized upon manual admin verification.');
+            window.location.href = '/';
+        } catch (error) {
+            console.error(error);
+            const msg = error.message || (error.errors ? Object.values(error.errors)[0][0] : 'Validation failure. Security check manual logs.');
+            errorDiv.textContent = msg;
+            errorDiv.classList.remove('hidden');
             btn.disabled = false;
-            btn.innerHTML = 'Submit Registration';
+            btn.innerHTML = 'DEPLOY APPLICATION';
+        }
+    });
+
+    // Login Handler
+    document.getElementById('orgLoginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const btn = document.getElementById('loginBtn');
+        const errorDiv = document.getElementById('loginError');
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+
+        btn.disabled = true;
+        btn.innerHTML = '<span class="flex items-center justify-center animate-pulse tracking-widest">VERIFYING IDENTITY...</span>';
+        errorDiv.classList.add('hidden');
+
+        try {
+            await ApiClient.loginOrganisation(email, password);
+            window.location.href = '/porter/dashboard';
+        } catch (error) {
+            console.error(error);
+            const msg = error.error || 'Identity rejection. Verification pending or invalid credentials.';
+            errorDiv.textContent = msg;
+            errorDiv.classList.remove('hidden');
+            btn.disabled = false;
+            btn.innerHTML = 'VERIFY IDENTITY';
         }
     });
 </script>

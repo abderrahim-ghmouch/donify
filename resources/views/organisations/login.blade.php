@@ -1,131 +1,93 @@
-@extends('layouts.app')
-
-@section('styles')
-<style>
-    .auth-card {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-    }
-    .input-field {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        transition: all 0.3s ease;
-    }
-    .input-field:focus {
-        border-color: var(--primary);
-        background: white;
-        box-shadow: 0 0 0 4px rgba(47, 217, 28, 0.1);
-    }
-    .login-hero {
-        background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
-    }
-</style>
-@endsection
+@extends('layouts.app', ['hide_nav' => true, 'hide_footer' => true])
 
 @section('content')
-<div class="min-h-screen py-12 px-6 flex items-center justify-center bg-[#f8fafc] relative overflow-hidden">
-    <!-- Background elements -->
-    <div class="absolute top-0 right-0 w-96 h-96 bg-emerald-100 rounded-full blur-[100px] opacity-40 -mr-48 -mt-48"></div>
-    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-50 rounded-full blur-[120px] opacity-40 -ml-64 -mb-64"></div>
+<div class="flex flex-col md:flex-row h-screen bg-[#fbf8f6] font-quicksand overflow-hidden relative">
+    
+    {{-- Left Side: Access Context --}}
+    <div class="hidden md:flex md:w-1/2 bg-[#1A1A1A] relative overflow-hidden flex-col justify-between p-20">
+        {{-- Abstract Rise --}}
+        <div class="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-[#064e3b]/40 to-transparent z-0"></div>
 
-    <div class="max-w-md w-full relative z-10">
-        <div class="auth-card rounded-[2.5rem] p-8 md:p-12">
-            <div class="mb-10 text-center">
-                <div class="w-16 h-16 bg-emerald-500 rounded-2xl flex items-center justify-center text-white mx-auto mb-6 shadow-lg shadow-emerald-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                    </svg>
-                </div>
-                <h2 class="text-3xl font-bold font-outfit mb-2">Organisation Login</h2>
-                <p class="text-slate-500">Access your impact dashboard</p>
+        <div class="relative z-10 space-y-10">
+            <a href="{{ route('home') }}" class="inline-flex items-center text-white/40 hover:text-white transition-all group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                <span class="font-bold text-xs uppercase tracking-widest text-white/40">Home</span>
+            </a>
+
+            <div class="space-y-4">
+                <img src="{{ asset('images/donifylg.png') }}" class="h-16 w-auto brightness-0 invert opacity-90 drop-shadow-2xl">
+                <h1 class="text-6xl font-black text-white leading-none tracking-tighter italic">Partner <br> Access.</h1>
+                <p class="text-white/40 text-xs font-black uppercase tracking-[0.5em] mt-4">Authorized Personnel Only</p>
+            </div>
+        </div>
+
+        <div class="relative z-10">
+            <div class="max-w-[400px]">
+                <h3 class="text-3xl font-black text-[#996515] leading-tight mb-4 italic">"Transparency is the cornerstone of trust."</h3>
+                <p class="text-white/30 text-[10px] font-black uppercase tracking-widest">Protocol 04. Unified Integrity</p>
+            </div>
+        </div>
+    </div>
+
+    {{-- Right Side: Login Form --}}
+    <div class="w-full md:w-1/2 flex flex-col justify-center items-center bg-white p-12">
+        <div class="max-w-md w-full space-y-12">
+            <div class="text-center md:text-left">
+                <h2 class="text-4xl font-black text-[#1A1A1A] tracking-tighter">Execute Login.</h2>
+                <p class="text-gray-400 font-medium mt-2">Manage your organization's missions and impact.</p>
             </div>
 
             <form id="orgLoginForm" class="space-y-6">
-                <div>
-                    <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
-                            </svg>
-                        </span>
-                        <input type="email" name="email" required class="w-full input-field pl-12 pr-5 py-4 rounded-2xl outline-none" placeholder="name@organisation.org">
-                    </div>
+                <div id="loginError" class="hidden bg-red-50 text-red-600 p-6 rounded-2xl text-xs font-bold border border-red-100 italic"></div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Official Email</label>
+                    <input type="email" id="email" required class="w-full px-6 py-5 rounded-2xl bg-gray-50 border border-gray-100 focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all outline-none text-sm font-medium shadow-sm">
                 </div>
 
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-bold text-slate-700">Password</label>
-                        <a href="#" class="text-xs font-bold text-emerald-500 hover:underline">Forgot?</a>
-                    </div>
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                            </svg>
-                        </span>
-                        <input type="password" name="password" required class="w-full input-field pl-12 pr-5 py-4 rounded-2xl outline-none" placeholder="•••••••••">
-                    </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Access Credentials</label>
+                    <input type="password" id="password" required class="w-full px-6 py-5 rounded-2xl bg-gray-50 border border-gray-100 focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all outline-none text-sm font-medium shadow-sm">
                 </div>
 
-                <div class="flex items-center space-x-3 py-2">
-                    <input type="checkbox" id="remember" class="w-4 h-4 rounded text-emerald-500 focus:ring-emerald-500 border-slate-300">
-                    <label for="remember" class="text-sm text-slate-500 font-medium cursor-pointer">Remember this device</label>
+                <div class="pt-6">
+                    <button type="submit" id="loginBtn" class="w-full bg-[#1A1A1A] hover:bg-[#064e3b] text-white py-6 rounded-2xl font-black text-xs uppercase tracking-[0.4em] shadow-2xl transition-all active:scale-[0.98]">Identity Verification</button>
+                    
+                    <div class="flex flex-col items-center gap-4 mt-10">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                            New Partner Entity? 
+                            <a href="{{ route('organisations.register') }}" class="text-[#064e3b] ml-1 hover:underline">Deploy Application</a>
+                        </p>
+                    </div>
                 </div>
-
-                <button type="submit" id="submitBtn" class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold hover:bg-slate-900 transition-all shadow-lg shadow-slate-200 mt-2">
-                    Login to Dashboard
-                </button>
             </form>
-
-            <div id="errorMessage" class="hidden mt-6 p-4 bg-red-50 text-red-600 rounded-xl text-sm font-medium border border-red-100"></div>
-
-            <div class="mt-10 pt-8 border-t border-slate-100 text-center">
-                <p class="text-slate-500">New Organisation? <a href="{{ route('organisations.register') }}" class="text-emerald-500 font-bold hover:underline">Apply Now</a></p>
-            </div>
-        </div>
-
-        <div class="mt-8 text-center">
-            <a href="{{ route('login') }}" class="text-slate-400 text-sm font-medium hover:text-slate-600 transition-colors">Are you an individual donor? Click here</a>
         </div>
     </div>
 </div>
-@endsection
 
-@section('scripts')
 <script>
     document.getElementById('orgLoginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const btn = document.getElementById('submitBtn');
-        const errorEl = document.getElementById('errorMessage');
-        const email = e.target.email.value;
-        const password = e.target.password.value;
+        
+        const btn = document.getElementById('loginBtn');
+        const errorDiv = document.getElementById('loginError');
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
-        errorEl.classList.add('hidden');
         btn.disabled = true;
-        btn.innerHTML = 'Authenticating...';
+        btn.innerHTML = '<span class="flex items-center justify-center animate-pulse tracking-[0.2em] italic">VERIFYING IDENTITY...</span>';
+        errorDiv.classList.add('hidden');
 
         try {
-            const data = await ApiClient.loginOrganisation(email, password);
-            console.log('Login successful:', data);
-            
-            // Redirect to dashboard (porters and organisations might share the dashboard or have specialized ones)
-            window.location.href = '/dashboard';
-        } catch (err) {
-            console.error('Login error:', err);
-            let msg = err.error || err.message || 'Invalid credentials.';
-            
-            if (err.status === 'pending') {
-                msg = 'Your account is still awaiting administrator verification.';
-            }
-            
-            errorEl.textContent = msg;
-            errorEl.classList.remove('hidden');
-        } finally {
+            await ApiClient.loginOrganisation(email, password);
+            window.location.href = '/porter/dashboard';
+        } catch (error) {
+            console.error(error);
+            const msg = error.error || 'Identity rejection. Verification pending or invalid credentials.';
+            errorDiv.textContent = msg;
+            errorDiv.classList.remove('hidden');
             btn.disabled = false;
-            btn.innerHTML = 'Login to Dashboard';
+            btn.innerHTML = 'IDENTITY VERIFICATION';
         }
     });
 </script>
