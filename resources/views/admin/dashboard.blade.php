@@ -1,4 +1,4 @@
-@php $hide_nav = true; @endphp
+@php $hide_nav = true; $hide_footer = true; @endphp
 @extends('layouts.app')
 
 @section('content')
