@@ -59,15 +59,38 @@ class UserController extends Controller
             'password' => 'required|string',
         ]);
 
-        if (!$token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'Invalid credentials'], 401);
+        // 1. Try Standard User Auth
+        if ($token = auth('api')->attempt($credentials)) {
+            return response()->json([
+                'message' => 'Login successful',
+                'access_token' => $token,
+                'user' => auth('api')->user()->load('images'),
+            ]);
         }
 
-        return response()->json([
-            'message' => 'Login successful',
-            'access_token' => $token,
-            'user' => auth()->user()->load('images'),
-        ]);
+        // 2. Try Organisation Auth
+        if ($token = auth('organisation')->attempt($credentials)) {
+            $org = auth('organisation')->user();
+
+            if (!$org->is_verified) {
+                return response()->json([
+                    'error' => 'Your account is pending verification.',
+                    'status' => 'pending'
+                ], 403);
+            }
+
+            // Map for UI Compatibility
+            $org->role = 'organisation';
+            $org->first_name = $org->name;
+
+            return response()->json([
+                'message' => 'Organisation login successful',
+                'access_token' => $token,
+                'user' => $org,
+            ]);
+        }
+
+        return response()->json(['error' => 'Invalid credentials'], 401);
     }
 
     /**

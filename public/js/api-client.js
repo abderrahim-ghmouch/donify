@@ -84,28 +84,23 @@ const ApiClient = {
         });
     },
 
-    loginOrganisation(email, password) {
-        return this.request('/organisations/login', {
-            method: 'POST',
-            body: JSON.stringify({ email, password })
-        }).then(data => {
-            if (data.access_token) {
-                this.setToken(data.access_token);
-                // We use 'organisation' key but store it in 'donify_user' for UI compatibility
-                const org = data.organisation;
-                org.role = 'organisation'; // Ensure role is present for UI logic
-                org.first_name = org.name; // For navbar compatibility
-                this.setUser(org);
-            }
-            return data;
-        });
-    },
+
 
     registerOrganisation(fd) {
         return this.request('/organisations/register', {
             method: 'POST',
             body: fd,
             headers: { 'Content-Type': null }
+        });
+    },
+
+    getFavourites() {
+        return this.request('/favourites');
+    },
+
+    toggleFavourite(campaignId) {
+        return this.request(`/campaigns/${campaignId}/favourite`, {
+            method: 'POST'
         });
     },
 

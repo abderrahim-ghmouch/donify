@@ -58,22 +58,22 @@ class FrontendController extends Controller
 
     public function adminDashboard()
     {
-        $users = \App\Models\User::all();
-        $campaigns = \App\Models\Campaign::with('images')->get();
-        $organisations = \App\Models\Organisation::all();
+        $users = \App\Models\User::latest()->get();
+        $campaigns = \App\Models\Campaign::with('images')->latest()->get();
+        $organisations = \App\Models\Organisation::latest()->get();
         $categories = \App\Models\Category::all();
 
         return view('admin.dashboard', compact('users', 'campaigns', 'organisations', 'categories'));
     }
 
-    public function organisationLogin()
-    {
-        return view('organisations.login');
-    }
-
     public function organisationRegister()
     {
         return view('organisations.register');
+    }
+
+    public function favourites()
+    {
+        return view('favourites');
     }
 
     public function logout(Request $request)
