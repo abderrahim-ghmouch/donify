@@ -40,13 +40,6 @@
                 </div>
             </div>
 
-            <div id="loginHeader" class="hidden">
-                <div class="mb-12 relative z-10">
-                    <h2 class="text-4xl font-extrabold text-white tracking-tight">Partner Login.</h2>
-                    <p class="text-white/30 text-sm mt-1">Access your secure organisational dashboard.</p>
-                </div>
-            </div>
-
             <div id="registerFormContainer">
                 <form id="orgRegisterForm" class="space-y-8 relative z-10">
                     <div id="registerError" class="hidden bg-red-50 text-red-600 p-6 rounded-2xl text-xs font-bold border border-red-100 animate-shake"></div>
@@ -100,32 +93,7 @@
                     <div class="pt-8">
                         <button type="submit" id="registerBtn" class="w-full bg-[#b8860b] hover:bg-[#996515] text-white py-4 rounded-xl font-bold text-sm tracking-wide shadow-lg transition-all active:scale-[0.98]">Complete Registration</button>
                         <p class="text-center mt-6 text-xs text-white/40">
-                            Already registered? <a href="javascript:void(0)" onclick="toggleMode('login')" class="text-[#b8860b] font-bold hover:underline ml-1">Switch to Login</a>
-                        </p>
-                    </div>
-                </form>
-            </div>
-
-            <div id="loginFormContainer" class="hidden">
-                <form id="orgLoginForm" class="space-y-8 relative z-10">
-                    <div id="loginError" class="hidden bg-red-50 text-red-600 p-6 rounded-2xl text-xs font-bold border border-red-100 animate-shake italic"></div>
-
-                    <div class="space-y-6">
-                        <div class="space-y-2 relative">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Official Email</label>
-                            <input type="email" id="loginEmail" required placeholder="name@organisation.org" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
-                        </div>
-
-                        <div class="space-y-2 relative">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Security Key</label>
-                            <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
-                        </div>
-                    </div>
-
-                    <div class="pt-8">
-                        <button type="submit" id="loginBtn" class="w-full bg-[#b8860b] hover:bg-[#996515] text-white py-4 rounded-xl font-bold text-sm tracking-wide shadow-lg transition-all active:scale-[0.98]">Secure Login</button>
-                        <p class="text-center mt-6 text-xs text-white/40">
-                            New organisation? <a href="javascript:void(0)" onclick="toggleMode('register')" class="text-[#b8860b] font-bold hover:underline ml-1">Register Now</a>
+                            Already registered? <a href="{{ route('login') }}" class="text-[#b8860b] font-bold hover:underline ml-1">Sign In</a>
                         </p>
                     </div>
                 </form>
@@ -135,20 +103,6 @@
 </div>
 
 <script>
-    function toggleMode(mode) {
-        if (mode === 'login') {
-            document.getElementById('registerHeader').classList.add('hidden');
-            document.getElementById('registerFormContainer').classList.add('hidden');
-            document.getElementById('loginHeader').classList.remove('hidden');
-            document.getElementById('loginFormContainer').classList.remove('hidden');
-        } else {
-            document.getElementById('loginHeader').classList.add('hidden');
-            document.getElementById('loginFormContainer').classList.add('hidden');
-            document.getElementById('registerHeader').classList.remove('hidden');
-            document.getElementById('registerFormContainer').classList.remove('hidden');
-        }
-    }
-
     // Registration Handler
     document.getElementById('orgRegisterForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -184,33 +138,7 @@
             errorDiv.textContent = msg;
             errorDiv.classList.remove('hidden');
             btn.disabled = false;
-            btn.innerHTML = 'DEPLOY APPLICATION';
-        }
-    });
-
-    // Login Handler
-    document.getElementById('orgLoginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const btn = document.getElementById('loginBtn');
-        const errorDiv = document.getElementById('loginError');
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-
-        btn.disabled = true;
-        btn.innerHTML = '<span class="flex items-center justify-center animate-pulse tracking-widest">VERIFYING IDENTITY...</span>';
-        errorDiv.classList.add('hidden');
-
-        try {
-            await ApiClient.loginOrganisation(email, password);
-            window.location.href = '/porter/dashboard';
-        } catch (error) {
-            console.error(error);
-            const msg = error.error || 'Identity rejection. Verification pending or invalid credentials.';
-            errorDiv.textContent = msg;
-            errorDiv.classList.remove('hidden');
-            btn.disabled = false;
-            btn.innerHTML = 'VERIFY IDENTITY';
+            btn.innerHTML = 'COMPLETE REGISTRATION';
         }
     });
 </script>
