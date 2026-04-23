@@ -33,10 +33,7 @@
         </nav>
 
         <div class="p-10 border-t border-white/5 bg-black/10">
-            <form action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="w-full bg-white text-[#064e3b] py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] transition-all hover:bg-red-50 hover:text-red-600 shadow-xl">Terminate Session</button>
-            </form>
+            <button onclick="ApiClient.logout()" class="w-full bg-white text-[#064e3b] py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] transition-all hover:bg-red-50 hover:text-red-600 shadow-xl cursor-pointer border-none">Terminate Session</button>
         </div>
     </aside>
 
@@ -148,8 +145,16 @@
                                     {{ $o->is_verified ? 'Verified' : 'Validation Required' }}
                                 </span>
                             </td>
-                            <td class="px-12 py-10 text-right">
-                                <button class="bg-white/10 hover:bg-white hover:text-[#064e3b] px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Audit</button>
+                            <td class="px-12 py-10 text-right space-x-2">
+                                @if($o->document_path)
+                                <a href="{{ $o->document_path }}" target="_blank" class="bg-white/5 hover:bg-white/10 px-4 py-3 rounded-xl text-[8px] font-black uppercase tracking-widest transition-all inline-block">Doc</a>
+                                @endif
+                                
+                                @if(!$o->is_verified)
+                                <button onclick="verifyOrg({{ $o->id }})" class="bg-emerald-500 text-[#064e3b] hover:bg-emerald-400 px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Verify</button>
+                                @else
+                                <button onclick="rejectOrg({{ $o->id }})" class="bg-red-500/20 text-red-300 hover:bg-red-500 hover:text-white px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Revoke</button>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
@@ -223,6 +228,34 @@
         // Activate current button
         const btn = document.getElementById('btn-' + name);
         if(btn) btn.classList.add('active');
+    }
+
+    async function verifyOrg(id) {
+        if(!confirm('Authorize this entity for platform access?')) return;
+        try {
+            const resp = await fetch(`/api/organisations/${id}/verify`, { 
+                method: 'POST',
+                headers: { 
+                    'Authorization': `Bearer ${localStorage.getItem('donify_token')}`,
+                    'Accept': 'application/json'
+                }
+            });
+            if(resp.ok) location.reload();
+        } catch(e) { alert('Verification failed.'); }
+    }
+
+    async function rejectOrg(id) {
+        if(!confirm('Revoke access for this entity?')) return;
+        try {
+            const resp = await fetch(`/api/organisations/${id}/reject`, { 
+                method: 'POST',
+                headers: { 
+                    'Authorization': `Bearer ${localStorage.getItem('donify_token')}`,
+                    'Accept': 'application/json'
+                }
+            });
+            if(resp.ok) location.reload();
+        } catch(e) { alert('Action failed.'); }
     }
 </script>
 @endsection

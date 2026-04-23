@@ -16,12 +16,11 @@
     </div>
 
     <div class="max-w-5xl mx-auto w-full relative z-10 text-center">
-        <div class="animate-fade-in">
             <!-- Branded Logo Above Hero -->
             <div class="mb-10 flex justify-center">
                 <img src="{{ asset('images/donifylg.png') }}" class="h-20 w-auto object-contain">
             </div>
-        
+
             <h1 class="text-4xl sm:text-5xl md:text-8xl font-black text-[#1A1A1A] mb-8 leading-tight">
                 Donify <br><span class="text-[#064e3b]">Be the Change</span>
             </h1>
@@ -69,6 +68,32 @@
         <div class="text-center group cursor-default p-8 transition-all duration-500 delay-300">
             <h3 class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">12K+</h3>
             <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Happy Donors</p>
+        </div>
+    </div>
+</section>
+
+<!-- Institutional Partnership Interface -->
+<section class="relative py-24 px-10 z-10">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 border-t border-[#064e3b]/10 pt-24">
+        
+        {{-- Left: Identity Block --}}
+        <div class="max-w-2xl space-y-6">
+            <h2 class="text-4xl md:text-5xl font-black text-[#1A1A1A] leading-tight tracking-tighter">
+                Scale Your Social <br><span class="text-[#064e3b]">Impact as a Partner.</span>
+            </h2>
+            <p class="text-[#1A1A1A]/60 text-lg font-medium max-w-lg leading-relaxed">
+                Connect your organization to the most transparent donation ecosystem. Validate your mission and reach a global network of donors instantly.
+            </p>
+        </div>
+
+        {{-- Right: Direct Access Protocol --}}
+        <div class="flex-shrink-0">
+            <a href="{{ route('organisations.register') }}" class="text-3xl md:text-5xl font-black text-[#1A1A1A] uppercase tracking-tighter hover:text-[#064e3b] transition-all duration-500 flex items-center gap-6 group">
+                Apply Now.
+                <svg class="w-10 h-10 transform group-hover:translate-x-4 transition-transform duration-500" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                    <path d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
         </div>
     </div>
 </section>
