@@ -1,14 +1,4 @@
-<p align="center">
-  <img src="./public/images/donifylg.png" alt="Donify Logo" width="300">
-</p>
-
 # DONIFY — GLOBAL IMPACT HUB
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Aesthetic-Luxury_Heritage-DAA520?style=for-the-badge" alt="Luxury Heritage">
-  <img src="https://img.shields.io/badge/Architecture-High_Performance-064e3b?style=for-the-badge" alt="High Performance">
-  <img src="https://img.shields.io/badge/Security-JWT_Auth-1A1A1A?style=for-the-badge" alt="JWT Auth">
-</p>
 
 **Donify** is a prestigious, high-performance platform designed to bridge the gap between visionary "Porters" (campaigners) and institutional "Donors." Built with the **Luxury Raja** design aesthetic, it prioritizes architectural clarity, professional high-contrast interfaces, and institutional authority.
 
@@ -52,10 +42,10 @@ A sophisticated, cinematic registration flow for organizations, featuring high-i
 
 ## 🏗 Technology Stack
 
-- **Core Engine**: [Laravel 11.x](https://laravel.com) ![](https://img.shields.io/badge/Laravel-FF2D20?style=flat-square&logo=laravel&logoColor=white)
-- **Styling Architecture**: [Tailwind CSS](https://tailwindcss.com) ![](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)
-- **Communication Protocol**: Native AJAX/Fetch with bespoke `ApiClient` wrapper ![](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-- **Identity & Security**: [PHPOpenSourceSaver JWT-Auth](https://github.com/PHP-OpenSource-Saver/jwt-auth) ![](https://img.shields.io/badge/PHP-777BB4?style=flat-square&logo=php&logoColor=white)
+- **Core Engine**: [Laravel 11.x](https://laravel.com)
+- **Styling Architecture**: [Tailwind CSS](https://tailwindcss.com) (Strictly utility-first, "No-CSS" policy)
+- **Communication Protocol**: Native AJAX/Fetch with bespoke `ApiClient` wrapper
+- **Identity & Security**: [PHPOpenSourceSaver JWT-Auth](https://github.com/PHP-OpenSource-Saver/jwt-auth)
 - **Typography**: Quicksand (Geometric Sans Serif)
 
 ---
@@ -109,15 +99,19 @@ A sophisticated, cinematic registration flow for organizations, featuring high-i
 
 Contributors must strictly adhere to the **Luxury Heritage** design system:
 
-- **Primary Contrast**: White (`#FFFFFF`) / Off-Black (`#1A1A1A`) ![](https://img.shields.io/badge/-1A1A1A?style=flat-square&color=1A1A1A)
-- **Accent Materials**: Emerald Green (`#064e3b`) ![](https://img.shields.io/badge/-064e3b?style=flat-square&color=064e3b) , Metallic Gold (`#DAA520`) ![](https://img.shields.io/badge/-DAA520?style=flat-square&color=DAA520)
-- **Surface Strategy**: Dual-tone Beige (`#fbf8f6`) ![](https://img.shields.io/badge/-fbf8f6?style=flat-square&color=fbf8f6) for data-heavy zones.
+- **Primary Contrast**: White (`#FFFFFF`) / Off-Black (`#1A1A1A`)
+- **Accent Materials**: Emerald Green (`#064e3b`), Metallic Gold (`#DAA520`)
+- **Surface Strategy**: Dual-tone Beige (`#fbf8f6`) for data-heavy zones.
 - **Radius Policy**: Fixed `rounded-xl` for all structural cards and inputs.
 
 ---
 
+## ⚖️ License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
 <p align="center">
-  <img src="./public/images/slogan.png" alt="Donify Slogan" width="600">
-  <br>
   <b>Donify — Empowering The Architecture of Change.</b>
 </p>
