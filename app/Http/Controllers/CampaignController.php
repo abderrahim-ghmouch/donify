@@ -13,7 +13,7 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::with(['images', 'category'])
+        $campaigns = Campaign::with(['images', 'category', 'user'])
             ->where('status', 'active')
             ->latest()
             ->get();
