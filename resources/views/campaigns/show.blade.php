@@ -8,31 +8,31 @@
     <div class="absolute inset-x-0 bottom-0 h-[80%] bg-gradient-to-t from-[#064e3b]/40 via-[#064e3b]/10 to-transparent pointer-events-none z-0"></div>
 
     {{-- Header Section: Visual Identity --}}
-    <section class="relative pt-32 pb-20 px-8 z-10 transition-all duration-700">
+    <section class="relative pt-24 pb-12 px-8 z-10 transition-all duration-700">
         <div class="max-w-7xl mx-auto">
             {{-- Breadcrumbs / Meta --}}
-            <div class="flex flex-wrap items-center gap-4 mb-8">
-                <a href="/campaigns" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-[#1A1A1A] transition-colors">Campaigns</a>
+            <div class="flex flex-wrap items-center gap-4 mb-10">
+                <a href="/campaigns" class="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 hover:text-[#1A1A1A] transition-colors">Hall</a>
                 <span class="text-gray-300 text-[10px]">/</span>
-                <span class="text-[10px] font-black uppercase tracking-[0.2em] text-[#064e3b]">{{ $campaign->category->name ?? 'Visionary' }}</span>
-                <div class="px-3 py-1 rounded-full bg-black text-[#059669] text-[8px] font-black uppercase tracking-widest ml-auto border border-[#059669]/20">
-                    Mission: Active
+                <span class="text-[10px] font-black uppercase tracking-[0.4em] text-[#059669]">{{ $campaign->category->name ?? 'Visionary' }}</span>
+                <div class="px-5 py-2 rounded-xl bg-black/90 backdrop-blur-md text-[#059669] text-[9px] font-black uppercase tracking-widest ml-auto border border-[#059669]/30 shadow-xl">
+                    Mission Status: {{ strtoupper($campaign->status) }}
                 </div>
             </div>
 
             {{-- Main Title --}}
-            <h1 class="text-4xl md:text-7xl font-black text-[#1A1A1A] leading-[1.1] mb-8 tracking-tighter">
+            <h1 class="text-4xl md:text-7xl font-black text-[#1A1A1A] leading-[1.05] mb-12 tracking-tighter">
                 {{ $campaign->title }}.
             </h1>
 
             {{-- Porter Identity --}}
-            <div class="flex items-center gap-4 border-t border-black/5 pt-8">
-                <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden border-2 border-white shadow-xl">
-                    <img src="https://ui-avatars.com/api/?name={{ urlencode($campaign->user->name) }}&background=064e3b&color=fff" alt="Porter">
+            <div class="flex items-center gap-5 border-t border-black/[0.03] pt-12">
+                <div class="w-16 h-16 rounded-xl bg-white border-2 border-black/5 p-1 shadow-2xl relative overflow-hidden group">
+                    <img class="w-full h-full object-cover rounded-lg group-hover:scale-110 transition-transform duration-700" src="https://ui-avatars.com/api/?name={{ urlencode($campaign->user->name) }}&background=064e3b&color=fff" alt="Lead">
                 </div>
                 <div>
-                    <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest italic">Initiated by</p>
-                    <h3 class="text-sm font-black text-[#1A1A1A]">{{ $campaign->user->name }}</h3>
+                    <span class="text-[9px] font-black text-[#059669] uppercase tracking-[0.3em] block mb-1 italic">Mission Lead:</span>
+                    <h3 class="text-lg font-black text-[#1A1A1A] uppercase tracking-wider italic underline decoration-[#059669]/20 underline-offset-8">{{ $campaign->user->name }}</h3>
                 </div>
             </div>
         </div>
@@ -45,87 +45,86 @@
             {{-- Left: Mission Narrative --}}
             <div class="flex-1 space-y-12">
                 {{-- Cover Image --}}
-                <div class="rounded-[2.5rem] overflow-hidden shadow-2xl bg-gray-100 group">
+                <div class="rounded-xl overflow-hidden shadow-2xl bg-white border border-black/5 group">
                     @if($campaign->images && count($campaign->images) > 0)
-                        <img src="{{ $campaign->images[0]->url }}" class="w-full h-auto object-cover min-h-[400px] group-hover:scale-105 transition-transform duration-1000" alt="Campaign Identity">
+                        <img src="{{ $campaign->images[0]->url }}" class="w-full h-auto object-cover min-h-[500px] group-hover:scale-110 transition-transform duration-1000" alt="Identity">
                     @else
-                        <div class="w-full h-[500px] flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-200">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                            </svg>
-                        </div>
+                        <div class="w-full h-[500px] flex items-center justify-center bg-gray-50 uppercase font-black text-gray-200 tracking-tighter text-4xl">No Image Asset</div>
                     @endif
                 </div>
 
                 {{-- The Story --}}
-                <div class="prose prose-xl prose-stone max-w-none bg-white/40 backdrop-blur-xl p-12 rounded-[2.5rem] border border-black/5 shadow-sm">
-                    <h2 class="text-2xl font-black text-[#1A1A1A] mb-8 tracking-tight italic">Mission Narrative.</h2>
-                    <div class="text-gray-600 font-medium leading-relaxed whitespace-pre-line text-lg">
+                <div class="prose prose-stone max-w-none bg-[#fbf8f6] p-12 rounded-xl border-2 border-black/5 shadow-inner">
+                    <h2 class="text-2xl font-black text-[#1A1A1A] mb-10 tracking-[0.4em] uppercase underline decoration-[#059669] decoration-4 underline-offset-8">Mission Narrative.</h2>
+                    <div class="text-black font-medium leading-relaxed whitespace-pre-line text-lg opacity-80">
                         {{ $campaign->description }}
                     </div>
                 </div>
 
                 {{-- Impact Stats --}}
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div class="bg-black p-8 rounded-3xl group hover:bg-[#064e3b] transition-all duration-500 transform hover:-translate-y-2">
-                        <h4 class="text-[#059669] text-[10px] font-black uppercase tracking-widest mb-2 group-hover:text-white">Backers</h4>
-                        <p class="text-white text-3xl font-black">{{ $campaign->donations->count() }}</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="bg-black p-8 rounded-xl group transition-all duration-500 shadow-xl border-2 border-black">
+                        <h4 class="text-[#059669] text-[9px] font-black uppercase tracking-widest mb-4">Backers</h4>
+                        <p class="text-white text-4xl font-black tracking-tighter">{{ $campaign->donations->count() }}</p>
                     </div>
-                    <div class="bg-white p-8 rounded-3xl border border-black/5 shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2">
-                        <h4 class="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-2">Category</h4>
-                        <p class="text-[#1A1A1A] text-lg font-black tracking-tighter">{{ $campaign->category->name ?? 'General' }}</p>
+                    <div class="bg-white p-8 rounded-xl border-2 border-black/5 shadow-sm transition-all hover:bg-[#fbf8f6]">
+                        <h4 class="text-gray-400 text-[9px] font-black uppercase tracking-widest mb-4">Sector</h4>
+                        <p class="text-[#1A1A1A] text-xl font-black tracking-tighter uppercase">{{ $campaign->category->name ?? 'Vision' }}</p>
                     </div>
-                    <div class="bg-white p-8 rounded-3xl border border-black/5 shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2">
-                        <h4 class="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-2">Status</h4>
-                        <p class="text-[#1A1A1A] text-lg font-black tracking-tighter italic">{{ ucfirst($campaign->status) }}</p>
+                    <div class="bg-white p-8 rounded-xl border-2 border-black/5 shadow-sm transition-all hover:bg-[#fbf8f6]">
+                        <h4 class="text-gray-400 text-[9px] font-black uppercase tracking-widest mb-4">Phase</h4>
+                        <p class="text-[#1A1A1A] text-xl font-black tracking-tighter uppercase italic">{{ $campaign->status }}</p>
                     </div>
-                    <div class="bg-white p-8 rounded-3xl border border-black/5 shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2">
-                        <h4 class="text-gray-400 text-[10px] font-black uppercase tracking-widest mb-2">Conclusion</h4>
-                        <p class="text-[#1A1A1A] text-lg font-black tracking-tighter">{{ $campaign->end_date ? \Carbon\Carbon::parse($campaign->end_date)->format('M d, Y') : 'Infinite' }}</p>
+                    <div class="bg-white p-8 rounded-xl border-2 border-black/5 shadow-sm transition-all hover:bg-[#fbf8f6]">
+                        <h4 class="text-gray-400 text-[9px] font-black uppercase tracking-widest mb-4">Horizon</h4>
+                        <p class="text-[#1A1A1A] text-xl font-black tracking-tighter uppercase">{{ $campaign->end_date ? \Carbon\Carbon::parse($campaign->end_date)->format('M d') : 'Open' }}</p>
                     </div>
                 </div>
             </div>
 
             {{-- Right: Donation Hub (Sticky) --}}
-            <div class="w-full md:w-[400px]">
+            <div class="w-full md:w-[420px]">
                 <div class="sticky top-12">
-                    <div class="bg-[#064e3b] p-10 rounded-[2.5rem] shadow-2xl border-4 border-black group relative overflow-hidden">
+                    <div class="bg-[#064e3b] p-12 rounded-xl shadow-2xl border-2 border-black group relative overflow-hidden">
                         {{-- Background Accent --}}
                         <div class="absolute -top-20 -right-20 w-40 h-40 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-all"></div>
                         
                         {{-- Progress Info --}}
                         <div class="relative z-10">
-                            <h3 class="text-white text-[10px] font-black uppercase tracking-[0.3em] mb-12 italic border-b border-white/10 pb-4">Funding Status</h3>
+                            <h3 class="text-white text-[10px] font-black uppercase tracking-[0.5em] mb-12 italic border-b-2 border-white/10 pb-4">Funding Protocol</h3>
                             
-                            <div class="mb-10">
+                            <div class="mb-12">
                                 <div class="flex items-baseline gap-2 text-white mb-2">
-                                    <span class="text-5xl font-black italic tracking-tighter" id="currentAmountDisplay">${{ number_format($campaign->current_amount) }}</span>
+                                    <span class="text-6xl font-black italic tracking-tighter" id="currentAmountDisplay">${{ number_format($campaign->current_amount) }}</span>
                                 </div>
-                                <p class="text-[#059669] text-sm font-bold tracking-tight">Gathered of ${{ number_format($campaign->target_amount) }} target</p>
+                                <p class="text-emerald-400 text-[10px] font-black uppercase tracking-widest">Gathered of ${{ number_format($campaign->target_amount) }} Goal</p>
                             </div>
 
                             {{-- Progress Bar --}}
                             @php
                                 $percentage = min(100, ($campaign->current_amount / max(1, $campaign->target_amount)) * 100);
                             @endphp
-                            <div class="w-full h-4 bg-black/40 rounded-full mb-4 overflow-hidden border border-white/5">
-                                <div class="h-full bg-gradient-to-r from-emerald-500 to-emerald-300 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.5)] transition-all duration-1000" style="width: {{ $percentage }}%"></div>
+                            <div class="w-full h-3 bg-black rounded-full mb-4 overflow-hidden border border-white/10">
+                                <div class="h-full bg-emerald-500 rounded-full transition-all duration-1000" style="width: {{ $percentage }}%"></div>
                             </div>
                             <div class="flex justify-between text-white text-[10px] font-black uppercase tracking-widest mb-16 px-1">
-                                <span>{{ number_format($percentage, 1) }}% Funded</span>
-                                <span>{{ $campaign->end_date ? \Carbon\Carbon::parse($campaign->end_date)->diffForHumans() : 'Active' }}</span>
+                                <span>{{ number_format($percentage, 1) }}% Efficiency</span>
+                                <span class="italic text-emerald-400">{{ $campaign->end_date ? \Carbon\Carbon::parse($campaign->end_date)->diffForHumans() : 'Live' }}</span>
                             </div>
 
                             {{-- Pledge Form --}}
-                            <div class="space-y-6">
-                                <div class="relative">
-                                    <span class="absolute left-6 top-1/2 -translate-y-1/2 text-[#1A1A1A] font-black text-xl">$</span>
-                                    <input type="number" id="donationAmount" placeholder="Enter amount" class="w-full bg-[#fbf8f6] border-2 border-black rounded-2xl py-6 pl-12 pr-8 text-black font-black text-xl outline-none focus:ring-4 focus:ring-emerald-500/20 transition-all placeholder-gray-300">
+                            <div class="space-y-4">
+                                <div class="space-y-4">
+                                    <label class="text-[10px] font-black text-white/40 uppercase tracking-widest ml-1 leading-none">Investment Amount</label>
+                                    <div class="relative">
+                                        <span class="absolute left-6 top-1/2 -translate-y-1/2 text-black font-black text-xl">$</span>
+                                        <input type="number" id="donationAmount" placeholder="0.00" class="w-full bg-[#fbf8f6] border-2 border-black rounded-xl py-6 pl-12 pr-8 text-black font-black text-2xl outline-none focus:bg-white transition-all placeholder:text-black/10">
+                                    </div>
                                 </div>
-                                <button id="donateBtn" class="w-full bg-[#1A1A1A] text-[#059669] border-2 border-[#1A1A1A] hover:bg-black hover:text-white rounded-2xl py-6 font-black uppercase tracking-widest text-xs transition-all shadow-xl italic cursor-pointer transform hover:-translate-y-1 active:scale-95">
-                                    Pledge Support
+                                <button id="donateBtn" class="w-full bg-black text-white hover:bg-zinc-800 rounded-xl py-7 font-black uppercase tracking-[0.4em] text-[10px] transition-all shadow-2xl active:scale-95 mt-4">
+                                    Initialize Support Protocol →
                                 </button>
-                                <p id="donationMessage" class="hidden text-center text-[10px] font-black uppercase tracking-widest text-emerald-400 animate-pulse mt-4"></p>
+                                <p id="donationMessage" class="hidden text-center text-[10px] font-black uppercase tracking-widest text-emerald-400 animate-pulse mt-6"></p>
                             </div>
                         </div>
                     </div>
