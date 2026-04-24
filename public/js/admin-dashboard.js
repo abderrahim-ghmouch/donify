@@ -95,7 +95,7 @@ function renderUT() {
         ['Identity', 'Role', 'Security Status', 'Actions'],
         (AU || []).map(u => [
             `<div class="flex items-center gap-5 text-left">${thumb(u.images?.url, u.first_name)}<div><div class="font-black text-[#1A1A1A] text-sm italic tracking-tight">${x(u.first_name + ' ' + u.last_name)}</div><div class="text-[10px] text-gray-400 font-bold italic">${x(u.email)}</div></div></div>`,
-            `<div class="text-[10px] font-black uppercase tracking-widest text-[#064e3b] italic">${u.role}</div>`,
+            `<div class="text-[10px] font-black uppercase tracking-widest text-emerald-800 italic">${u.role}</div>`,
             u.is_banned ? badge('cancelled', 'BANNED') : badge('active', 'VERIFIED'),
             u.role === 'admin' ? '-' : (u.is_banned ? mBtn(u.id, 'unbanU', 'Unlock', '#064e3b') : mBtn(u.id, 'banU', 'Restrict', '#DAA520'))
         ])
@@ -116,7 +116,7 @@ function renderOT() {
 function renderCatG() {
     const e = document.getElementById('catCount'); if(e) e.textContent = `${ACAT.length} Total Domains`;
     document.getElementById('catGrid').innerHTML = (ACAT || []).map(c => `
-        <div class="flex items-center justify-between bg-white border border-black/5 rounded-2xl px-6 py-4 transition-all duration-500 hover:shadow-lg group">
+        <div class="flex items-center justify-between bg-white border-2 border-black/5 rounded-2xl px-6 py-4 transition-all duration-500 hover:shadow-lg group">
             <span class="font-black text-[#1A1A1A] text-xs uppercase tracking-widest italic">${x(c.category_name)}</span>
             <button onclick="deleteCat(${c.id},this)" class="opacity-0 group-hover:opacity-100 p-2 text-red-300 hover:text-red-500 transition-all border-none cursor-pointer bg-transparent">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
@@ -163,11 +163,11 @@ function tbl(hs, rs) {
     return `
         <div class="overflow-x-auto"><table class="w-full border-collapse">
             <thead class="bg-black/5">
-                <tr class="border-b border-black/5">
-                    ${hs.map(h => `<th class="px-10 py-6 text-left text-[10px] font-black uppercase tracking-[0.4em] text-gray-400">${h}</th>`).join('')}
+                <tr class="border-b-2 border-black/5">
+                    ${hs.map(h => `<th class="px-10 py-6 text-left text-[10px] font-black uppercase tracking-[0.4em] text-black/40">${h}</th>`).join('')}
                 </tr>
             </thead>
-            <tbody class="divide-y divide-black/5">
+            <tbody class="divide-y-2 divide-black/5">
                 ${rs.map(r => `
                     <tr class="hover:bg-white/40 transition-all duration-300">
                         ${r.map(c => `<td class="px-10 py-8 text-xs align-middle text-[#1A1A1A] font-medium tracking-tight">${c}</td>`).join('')}
@@ -185,12 +185,12 @@ function ovItem(id, t, s, img, ok, no, okT) {
                 ${thumb(img, t)}
                 <div>
                     <div class="font-black text-[#1A1A1A] text-sm leading-tight">${x(t)}</div>
-                    <div class="text-[9px] text-gray-400 font-black uppercase tracking-[0.2em] mt-1.5">${x(s || 'Primary Instance')}</div>
+                    <div class="text-[9px] text-black/20 font-black uppercase tracking-[0.2em] mt-1.5">${x(s || 'Primary Instance')}</div>
                 </div>
             </div>
             <div class="flex gap-4">
-                <button onclick="${ok}(${id},this)" class="bg-[#1A1A1A] hover:bg-[#064e3b] text-white px-6 py-3 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all duration-300 hover:scale-[1.05] active:scale-95 border-none cursor-pointer shadow-lg shadow-black/10">${okT}</button>
-                <button onclick="${no}(${id},this)" class="bg-white text-gray-300 hover:text-red-500 border border-black/5 px-4 py-3 rounded-xl transition-all cursor-pointer shadow-sm">
+                <button onclick="${ok}(${id},this)" class="bg-[#1A1A1A] hover:bg-zinc-800 text-white px-6 py-3 rounded-xl text-[10px] font-black tracking-widest uppercase transition-all duration-300 border-none cursor-pointer shadow-lg shadow-black/10">${okT}</button>
+                <button onclick="${no}(${id},this)" class="bg-white text-gray-300 hover:text-red-500 border-2 border-black/5 px-4 py-3 rounded-xl transition-all cursor-pointer shadow-sm">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
@@ -199,7 +199,7 @@ function ovItem(id, t, s, img, ok, no, okT) {
 }
 
 function mBtn(id, fn, t, color) {
-    return `<button onclick="${fn}(${id},this)" class="bg-white border-2 text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-xl transition-all duration-300 hover:scale-[1.05] active:scale-95 cursor-pointer shadow-sm hover:shadow-md" style="color:${color}; border-color: ${color}20">${t}</button>`;
+    return `<button onclick="${fn}(${id},this)" class="bg-white border-2 text-[10px] font-black uppercase tracking-widest px-6 py-3 rounded-xl transition-all duration-300 hover:bg-slate-50 cursor-pointer shadow-sm hover:shadow-sm" style="color:${color}; border-color: ${color}20">${t}</button>`;
 }
 
 function btnGrp(id, ok, no, okT) {
@@ -207,7 +207,7 @@ function btnGrp(id, ok, no, okT) {
 }
 
 function badge(s, over) {
-    const c = s==='pending' ? 'text-amber-500 bg-amber-500/10' : (s==='active' ? 'text-[#064e3b] bg-[#064e3b]/10' : 'text-red-500 bg-red-50');
+    const c = s==='pending' ? 'text-amber-600 bg-amber-50 border-2 border-amber-100' : (s==='active' ? 'text-emerald-700 bg-emerald-50 border-2 border-emerald-200/50' : 'text-red-500 bg-red-50 border-2 border-red-100');
     return `<span class="px-4 py-2 rounded-xl text-[9px] font-black uppercase tracking-[0.15em] ${c}">${over || s}</span>`;
 }
 
@@ -223,6 +223,6 @@ function empty(m) { return `<div class="p-20 text-center text-gray-200 font-blac
 
 function tst(m, tp = 'success') {
     const t = document.getElementById('toast'); t.textContent = m;
-    t.className = `fixed bottom-10 right-10 z-[100] ${tp=='error'?'bg-red-500':'bg-[#1A1A1A]'} text-white px-10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl transition-all duration-700 opacity-100 translate-y-0 pointer-events-none italic border-l-4 border-[#DAA520]`;
+    t.className = `fixed bottom-10 right-10 z-[100] ${tp=='error'?'bg-red-500':'bg-black'} text-white px-10 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-2xl transition-all duration-700 opacity-100 translate-y-0 pointer-events-none italic border-2 border-white/10`;
     setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(80px)'; }, 4000);
 }
