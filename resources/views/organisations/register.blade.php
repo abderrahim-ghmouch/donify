@@ -10,33 +10,32 @@
     </div>
     
     {{-- Form Zone (Right): Midnight Emerald Theme --}}
-    <div class="w-full md:w-1/2 overflow-y-auto custom-scrollbar relative z-20 shadow-lg" style="background: linear-gradient(to right, #163a30 0%, #163a30 40%, #253d36 70%, #8ca19b 90%, #e3e3e3 100%);">
-        <div class="max-w-xl mx-auto px-8 py-16 relative z-10">
+    <div class="w-full md:w-1/2 overflow-y-auto custom-scrollbar relative z-20 shadow-lg bg-gradient-to-bl from-[#10b981] via-[#064e3b] to-[#0d1f1a]">
+        <div class="max-w-4xl mx-auto px-8 py-20 relative z-10">
             {{-- Top Navigation --}}
             <div class="mb-10 flex justify-between items-center relative z-10">
                 <a href="{{ route('home') }}" class="inline-flex items-center gap-3 text-white/70 hover:text-white transition-all group font-bold text-sm bg-white/5 px-5 py-2.5 rounded-full border border-white/10 hover:bg-white/10 shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-5"  viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
                     Return to Home
                 </a>
             </div>
 
-            {{-- Platform Slogan at Apex --}}
             <div class="mb-16">
                 <div class="flex items-center gap-3 mb-4">
-                    <img src="{{ asset('images/donifylg.png') }}" class="h-8 w-auto brightness-0 invert opacity-80">
-                    <div class="h-4 w-px bg-white/10"></div>
-                    <span class="text-[10px] font-black uppercase tracking-[0.4em] text-[#fbf8f6]/30">Empowering Impact.</span>
+                    <img src="{{ asset('images/donifylg.png') }}" class="h-24 w-auto">
+                    <div class="h-6 w-px bg-white/10"></div>
+                    <span class="text-[12px] font-black uppercase tracking-[0.4em] text-[#fbf8f6]/30">Empowering Impact</span>
                 </div>
                 <h1 class="text-3xl font-bold text-[#fbf8f6] leading-tight tracking-tight">Be the <span class="text-white/40">Change.</span></h1>
             </div>
 
             {{-- State Headers --}}
             <div id="registerHeader">
-                <div class="mb-12 relative z-10">
-                    <h2 class="text-4xl font-extrabold text-white tracking-tight">Register Organisation.</h2>
-                    <p class="text-white/30 text-sm mt-1">Initialize your professional profile and global presence.</p>
+                <div class="mb-16 relative z-10">
+                    <h2 class="text-6xl font-extrabold text-white tracking-tighter leading-none uppercase">Register Organisation</h1>
+                    <p class="text-yellow-200 text-lg mt-4 uppercase tracking-[0.3em] font-bold">register your organisation</p>
                 </div>
             </div>
 
@@ -47,53 +46,53 @@
                 {{-- Section 1: Identity --}}
                 <div class="space-y-6">
                     {{-- Identification Section --}}
-                    <div class="space-y-2 relative">
-                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Organisation Name</label>
-                        <input type="text" id="name" required placeholder="Official legal name" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
+                    <div class="space-y-3 relative">
+                        <label class="text-[11px] font-black text-black uppercase tracking-[0.4em] ml-1">Organisation Identity</label>
+                        <input type="text" id="name" required placeholder="OFFICIAL LEGAL NAME" class="w-full px-8 py-5 rounded-2xl bg-[#fbf8f6] border-2 border-black focus:bg-white transition-all outline-none text-sm font-bold text-black placeholder:text-black/20">
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2 relative">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Official Email</label>
-                            <input type="email" id="email" required placeholder="name@organisation.org" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3 relative">
+                            <label class="text-[11px] font-black text-black uppercase tracking-[0.4em] ml-1">Official Protocol Email</label>
+                            <input type="email" id="email" required placeholder="NAME@ORGANISATION.ORG" class="w-full px-8 py-5 rounded-2xl bg-[#fbf8f6] border-2 border-black focus:bg-white transition-all outline-none text-sm font-bold text-black placeholder:text-black/20">
                         </div>
-                        <div class="space-y-2 relative">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Contact Phone</label>
-                            <input type="text" id="phone" required placeholder="+1 (555) 000-0000" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
+                        <div class="space-y-3 relative">
+                            <label class="text-[11px] font-black text-black uppercase tracking-[0.4em] ml-1">Direct Secure Line</label>
+                            <input type="text" id="phone" required placeholder="+212 000-000000" class="w-full px-8 py-5 rounded-2xl bg-[#fbf8f6] border-2 border-black focus:bg-white transition-all outline-none text-sm font-bold text-black placeholder:text-black/20">
                         </div>
                     </div>
 
-                    <div class="space-y-2 relative">
-                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Physical Address</label>
-                        <input type="text" id="address" required placeholder="Full office address" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
+                    <div class="space-y-3 relative">
+                        <label class="text-[11px] font-black text-black uppercase tracking-[0.4em] ml-1">Physical Base Address</label>
+                        <input type="text" id="address" required placeholder="FULL OFFICE SUITE ADDRESS" class="w-full px-8 py-5 rounded-2xl bg-[#fbf8f6] border-2 border-black focus:bg-white transition-all outline-none text-sm font-bold text-black placeholder:text-black/20">
                     </div>
 
-                    <div class="space-y-2 relative">
-                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Mission Description</label>
-                        <textarea id="description" placeholder="Briefly describe your purpose and goals..." class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20 h-32 resize-none"></textarea>
+                    <div class="space-y-3 relative">
+                        <label class="text-[11px] font-black text-black uppercase tracking-[0.4em] ml-1">Mission Synthesis</label>
+                        <textarea id="description" placeholder="BRIEF ARCHITECTURE OF YOUR GOALS..." class="w-full px-8 py-5 rounded-2xl bg-[#fbf8f6] border-2 border-black focus:bg-white transition-all outline-none text-sm font-bold text-black placeholder:text-black/20 h-40 resize-none"></textarea>
                     </div>
 
-                    <div class="space-y-2 relative">
-                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Security Key (Password)</label>
-                        <input type="password" id="password" required placeholder="••••••••" class="w-full px-6 py-4 rounded-xl bg-[#1d352f] border border-[#2d4d44] focus:border-[#b8860b] focus:bg-[#25423b] transition-all outline-none text-sm font-medium text-white placeholder:text-white/20">
+                    <div class="space-y-3 relative">
+                        <label class="text-[11px] font-black text-black uppercase tracking-[0.4em] ml-1">Security Access Key</label>
+                        <input type="password" id="password" required placeholder="••••••••" class="w-full px-8 py-5 rounded-2xl bg-[#fbf8f6] border-2 border-black focus:bg-white transition-all outline-none text-sm font-bold text-black placeholder:text-black/20">
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Brand Logo</label>
-                            <input type="file" id="logo" accept="image/*" class="w-full text-[10px] text-white/20 file:mr-4 file:py-2.5 file:px-5 file:rounded-lg file:border file:border-[#2d4d44] file:text-[10px] file:font-bold file:uppercase file:bg-[#1d352f] file:text-white hover:file:bg-[#25423b] transition-all cursor-pointer">
+                            <label class="text-sm font-black text-black uppercase tracking-widest ml-1">Brand Logo</label>
+                            <input type="file" id="logo" accept="image/*" class="w-full text-[10px] text-black/40 file:mr-4 file:py-2.5 file:px-5 file:rounded-lg file:border-2 file:border-black file:text-[10px] file:font-black file:uppercase file:bg-white file:text-black hover:file:bg-black hover:file:text-white transition-all cursor-pointer">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest ml-1">Legal Dossier (PDF)</label>
-                            <input type="file" id="document" required accept=".pdf,image/*" class="w-full text-[10px] text-white/20 file:mr-4 file:py-2.5 file:px-5 file:rounded-lg file:border file:border-[#2d4d44] file:text-[10px] file:font-bold file:uppercase file:bg-[#1d352f] file:text-white hover:file:bg-[#25423b] transition-all cursor-pointer">
+                            <label class="text-sm font-black text-black uppercase tracking-widest ml-1">Legal Dossier (PDF)</label>
+                            <input type="file" id="document" required accept=".pdf,image/*" class="w-full text-[10px] text-black/40 file:mr-4 file:py-2.5 file:px-5 file:rounded-lg file:border-2 file:border-black file:text-[10px] file:font-black file:uppercase file:bg-white file:text-black hover:file:bg-black hover:file:text-white transition-all cursor-pointer">
                         </div>
                     </div>
                 </div>
 
                     <div class="pt-8">
-                        <button type="submit" id="registerBtn" class="w-full bg-[#b8860b] hover:bg-[#996515] text-white py-4 rounded-xl font-bold text-sm tracking-wide shadow-lg transition-all active:scale-[0.98]">Complete Registration</button>
-                        <p class="text-center mt-6 text-xs text-white/40">
-                            Already registered? <a href="{{ route('login') }}" class="text-[#b8860b] font-bold hover:underline ml-1">Sign In</a>
+                        <button type="submit" id="registerBtn" class="w-full bg-black hover:bg-zinc-800 text-white py-6 rounded-xl font-black text-xs uppercase tracking-[0.4em] shadow-2xl transition-all active:scale-[0.98] border-none">Complete Registration</button>
+                        <p class="text-center mt-6 text-xs text-white/40 uppercase tracking-widest font-bold">
+                            Already registered? <a href="{{ route('login') }}" class="text-emerald-400 font-black hover:underline ml-1">Sign In</a>
                         </p>
                     </div>
                 </form>

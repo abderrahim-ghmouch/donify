@@ -2,129 +2,147 @@
 
 @section('content')
 
-{{-- Porter Command Dashboard (Ultra-Premium Glass Modal) --}}
-<div class="min-h-screen bg-[#fbf8f6] font-quicksand relative overflow-hidden flex flex-col">
+{{-- Porter Command Dashboard (Luxury Raja Light) --}}
+<div class="min-h-screen bg-[#FAFAF5] font-quicksand relative overflow-hidden flex flex-col text-black selection:bg-emerald-500/ font-sans">
     
-    {{-- Subtle Atmospheric Rise: Low Opacity Forest Green Gradient --}}
-    {{-- Ultimate Static Rise: Max-Depth Forest Green Gradient --}}
-    <div class="absolute bottom-0 left-0 right-0 h-[1200px] bg-gradient-to-t from-[#064e3b]/90 via-[#064e3b]/20 via-40% to-transparent pointer-events-none z-0"></div>
+    {{-- Atmospheric Depth Prestige --}}
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute -top-[10%] -right-[5%] w-[70%] h-[70%] bg-emerald-500/5 blur-[180px] rounded-full opacity-40"></div>
+        <div class="absolute -bottom-[20%] -left-[10%] w-[60%] h-[60%] bg-amber-500/5 blur-[150px] rounded-full opacity-40"></div>
+    </div>
 
     {{-- Hero Section --}}
-    <section class="relative pt-40 pb-16 px-8 z-10 text-center">
-        <div class="max-w-7xl mx-auto flex flex-col items-center animate-show">
-            <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-24 w-auto mb-12 opacity-90 drop-shadow-2xl">
-            <h1 class="text-6xl md:text-8xl font-black text-[#1A1A1A] leading-tight mb-4 tracking-tighter">
-                Campaign Dashboard.
-            </h1>
-            <h2 class="text-2xl font-bold text-[#996515] tracking-tight mb-16">
-                Welcome, <span id="heroName" class="text-[#1A1A1A]">Porter</span>.
-            </h2>
+    <section class="relative pt-40 pb-24 px-8 z-10 text-center">
+        <div class="max-w-7xl mx-auto flex flex-col items-center">
+            <div class="relative group mb-12 cursor-pointer transition-all duration-700">
+                <div class="absolute -inset-6 bg-emerald-500/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-24 w-auto relative z-10 opacity-90 transition-all duration-500">
+            </div>
             
-            <button onclick="openMissionModal()" class="px-14 py-6 bg-[#1A1A1A] text-white rounded-xl text-[10px] font-black uppercase tracking-[0.4em] hover:bg-black transition-all shadow-[0_20px_50px_rgba(0,0,0,0.2)] active:scale-95 transform">
-                + Spread Hope.
+            <h1 class="text-7xl md:text-9xl font-black text-black leading-none mb-8 tracking-tighter">
+                Registry.
+            </h1>
+            <div class="flex flex-col items-center gap-6 mb-24">
+                <div class="h-[1px] w-16 bg-amber-500/20"></div>
+                <h2 class="text-xs font-black text-black uppercase tracking-[1em] ml-[1em]">
+                    Entity: <span id="heroName" class="text-black font-black tracking-widest">...</span>
+                </h2>
+            </div>
+            
+            <button onclick="openMissionModal()" class="group relative px-20 py-8 bg-black text-white rounded-xl text-[11px] font-black uppercase tracking-[0.6em] transition-all shadow-3xl shadow-black/20 overflow-hidden">
+                <div class="absolute inset-0 bg-[#C5A021] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                <span class="relative z-10">Launch The Campaign</span>
             </button>
         </div>
     </section>
 
     {{-- Main Workspace --}}
-    <section class="relative z-10 px-8 pb-32">
+    <section class="relative z-10 px-8 pb-40">
         <div class="max-w-6xl mx-auto">
-            <div class="border-b-2 border-black/5 pb-8 mb-10 flex items-center justify-between">
-                <h3 class="text-xs font-black text-[#1A1A1A] uppercase tracking-[0.4em]">Campaign Registry.</h3>
+            <div class="flex items-center justify-between mb-16 px-10">
+                <div class="space-y-2">
+                    <h3 class="text-[10px] font-black text-black/40 uppercase tracking-[0.6em]">Global Distribution Stream</h3>
+                    <div class="h-1.5 w-10 bg-black rounded-full"></div>
+                </div>
+                <div class="flex items-center gap-4 border-b-2 border-amber-500/20 pb-2">
+                    <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></div>
+                    <div class="text-[10px] font-black text-emerald-800 uppercase tracking-widest leading-none">Status: Security Cleared</div>
+                </div>
             </div>
-            <div class="flex flex-col gap-5" id="myCampaignsList">
+
+            <div class="flex flex-col gap-10" id="myCampaignsList">
                 {{-- Skeleton List --}}
-                @for($i=0;$i<4;$i++)
-                <div class="bg-white h-28 rounded-xl border border-black/5 animate-pulse shadow-sm"></div>
+                @for($i=0;$i<3;$i++)
+                <div class="bg-white h-40 rounded-2xl border-2 border-emerald-500/10 animate-pulse shadow-sm"></div>
                 @endfor
             </div>
         </div>
     </section>
 
-    {{-- Premium Modern Modal: Unified Production Console --}}
-    <div id="missionModal" class="fixed inset-0 z-[100] hidden opacity-0 transition-opacity duration-500 flex items-center justify-center p-4">
-        {{-- High-Intensity Backdrop Blur --}}
-        <div class="absolute inset-0 bg-[#064e3b]/10 backdrop-blur-xl transition-all" onclick="closeMissionModal()"></div>
+    {{-- Modern Modal Console --}}
+    <div id="missionModal" class="fixed inset-0 z-[100] hidden opacity-0 transition-all duration-500 flex items-center justify-center p-4 md:p-8">
+        {{-- Prestige Backdrop --}}
+        <div class="absolute inset-0 bg-[#FAFAF5]/80 backdrop-blur-xl transition-all" onclick="closeMissionModal()"></div>
         
-        {{-- High-Intensity Console: Maximized Shadow Impact --}}
-        <div class="relative w-full max-w-3xl bg-[#fdfdfd]/98 backdrop-blur-3xl rounded-xl border border-[#996515]/20 shadow-[0_70px_110px_-15px_rgba(5,150,105,0.65),35px_0_60px_-20px_rgba(5,150,105,0.2),-35px_0_60px_-20px_rgba(5,150,105,0.2)] transform transition-all duration-500 translate-y-10 scale-95 opacity-0 overflow-hidden font-quicksand" id="modalContainer">
+        {{-- Console Interface --}}
+        <div class="relative w-full max-w-6xl bg-white rounded-2xl border-2 border-emerald-500/30 shadow-[0_60px_120px_rgba(6,78,59,0.15)] transform transition-all duration-700 translate-y-20 scale-[0.98] opacity-0 overflow-hidden" id="modalContainer">
             
-            {{-- Modular Header: Tighter on mobile --}}
-            <div class="relative flex flex-col items-center p-4 md:p-6 border-b border-black/5 bg-white text-center">
-                <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-6 md:h-10 w-auto mb-2 md:mb-4 opacity-80">
-                <h5 class="text-xl md:text-3xl font-bold text-[#1A1A1A] tracking-tight">Spread Joy.</h5>
+            {{-- Modular Header --}}
+            <div class="relative flex flex-col items-center p-16 lg:p-24 border-b-2 border-emerald-500/10 bg-[#FAFAF5]/50 text-center">
+                <div class="text-[11px] font-black uppercase tracking-[0.8em] text-black mb-8 ml-[0.8em]">Mission Deployment Interface</div>
+                <h5 class="text-6xl md:text-8xl font-black text-black tracking-tighter mb-4 leading-none">Deploy.</h5>
                 
-                <button onclick="closeMissionModal()" class="absolute top-4 right-4 md:top-8 md:right-8 w-8 h-8 md:w-10 md:h-10 rounded-xl hover:bg-black/5 flex items-center justify-center transition-all group">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 text-gray-300 group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                <button onclick="closeMissionModal()" class="absolute top-12 right-12 w-16 h-16 rounded-full bg-slate-50 hover:bg-slate-200 flex items-center justify-center transition-all group border-2 border-slate-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-slate-300 group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
-            {{-- Split Form Body to Break White Space --}}
-            <div class="p-0 max-h-[80vh] overflow-y-auto scrollbar-hide">
-                <form id="createCampaignForm" class="grid grid-cols-1 md:grid-cols-12">
+            {{-- Form Body --}}
+            <div class="p-0 max-h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-emerald-100 bg-white">
+                <form id="createCampaignForm" class="grid grid-cols-1 lg:grid-cols-12 text-slate-800 font-sans">
                     
                     {{-- Left Column: Core Narrative --}}
-                    <div class="md:col-span-12 lg:col-span-7 p-6 md:p-10 space-y-5 md:space-y-7 bg-white">
-                        <div class="space-y-1.5 md:space-y-2 text-label">
-                            <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Mission Title</label>
-                            <input type="text" id="cTitle" placeholder="Goal name..."
-                                class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 md:py-4 px-5 md:px-6 text-sm md:text-lg font-medium text-[#1A1A1A] focus:border-[#996515] transition-all">
+                    <div class="lg:col-span-7 p-12 lg:p-24 space-y-16">
+                        <div class="space-y-6">
+                            <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2 font-sans">Mission Identification</label>
+                            <input type="text" id="cTitle" placeholder="PROJECT LABEL"
+                                class="w-full bg-slate-50 border-2 border-emerald-500/10 rounded-xl outline-none py-8 px-12 text-2xl font-black text-black placeholder:text-slate-200 focus:border-black/30 transition-all uppercase tracking-widest font-sans">
                         </div>
 
-                        <div class="space-y-1.5 md:space-y-2 text-label">
-                            <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Description</label>
-                            <textarea id="cDesc" placeholder="The impact and story..."
-                                class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 md:py-4 px-5 md:px-6 text-sm font-medium text-[#1A1A1A] focus:border-[#996515] h-32 md:h-48 resize-none leading-relaxed"></textarea>
+                        <div class="space-y-6">
+                            <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2 font-sans">Deployment Roadmap</label>
+                            <textarea id="cDesc" placeholder="SUMMARY PROTOCOL..."
+                                class="w-full bg-slate-50 border-2 border-emerald-500/10 rounded-xl outline-none py-10 px-12 text-base font-medium text-slate-600 placeholder:text-slate-200 focus:border-black/30 h-72 resize-none leading-relaxed uppercase tracking-wider font-sans"></textarea>
                         </div>
                     </div>
 
-                    {{-- Right Column: Setup --}}
-                    <div class="md:col-span-12 lg:col-span-5 p-6 md:p-10 space-y-5 md:space-y-7 bg-[#fbf8f6] border-l border-black/5">
-                        <div class="space-y-1.5 md:space-y-2 text-label">
-                            <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Sector</label>
-                            <select id="cCategory" class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 md:py-4 px-5 md:px-6 text-xs font-bold text-[#1A1A1A] focus:border-[#996515] transition-all cursor-pointer">
-                                <option value="">SELECT SECTOR</option>
+                    {{-- Right Column: Config --}}
+                    <div class="lg:col-span-5 p-12 lg:p-24 space-y-16 bg-slate-50/50 border-l-2 border-emerald-500/10 font-sans">
+                        <div class="space-y-6">
+                            <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2">Sector Domain</label>
+                            <select id="cCategory" class="w-full bg-white border-2 border-emerald-500/10 rounded-xl outline-none py-8 px-12 text-[12px] font-black text-black focus:border-black/30 transition-all hover:bg-slate-50 cursor-pointer uppercase tracking-widest font-sans">
+                                <option value="">SELECT DOMAIN</option>
                             </select>
                         </div>
                         
-                        <div class="space-y-1.5 md:space-y-2 text-label">
-                            <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Target (MAD)</label>
-                            <input type="number" id="cTarget" placeholder="Amount"
-                                class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 md:py-4 px-5 md:px-6 text-sm font-bold text-[#1A1A1A] focus:border-[#996515] transition-all">
+                        <div class="space-y-6">
+                            <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2">Budget Target (MAD)</label>
+                            <input type="number" id="cTarget" placeholder="000,000"
+                                class="w-full bg-white border-2 border-emerald-500/10 rounded-xl outline-none py-8 px-12 text-7xl font-black text-[#C5A021] placeholder:text-amber-100 focus:border-black/30 transition-all font-sans tracking-tighter">
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="space-y-1.5 md:space-y-2 text-label">
-                                <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">Start</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="space-y-6">
+                                <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2">Active From</label>
                                 <input type="date" id="cStartDate" 
-                                    class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 px-3 text-[10px] font-medium text-[#1A1A1A] focus:border-[#996515] transition-all">
+                                    class="w-full bg-white border-2 border-emerald-500/10 rounded-xl outline-none py-6 px-10 text-[12px] font-black text-black focus:border-black/30 transition-all uppercase font-sans">
                             </div>
-                            <div class="space-y-1.5 md:space-y-2 text-label">
-                                <label class="text-[10px] md:text-xs font-bold text-[#996515] uppercase tracking-widest pl-1">End</label>
+                            <div class="space-y-6">
+                                <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2">Active To</label>
                                 <input type="date" id="cEndDate" 
-                                    class="w-full bg-white border border-black/10 rounded-xl outline-none py-3 px-3 text-[10px] font-bold text-[#1A1A1A] focus:border-[#996515] transition-all">
+                                    class="w-full bg-white border-2 border-emerald-500/10 rounded-xl outline-none py-6 px-10 text-[12px] font-black text-black focus:border-black/30 transition-all uppercase font-sans">
                             </div>
                         </div>
 
-                        <div class="space-y-2">
-                            <label class="text-[10px] font-bold text-[#996515] uppercase tracking-widest pl-1">Photo</label>
+                        <div class="space-y-8">
+                            <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2 font-sans">Mission Asset</label>
                             <label class="block relative cursor-pointer group">
                                 <input type="file" id="cImages" class="absolute inset-0 opacity-0 z-10" accept="image/*">
-                                <div class="w-full py-3 md:py-5 border-2 border-dashed border-black/10 rounded-xl flex flex-col items-center justify-center transition-all group-hover:border-[#996515] bg-white hover:bg-gray-50">
-                                    <p id="dropText" class="text-[9px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-[#996515]">Add (+)</p>
+                                <div class="w-full py-12 border-2 border-dashed border-amber-500/10 rounded-[2.5rem] flex flex-col items-center justify-center transition-all group-hover:border-black/30 bg-white hover:bg-slate-50/20">
+                                    <p id="dropText" class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] group-hover:text-black text-center px-6 transition-colors font-sans">Deploy Asset (+)</p>
                                 </div>
                             </label>
                         </div>
                     </div>
 
-                    {{-- Footer: Compact on mobile --}}
-                    <div class="md:col-span-12 p-6 md:p-10 bg-white border-t border-black/5 flex flex-col items-center gap-4 md:gap-8">
-                        <div id="galleryPreview" class="h-16 w-16 md:h-28 md:w-28 rounded-xl bg-[#fdfdfd] border border-black/5 overflow-hidden shadow-sm flex items-center justify-center group relative cursor-pointer" onclick="document.getElementById('cImages').click()">
-                            <span class="text-[7px] font-bold text-gray-300 uppercase tracking-widest text-center">Preview</span>
+                    {{-- Actions --}}
+                    <div class="lg:col-span-12 p-16 lg:p-24 bg-slate-50/50 border-t-2 border-emerald-500/10 flex flex-col items-center gap-16">
+                        <div id="galleryPreview" class="h-44 w-72 rounded-xl bg-white border-2 border-emerald-500/30 overflow-hidden shadow-3xl flex items-center justify-center group relative cursor-pointer ring-8 ring-transparent hover:ring-black/5 transition-all" onclick="document.getElementById('cImages').click()">
+                            <span class="text-[10px] font-black text-black/10 uppercase tracking-[0.4em] font-sans">Asset Buffer Empty</span>
                         </div>
 
-                        <button type="submit" id="submitBtn" class="w-full md:w-auto px-12 md:px-20 py-4 md:py-6 bg-[#1A1A1A] text-white rounded-xl text-[10px] md:text-xs font-bold uppercase tracking-[0.4em] hover:bg-black transition-all shadow-xl active:scale-95 transform">
-                            Confirm Mission.
+                        <button type="submit" id="submitBtn" class="w-full md:w-auto px-32 py-10 bg-black text-white rounded-xl text-[12px] font-black uppercase tracking-[0.8em] hover:bg-zinc-800 transition-all shadow-[0_25px_50px_rgba(0,0,0,0.2)] transform font-sans">
+                            Confirm Mission
                         </button>
                     </div>
                 </form>
@@ -132,30 +150,6 @@
         </div>
     </div>
 </div>
-
-<style>
-    /* Hide Spinners */
-    input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-    input[type=number] { -moz-appearance: textfield; }
-
-    .mission-row { background: #ffffff; transition: all 0.4s ease; }
-    .mission-row:hover { transform: translateY(-4px); box-shadow: 0 15px 40px rgba(0,0,0,0.05); }
-
-    /* Modal Super-Transitions */
-    #missionModal.visible { display: flex; opacity: 1; }
-    #missionModal.visible #modalContainer { 
-        transform: translateY(0) scale(1); 
-        opacity: 1; 
-    }
-
-    .animate-show { animation: show 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
-    @keyframes show { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
-    
-    .text-label label { display: block; }
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-</style>
-
 @endsection
 
 @section('scripts')
@@ -169,16 +163,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function openMissionModal() {
     const modal = document.getElementById('missionModal');
+    const container = document.getElementById('modalContainer');
     modal.classList.remove('hidden');
     setTimeout(() => {
-        modal.classList.add('visible');
+        modal.classList.replace('opacity-0', 'opacity-100');
+        container.classList.replace('translate-y-20', 'translate-y-0');
+        container.classList.replace('scale-[0.98]', 'scale-100');
+        container.classList.replace('opacity-0', 'opacity-100');
     }, 10);
     document.body.style.overflow = 'hidden';
 }
 
 function closeMissionModal() {
     const modal = document.getElementById('missionModal');
-    modal.classList.remove('visible');
+    const container = document.getElementById('modalContainer');
+    modal.classList.replace('opacity-100', 'opacity-0');
+    container.classList.replace('translate-y-0', 'translate-y-20');
+    container.classList.replace('scale-100', 'scale-[0.98]');
+    container.classList.replace('opacity-100', 'opacity-0');
     setTimeout(() => {
         modal.classList.add('hidden');
         document.body.style.overflow = '';
@@ -211,32 +213,33 @@ async function loadOverview() {
 function renderRegistryList(list) {
     const el = document.getElementById('myCampaignsList');
     if (!list.length) {
-        el.innerHTML = `<div class="py-24 text-center bg-white rounded-2xl border border-black/5"><p class="text-gray-300 font-bold text-[10px] uppercase tracking-widest">Registry Neutral.</p></div>`;
+        el.innerHTML = `<div class="py-32 text-center bg-white rounded-[3.5rem] border border-amber-500/5 shadow-xl"><p class="text-amber-900/10 font-black text-[12px] uppercase tracking-[0.8em] font-sans">Registry Stream Depleted.</p></div>`;
         return;
     }
 
     el.innerHTML = list.map(c => {
-        const pct = Math.min(100, ((c.current_amount||0)/Math.max(1,c.target_amount||1))*100).toFixed(0);
-        const statusColor = c.status === 'active' ? 'text-emerald-500' : 'text-amber-500';
+        const statusColor = c.status === 'active' ? 'text-emerald-700 border-emerald-200 bg-emerald-50' : 'text-slate-400 border-slate-100 bg-slate-50';
         const img = c.images && c.images[0] ? c.images[0].url : null;
         
         return `
-        <div class="mission-row p-6 rounded-2xl border border-black/5 flex items-center gap-6 shadow-sm">
-            <div class="w-14 h-14 rounded-xl bg-gray-50 overflow-hidden flex-shrink-0 border border-black/5">
-                ${img ? `<img src="${img}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-gray-200"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14"/></svg></div>`}
+        <div class="group bg-white p-12 rounded-2xl border-2 border-emerald-500/20 flex items-center gap-16 shadow-xl shadow-emerald-900/[0.02] transition-all duration-700 hover:shadow-2xl hover:border-emerald-500/40 font-sans">
+            <div class="w-24 h-24 rounded-xl bg-slate-50 overflow-hidden flex-shrink-0 border-2 border-emerald-500/20 ring-[0.5rem] ring-transparent transition-all">
+                ${img ? `<img src="${img}" class="w-full h-full object-cover">` : `<div class="w-full h-full flex items-center justify-center text-slate-200"><svg class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14"/></svg></div>`}
             </div>
-            <div class="flex-grow min-w-0">
-                <div class="flex items-center gap-4 mb-1">
-                    <span class="text-[8px] font-black uppercase tracking-widest ${statusColor} bg-current/5 px-2.5 py-1 rounded-md">${c.status}.</span>
-                    <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest leading-none">${new Date(c.created_at).toLocaleDateString()}</span>
+            <div class="flex-grow min-w-0 space-y-4">
+                <div class="flex items-center gap-6">
+                    <span class="text-[11px] font-black uppercase tracking-[0.3em] ${statusColor} px-6 py-2.5 rounded-lg border-2 border-emerald-500/30">${c.status}.</span>
+                    <span class="text-[12px] text-black/30 font-black uppercase tracking-[0.4em] font-sans italic opacity-60">${new Date(c.created_at).toLocaleDateString()}</span>
                 </div>
-                <h3 class="text-lg font-black text-[#1A1A1A] tracking-tighter truncate leading-none">${escHtml(c.title)}</h3>
+                <h3 class="text-5xl font-black text-black tracking-tighter truncate leading-none">${escHtml(c.title)}</h3>
             </div>
-            <div class="flex items-center gap-8 flex-shrink-0">
+            <div class="flex items-center gap-20 flex-shrink-0">
                 <div class="flex flex-col items-end">
-                    <span class="text-2xl font-black text-[#1A1A1A] tracking-tighter">${Number(c.current_amount||0).toLocaleString()} <span class="text-[9px] text-[#059669]">MAD</span></span>
+                    <span class="text-7xl font-black text-black tracking-tighter tabular-nums">${Number(c.current_amount||0).toLocaleString()} <span class="text-[14px] text-emerald-600 uppercase tracking-[0.5em] mb-3 ml-2">MAD</span></span>
                 </div>
-                <a href="/campaigns/${c.id}" class="text-[9px] font-black text-[#1A1A1A] hover:text-[#059669] uppercase tracking-widest underline underline-offset-8 decoration-black/10 hover:decoration-current transition-all">Report</a>
+                <a href="/campaigns/${c.id}" class="px-12 py-6 rounded-lg bg-black text-[11px] font-black text-white hover:bg-zinc-800 uppercase tracking-[0.6em] transition-all border-none shadow-xl">
+                    INTERFACE
+                </a>
             </div>
         </div>`;
     }).join('');
@@ -250,28 +253,33 @@ imageInput.addEventListener('change', () => {
     gallery.innerHTML = '';
     const file = imageInput.files[0];
     if (file) {
-        dropText.textContent = `IMAGE READY.`;
+        dropText.textContent = `ASSET READY.`;
+        dropText.className = "text-[11px] font-black text-emerald-600 uppercase tracking-[0.5em] text-center px-6";
         const reader = new FileReader();
         reader.onload = e => {
             gallery.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
         };
         reader.readAsDataURL(file);
     } else {
-        dropText.textContent = 'GALLERY (+)';
-        gallery.innerHTML = `<span class="text-[8px] font-black text-gray-200 uppercase tracking-widest">No Image</span>`;
+        dropText.textContent = 'Deploy Asset (+)';
+        dropText.className = "text-[11px] font-black text-amber-900/20 uppercase tracking-[0.5em] text-center px-6";
+        gallery.innerHTML = `<span class="text-[10px] font-black text-amber-900/10 uppercase tracking-[0.4em]">Asset Buffer Empty</span>`;
     }
 });
 
 function showToast(msg) {
     const t = document.createElement('div');
-    t.className = 'fixed bottom-12 left-1/2 -translate-x-1/2 z-[200] bg-[#1A1A1A] text-white px-8 py-4 rounded-xl text-[10px] font-bold uppercase tracking-[0.3em] shadow-2xl flex items-center gap-4 animate-fade-up';
-    t.innerHTML = `<div class="w-2 h-2 rounded-full bg-[#059669] animate-pulse"></div><span>${msg}</span>`;
+    t.className = 'fixed bottom-16 left-1/2 -translate-x-1/2 z-[200] bg-black text-white px-16 py-6 rounded-[2rem] text-[11px] font-black uppercase tracking-[0.5em] shadow-3xl flex items-center gap-8 transition-all duration-700 opacity-0 translate-y-12 border-2 border-white/10';
+    t.innerHTML = `<div class="w-3.5 h-3.5 rounded-full bg-emerald-300 animate-pulse"></div><span class="font-sans">${msg}</span>`;
     document.body.appendChild(t);
     setTimeout(() => {
-        t.style.opacity = '0';
-        t.style.transform = 'translate(-50%, 20px)';
-        t.style.transition = 'all 0.5s ease-in-out';
-        setTimeout(() => t.remove(), 500);
+        t.classList.replace('opacity-0', 'opacity-100');
+        t.classList.replace('translate-y-12', 'translate-y-0');
+    }, 10);
+    setTimeout(() => {
+        t.classList.replace('opacity-100', 'opacity-0');
+        t.classList.replace('translate-y-0', 'translate-y-12');
+        setTimeout(() => t.remove(), 700);
     }, 4000);
 }
 
@@ -290,26 +298,21 @@ document.getElementById('createCampaignForm').addEventListener('submit', async (
     const file = imageInput.files[0];
     if (file) { fd.append('image', file); }
 
-    if (!fd.get('title') || !fd.get('category_id')) { alert('Protocol incomplete.'); return; }
+    if (!fd.get('title') || !fd.get('category_id')) { showToast('PROTOCOL INCOMPLETE.'); return; }
 
-    btn.disabled = true; btn.textContent = 'TRANSMITTING...';
+    btn.disabled = true; btn.textContent = 'EXECUTING...';
 
     try {
         await ApiClient.request('/campaigns', { method: 'POST', body: fd, headers: { 'Content-Type': null } });
-        
-        // Reset form
         e.target.reset();
         gallery.innerHTML = '';
-        dropText.textContent = 'GALLERY (+)';
-
+        dropText.textContent = 'Deploy Asset (+)';
         closeMissionModal();
-        showToast('MISSION DEPLOYED TO REGISTRY.');
-        
-        // Live Refresh instead of reload
+        showToast('MISSION LOGGED TO REGISTRY.');
         await loadOverview();
     } catch(err) {
-        showToast(err.message || 'Transmission failed.');
-        btn.disabled = false; btn.textContent = 'Confirm Mission.';
+        showToast(err.message || 'TRANSMISSION FAILURE.');
+        btn.disabled = false; btn.textContent = 'Confirm Mission';
     }
 });
 
