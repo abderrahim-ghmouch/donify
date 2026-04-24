@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="./public/images/donifylg.png" alt="Donify Logo" width="300">
+  <br>
+  <img src="./public/images/slogan.png" alt="Donify Slogan" width="500">
+</p>
+
 # DONIFY — GLOBAL IMPACT HUB
 
 **Donify** is a prestigious, high-performance platform designed to bridge the gap between visionary "Porters" (campaigners) and institutional "Donors." Built with the **Luxury Raja** design aesthetic, it prioritizes architectural clarity, professional high-contrast interfaces, and institutional authority.
