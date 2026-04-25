@@ -4,7 +4,7 @@ use App\Http\Controllers\FrontendController;
 
 Route::get('/', [FrontendController::class, 'index'])->name('home');
 Route::get('/campaigns', [FrontendController::class, 'campaigns'])->name('campaigns.index');
-Route::get('/campaigns/{id}', [FrontendController::class, 'campaigns'])->name('campaigns.show');
+Route::get('/campaigns/{id}', [FrontendController::class, 'campaign'])->name('campaigns.show');
 Route::get('/organisations', [FrontendController::class, 'organisations'])->name('organisations.index');
 Route::get('/profile', [FrontendController::class, 'profile'])->name('profile');
 Route::get('/porter/dashboard', [FrontendController::class, 'dashboard'])->name('dashboard');
