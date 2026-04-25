@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->enum('payment_method', ['stripe', 'paypal', 'credit_card', 'bank_transfer', 'apple_pay', 'google_pay'])->default('stripe');
             $table->decimal('amount', 12, 2);
-            $table->string('currency', 3)->default('USD');
+            $table->string('currency', 3)->default('MAD');
 
             // Payment status: pending, processing, completed, failed, refunded
             $table->enum('status', ['pending', 'processing', 'completed', 'failed', 'refunded', 'cancelled'])->default('pending');
