@@ -277,7 +277,7 @@ function campaignCard(c, i) {
     const cat = c.category ? (c.category.name || c.category.category_name || '') : 'Mission';
 
     return `
-    <div class="campaign-intel-card group bg-white rounded-xl overflow-hidden border border-black/5 hover:border-[#064e3b] transition-all duration-700 shadow-sm hover:shadow-2xl flex flex-col h-full relative">
+    <div onclick="window.location.href='/campaigns/${c.id}'" class="campaign-intel-card group bg-white rounded-xl overflow-hidden border border-black/5 hover:border-[#064e3b] transition-all duration-700 shadow-sm hover:shadow-2xl flex flex-col h-full relative cursor-pointer">
         <div class="relative h-64 overflow-hidden bg-zinc-50 border-b border-black/[0.03]">
             ${img
                 ? `<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${img}" alt="${escHtml(c.title)}">`
@@ -317,9 +317,9 @@ function campaignCard(c, i) {
                     </div>
                 </div>
 
-                <a href="/campaigns/${c.id}" class="block w-full py-5 rounded-xl bg-[#1A1A1A] text-white text-center text-[10px] font-black uppercase tracking-widest hover:bg-[#064e3b] hover:text-white transition-all transform hover:-translate-y-1 shadow-xl cursor-pointer transform active:scale-95">
+                <div class="block w-full py-5 rounded-xl bg-[#1A1A1A] text-white text-center text-[10px] font-black uppercase tracking-widest group-hover:bg-[#064e3b] transition-all transform group-hover:-translate-y-1 shadow-xl">
                     Analyze Initiative →
-                </a>
+                </div>
             </div>
         </div>
     </div>`;
@@ -349,7 +349,10 @@ function goPage(p) {
 }
 
 async function toggleFavourite(e, id) {
-    if (e) e.preventDefault();
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
     if (!ApiClient.isAuthenticated()) {
         window.location.href = '/login';
         return;
