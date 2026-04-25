@@ -98,9 +98,9 @@
                             
                             <div class="mb-14 text-center lg:text-left">
                                 <div class="flex items-baseline justify-center lg:justify-start gap-2 text-white mb-2">
-                                    <span class="text-6xl font-black tracking-tighter" id="currentAmountDisplay">${{ number_format($campaign->current_amount) }}</span>
+                                    <span class="text-6xl font-black tracking-tighter" id="currentAmountDisplay">{{ number_format($campaign->current_amount) }} MAD</span>
                                 </div>
-                                <p class="text-emerald-400/70 text-[9px] font-black uppercase tracking-widest">Authorized Goal: ${{ number_format($campaign->target_amount) }} USD</p>
+                                <p class="text-emerald-400/70 text-[9px] font-black uppercase tracking-widest">Authorized Goal: {{ number_format($campaign->target_amount) }} MAD</p>
                             </div>
 
                             {{-- High Precision Progress --}}
@@ -120,8 +120,8 @@
                                 <div class="space-y-4">
                                     <label class="text-[9px] font-black text-white/30 uppercase tracking-widest ml-1 italic">Contribution Magnitude</label>
                                     <div class="relative group">
-                                        <div class="absolute left-7 top-1/2 -translate-y-1/2 text-[#1A1A1A] font-black text-xl opacity-30 select-none">$</div>
-                                        <input type="number" id="donationAmount" placeholder="0.00" class="w-full bg-white border-2 border-transparent focus:border-emerald-400/30 rounded-2xl py-6 pl-12 pr-8 text-[#1A1A1A] font-black text-2xl outline-none transition-all shadow-inner placeholder:text-gray-200">
+                                        <div class="absolute left-6 top-1/2 -translate-y-1/2 text-[#1A1A1A] font-black text-xs opacity-30 select-none">MAD</div>
+                                        <input type="number" id="donationAmount" placeholder="0.00" class="w-full bg-white border-2 border-transparent focus:border-emerald-400/30 rounded-2xl py-6 pl-16 pr-8 text-[#1A1A1A] font-black text-2xl outline-none transition-all shadow-inner placeholder:text-gray-200">
                                     </div>
                                 </div>
                                 <button id="donateBtn" class="w-full bg-[#1A1A1A] text-white hover:bg-black rounded-2xl py-7 font-black uppercase tracking-[0.4em] text-[10px] transition-all shadow-2xl active:scale-95 group">
@@ -154,6 +154,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const msg = document.getElementById('donationMessage');
     const campaignId = "{{ $campaign->id }}";
 
+    // Handle Redirect or Status from Stripe
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('payment') === 'success') {
+        msg.textContent = 'Verification Successful. Contribution finalized.';
+        msg.classList.remove('hidden');
+        msg.className = 'text-center text-[9px] font-black uppercase tracking-widest text-emerald-400 animate-pulse mt-4';
+    } else if (urlParams.get('payment') === 'cancel') {
+        msg.textContent = 'Pledge Cancelled. No funds were transferred.';
+        msg.classList.remove('hidden');
+        msg.className = 'text-center text-[9px] font-black uppercase tracking-widest text-rose-400 mt-4';
+    }
+
     donateBtn.addEventListener('click', async () => {
         if (!ApiClient.isAuthenticated()) {
             window.location.href = '/login';
@@ -161,13 +173,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const amount = amountInput.value;
-        if (!amount || amount <= 0) {
-            alert('Please enter a valid amount.');
+        if (!amount || amount < 10) {
+            alert('Please enter a valid amount (Minimum 10 MAD).');
             return;
         }
 
         donateBtn.disabled = true;
-        donateBtn.innerHTML = 'Processing Pledge...';
+        donateBtn.innerHTML = 'Authorizing...';
         msg.classList.add('hidden');
 
         try {
@@ -176,22 +188,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ amount: amount })
             });
 
-            msg.textContent = 'Mission Supported. Thank You.';
-            msg.classList.remove('hidden');
-            
-            // Animation Update
-            setTimeout(() => {
-                 window.location.reload();
-            }, 1000);
+            if (res.checkout_url) {
+                msg.textContent = 'Connecting to Secure Gateway...';
+                msg.classList.remove('hidden');
+                window.location.href = res.checkout_url;
+            } else {
+                throw new Error('Could not establish secure session.');
+            }
 
         } catch (err) {
             alert(err.message || 'Donation failed. Please check your credentials.');
             donateBtn.disabled = false;
-            donateBtn.innerHTML = 'Pledge Support';
+            donateBtn.innerHTML = 'Initiate Support →';
         }
     });
 
-    // Preset amounts logic (Optional enhancement)
     amountInput.addEventListener('keypress', (e) => {
         if(e.key === 'Enter') donateBtn.click();
     });

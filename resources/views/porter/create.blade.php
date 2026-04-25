@@ -45,8 +45,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1A1A] mb-4 ml-2">Target Goal (USD)</label>
-                        <input type="number" id="cTarget" required class="w-full px-8 py-6 rounded-2xl bg-gray-100/50 border-2 border-gray-200 outline-none focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all text-base font-semibold text-[#1A1A1A] placeholder-gray-300" placeholder="e.g. 5000">
+                        <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-[#1A1A1A] mb-4 ml-2">Target Goal (MAD)</label>
+                        <input type="number" id="cTarget" required class="w-full px-8 py-6 rounded-2xl bg-gray-100/50 border-2 border-gray-200 outline-none focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all text-base font-semibold text-[#1A1A1A] placeholder-gray-300" placeholder="e.g. 50000">
                     </div>
                 </div>
 

@@ -309,8 +309,8 @@ function campaignCard(c, i) {
             <div class="mt-auto space-y-6">
                 <div class="space-y-3">
                     <div class="flex justify-between items-baseline mb-2">
-                        <span class="text-xl font-black text-[#1A1A1A] tracking-tighter">$${fmtNum(c.current_amount || 0)}</span>
-                        <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">of $${fmtNum(c.target_amount || 0)} Goal</span>
+                        <span class="text-xl font-black text-[#1A1A1A] tracking-tighter">${fmtNum(c.current_amount || 0)} MAD</span>
+                        <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">of ${fmtNum(c.target_amount || 0)} MAD Goal</span>
                     </div>
                     <div class="w-full h-2 rounded-full bg-black/5 overflow-hidden border border-black/5">
                         <div class="h-full bg-[#059669] rounded-full transition-all duration-1000" style="width: ${pct}%"></div>

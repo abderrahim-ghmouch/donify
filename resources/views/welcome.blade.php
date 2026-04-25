@@ -54,7 +54,7 @@
 <section class="py-24 px-6 bg-transparent z-10 relative">
     <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
         <div class="text-center group cursor-default p-8 transition-all duration-500">
-            <h3 class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">$24M+</h3>
+            <h3 class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">240M+ MAD</h3>
             <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Total Raised</p>
         </div>
         <div class="text-center group cursor-default p-8 transition-all duration-500 delay-100">
