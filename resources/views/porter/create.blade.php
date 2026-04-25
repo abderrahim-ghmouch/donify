@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         fd.append('target_amount', document.getElementById('cTarget').value);
         if (document.getElementById('cStartDate').value) fd.append('start_date', document.getElementById('cStartDate').value);
         if (document.getElementById('cEndDate').value) fd.append('end_date', document.getElementById('cEndDate').value);
-        if (imageInput.files[0]) fd.append('image', imageInput.files[0]);
+        if (imageInput.files[0]) fd.append('images[]', imageInput.files[0]);
 
         try {
             await ApiClient.request('/campaigns', {
