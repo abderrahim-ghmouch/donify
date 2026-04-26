@@ -7,7 +7,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\OrganisationController;
-use App\Http\Controllers\WebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +14,6 @@ use App\Http\Controllers\WebhookController;
 |--------------------------------------------------------------------------
 | All routes here are prefixed with /api automatically.
 */
-
-// ==================== Stripe Webhook (Public — No Auth) ====================
-Route::post('webhooks/stripe', [WebhookController::class, 'handleStripe']);
 
 // ==================== Public Auth Routes ====================
 Route::post('auth/register', [UserController::class, 'register']);
