@@ -1,13 +1,5 @@
 @extends('layouts.app', ['hide_nav' => true])
 
-@section('styles')
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .font-quicksand {
-            font-family: 'Quicksand', sans-serif;
-        }
-    </style>
-@endsection
 
 @section('content')
     <div class="flex flex-col md:flex-row h-screen bg-[#fbf8f6] font-quicksand overflow-hidden relative">

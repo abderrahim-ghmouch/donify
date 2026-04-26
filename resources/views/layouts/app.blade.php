@@ -11,69 +11,7 @@
     <!-- Tailwind CDN (using for layout) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Custom Design Tokens & Utilities -->
-    <style>
-        :root {
-            --primary: #02a95c;
-            --primary-dark: #028b4c;
-            --primary-light: #D1FAE5;
-            --secondary: #6366F1;
-            --dark: #0F172A;
-            --light: #fbf8f6;
-        }
 
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
-            overflow-x: hidden;
-        }
-
-        .font-outfit { font-family: 'Outfit', sans-serif; }
-        .font-quicksand { font-family: 'Quicksand', sans-serif; }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
-        }
-
-        .nav-link {
-            position: relative;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background-color: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-    </style>
-    @yield('styles')
 </head>
 <body class="antialiased">
     <!-- Navbar -->
@@ -92,8 +30,8 @@
 
             {{-- Left Side: Nav Links (Desktop Only) --}}
             <div class="hidden md:flex items-center space-x-10">
-                <a href="{{ route('campaigns.index') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Campaigns</a>
-                <a href="{{ route('favourites') }}" class="nav-link text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors">Favourites</a>
+                <a href="{{ route('campaigns.index') }}" class="relative text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-[#064e3b] after:transition-all hover:after:w-full">Campaigns</a>
+                <a href="{{ route('favourites') }}" class="relative text-xs font-bold uppercase tracking-[0.2em] text-[#1A1A1A] hover:text-[#064e3b] transition-colors after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-[#064e3b] after:transition-all hover:after:w-full">Favourites</a>
             </div>
 
             {{-- Center: Logo --}}
