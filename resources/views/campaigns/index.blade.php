@@ -41,6 +41,17 @@
                         <div id="categoryLabel" class="text-sm font-black text-[#1A1A1A] uppercase tracking-widest leading-none">All Sectors</div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     </div>
+
+                    {{-- Sort Select Hub --}}
+                    <div class="relative flex items-center min-w-[240px] px-8 bg-black rounded-[2rem] border-2 border-transparent hover:border-emerald-500/50 transition-all">
+                        <span class="text-[10px] font-black tracking-widest text-emerald-500/50 mr-4 uppercase">Sort.</span>
+                        <select id="sortSelect" onchange="applyFilters()" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                            <option value="progress">Active Progress</option>
+                            <option value="target">Goal Magnitude</option>
+                        </select>
+                        <div id="sortLabel" class="text-sm font-black text-white uppercase tracking-widest leading-none">Active Progress</div>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
                 </div>
 
                 {{-- Telemetry Row --}}
@@ -192,7 +203,12 @@ function handleCategoryChange() {
 }
 
 function applyFilters() {
-    sortBy = 'progress'; // Fixed default sorting logic
+    const sortSel = document.getElementById('sortSelect');
+    if (sortSel) {
+        sortBy = sortSel.value;
+        const sortLab = document.getElementById('sortLabel');
+        if (sortLab) sortLab.textContent = sortSel.options[sortSel.selectedIndex].text;
+    }
 
     let list = [...allCampaigns];
     if (activeCat !== 'all') list = list.filter(c => String(c.category_id) === String(activeCat));
@@ -217,6 +233,8 @@ function resetFilters() {
     document.getElementById('searchInput').value = '';
     document.getElementById('categorySelect').value = 'all';
     document.getElementById('categoryLabel').textContent = 'All Sectors';
+    document.getElementById('sortSelect').value = 'progress';
+    document.getElementById('sortLabel').textContent = 'Funded';
     applyFilters();
 }
 
