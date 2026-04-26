@@ -1,4 +1,4 @@
-@extends('layouts.app', ['hide_nav' => true, 'hide_footer' => true])
+@extends('layouts.app', ['hide_nav' => true])
 
 @section('styles')
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -9,13 +9,13 @@
 
 @section('content')
 <div class="flex flex-col md:flex-row h-screen bg-[#fbf8f6] font-quicksand overflow-hidden relative">
-    
+
     <!-- Dynamic Gradient Background (80% Coverage with Green) -->
     <div class="absolute inset-y-0 left-0 w-[80%] bg-gradient-to-r from-[#064e3b]/40 to-transparent z-0"></div>
 
     <!-- Left Side: Form Container -->
     <div class="w-full md:w-2/5 flex flex-col relative z-20 overflow-hidden">
-        
+
         <!-- Background Quotes (Left) -->
         <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]">
             <div class="absolute top-10 left-10 text-6xl font-black text-[#1A1A1A] -rotate-12 uppercase">Join</div>
@@ -39,7 +39,7 @@
             <div class="max-w-lg w-full mt-auto mb-auto bg-transparent relative z-10">
                 {{-- Logo Section --}}
                 <div class="mb-10 text-left">
-                    <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" 
+                    <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo"
                         class="h-16 w-auto object-contain drop-shadow-[0_10px_15px_rgba(2,169,92,0.1)]">
                 </div>
 
@@ -120,7 +120,7 @@
                             class="w-full bg-[#1A1A1A] hover:bg-[#064e3b] text-white py-5 rounded-xl font-bold text-sm uppercase tracking-[0.2em] shadow-xl transition-all active:scale-[0.98]">
                             Create Account
                         </button>
-                        
+
                         <div class="text-center mt-6">
                             <p class="text-gray-500 font-medium text-[10px]">
                                 Already have an account?
@@ -139,7 +139,7 @@
         <div class="absolute inset-x-0 bottom-0 h-1/2 flex items-end justify-center pb-12 z-0 opacity-10 grayscale brightness-150">
              <img src="{{ asset('images/donifylg.png') }}" class="w-full h-auto object-contain">
         </div>
-        
+
         <!-- Floating Quotes Overlay -->
         <div class="absolute inset-0 z-10 pointer-events-none p-12">
             <!-- Group 1: MASSIVE QUOTES -->
