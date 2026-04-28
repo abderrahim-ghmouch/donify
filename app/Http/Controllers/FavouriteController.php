@@ -13,7 +13,7 @@ class FavouriteController extends Controller
      */
     public function index()
     {
-        $favourites = auth()->user()->favourites()->with('campaign.category')->get();
+        $favourites = auth()->user()->favourites()->with('campaign.category', 'campaign.user')->get();
 
         return response()->json([
             'status' => 'success',
