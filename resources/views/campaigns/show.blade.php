@@ -146,66 +146,8 @@
     </section>
 </div>
 
-<script src="{{ asset('js/api-client.js') }}"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const donateBtn = document.getElementById('donateBtn');
-    const amountInput = document.getElementById('donationAmount');
-    const msg = document.getElementById('donationMessage');
-    const campaignId = "{{ $campaign->id }}";
-
-    // Handle Redirect or Status from Stripe
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('payment') === 'success') {
-        msg.textContent = 'Verification Successful. Contribution finalized.';
-        msg.classList.remove('hidden');
-        msg.className = 'text-center text-[9px] font-black uppercase tracking-widest text-emerald-400 animate-pulse mt-4';
-    } else if (urlParams.get('payment') === 'cancel') {
-        msg.textContent = 'Pledge Cancelled. No funds were transferred.';
-        msg.classList.remove('hidden');
-        msg.className = 'text-center text-[9px] font-black uppercase tracking-widest text-rose-400 mt-4';
-    }
-
-    donateBtn.addEventListener('click', async () => {
-        if (!ApiClient.isAuthenticated()) {
-            window.location.href = '/login';
-            return;
-        }
-
-        const amount = amountInput.value;
-        if (!amount || amount < 10) {
-            alert('Please enter a valid amount (Minimum 10 MAD).');
-            return;
-        }
-
-        donateBtn.disabled = true;
-        donateBtn.innerHTML = 'Authorizing...';
-        msg.classList.add('hidden');
-
-        try {
-            const res = await ApiClient.request(`/campaigns/${campaignId}/donate`, {
-                method: 'POST',
-                body: JSON.stringify({ amount: amount })
-            });
-
-            if (res.checkout_url) {
-                msg.textContent = 'Connecting to Secure Gateway...';
-                msg.classList.remove('hidden');
-                window.location.href = res.checkout_url;
-            } else {
-                throw new Error('Could not establish secure session.');
-            }
-
-        } catch (err) {
-            alert(err.message || 'Donation failed. Please check your credentials.');
-            donateBtn.disabled = false;
-            donateBtn.innerHTML = 'Initiate Support →';
-        }
-    });
-
-    amountInput.addEventListener('keypress', (e) => {
-        if(e.key === 'Enter') donateBtn.click();
-    });
-});
-</script>
+{{-- Data bridge: passes PHP values to the external JS file without Blade syntax in JS --}}
+<div id="campaignData" data-campaign-id="{{ $campaign->id }}" class="hidden"></div>
 @endsection
+
+

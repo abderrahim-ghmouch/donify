@@ -101,44 +101,4 @@
     </div>
 </div>
 
-<script>
-    // Registration Handler
-    document.getElementById('orgRegisterForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const btn = document.getElementById('registerBtn');
-        const errorDiv = document.getElementById('registerError');
-        
-        const fd = new FormData();
-        fd.append('name', document.getElementById('name').value);
-        fd.append('email', document.getElementById('email').value);
-        fd.append('password', document.getElementById('password').value);
-        fd.append('description', document.getElementById('description').value);
-        fd.append('phone', document.getElementById('phone').value);
-        fd.append('address', document.getElementById('address').value);
-        
-        const logo = document.getElementById('logo').files[0];
-        if(logo) fd.append('logo', logo);
-        
-        const doc = document.getElementById('document').files[0];
-        if(doc) fd.append('document', doc);
-
-        btn.disabled = true;
-        btn.innerHTML = '<span class="flex items-center justify-center animate-pulse tracking-widest">INITIALIZING PROTOCOL...</span>';
-        errorDiv.classList.add('hidden');
-
-        try {
-            await ApiClient.registerOrganisation(fd);
-            alert('Application Deployed. Access will be authorized upon manual admin verification.');
-            window.location.href = '/';
-        } catch (error) {
-            console.error(error);
-            const msg = error.message || (error.errors ? Object.values(error.errors)[0][0] : 'Validation failure. Security check manual logs.');
-            errorDiv.textContent = msg;
-            errorDiv.classList.remove('hidden');
-            btn.disabled = false;
-            btn.innerHTML = 'COMPLETE REGISTRATION';
-        }
-    });
-</script>
 @endsection
