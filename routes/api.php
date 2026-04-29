@@ -17,36 +17,51 @@ use App\Http\Controllers\OrganisationController;
 
 // ==================== Public Auth Routes ====================
 Route::post('auth/register', [UserController::class, 'register']);
+
 Route::post('auth/login', [UserController::class, 'login']);
 
 // ==================== Protected Auth Routes ====================
 Route::middleware(['auth:api', 'check.banned'])->group(function () {
+
     Route::get('auth/me', [UserController::class, 'me']);
+
     Route::post('auth/refresh', [UserController::class, 'refresh']);
+
     Route::post('auth/logout', [UserController::class, 'logout']);
+
     Route::put('auth/profile', [UserController::class, 'update']);
+
     Route::post('auth/avatar', [UserController::class, 'uploadAvatar']);
+
+
+
 
     // Favourites
     Route::get('favourites', [FavouriteController::class, 'index']);
+
     Route::post('campaigns/{campaign}/favourite', [FavouriteController::class, 'toggle']);
 
     // Donations
     Route::post('campaigns/{id}/donate', [DonationController::class, 'donate']);
     Route::get('my-donations', [DonationController::class, 'myDonations']);
+
 });
 
 // ==================== Public Routes ====================
 Route::get('categories', [CategoryController::class, 'index']);
+
 Route::get('categories/{category}', [CategoryController::class, 'show']);
 
-// Public campaign routes (read-only)
-Route::get('campaigns', [CampaignController::class, 'index']);
-Route::get('campaigns/search', [CampaignController::class, 'search']);
-Route::get('campaigns/filter', [CampaignController::class, 'filter']);
-Route::get('campaigns/{id}', [CampaignController::class, 'show']);
 
-// Organisation public routes
+// Public campaign routes (read-only)
+        Route::get('campaigns', [CampaignController::class, 'index']);
+
+        Route::get('campaigns/search', [CampaignController::class, 'search']);
+        Route::get('campaigns/filter', [CampaignController::class, 'filter']);
+
+        Route::get('campaigns/{id}', [CampaignController::class, 'show']);
+
+        // Organisation public routes
 Route::get('organisations', [OrganisationController::class, 'index']);
 Route::post('organisations/register', [OrganisationController::class, 'register']);
 Route::get('organisations/{id}', [OrganisationController::class, 'show']);
@@ -75,10 +90,17 @@ Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
 });
 
 // ==================== Porter Routes ====================
+
 Route::middleware(['auth:api', 'check.banned', 'porter'])->group(function () {
+
     Route::post('campaigns', [CampaignController::class, 'store']);
+
     Route::get('my-campaigns', [CampaignController::class, 'myCampaigns']);
+
     Route::put('campaigns/{id}', [CampaignController::class, 'update']);
+
     Route::delete('campaigns/{id}', [CampaignController::class, 'destroy']);
+
     Route::post('campaigns/{id}/image', [CampaignController::class, 'uploadImage']);
+
 });
