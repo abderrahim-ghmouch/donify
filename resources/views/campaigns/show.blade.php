@@ -132,7 +132,7 @@
                         </div>
                     </div>
 
-                    {{-- Bottom Security --}}
+                    
                     <div class="mt-8 flex items-center justify-center gap-3 opacity-40">
                         <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 4.946-3.076 9.165-7.402 10.824L10 18l-.598-.235A11.948 11.948 0 012 7.001c0-.681.056-1.35.166-2.002zm7.834 2.112A1.25 1.25 0 1110 4.611a1.25 1.25 0 010 2.5z"/></svg>
                         <p class="text-[9px] text-[#1A1A1A] font-bold uppercase tracking-widest leading-relaxed text-center">
