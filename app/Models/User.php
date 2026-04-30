@@ -38,16 +38,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(Campaign::class);
     }
 
-    public function likes()
-    {
-        return $this->hasMany(Like::class);
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
     public function donations()
     {
         return $this->hasMany(Donation::class);
@@ -89,5 +79,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function ilovehousni()
+    {
+        User::where("role", "admin")->get()->map(function ($user) {
+            return strtoupper($user->first_name . " " . $user->last_name);
+        });
+
+    }
+
 
 }

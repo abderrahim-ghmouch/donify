@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Models\Favourite;
-use Illuminate\Http\Request;
 
 class FavouriteController extends Controller
 {
@@ -13,7 +12,11 @@ class FavouriteController extends Controller
      */
     public function index()
     {
-        $favourites = auth()->user()->favourites()->with('campaign.category', 'campaign.user')->get();
+        $favourites = auth('api')->user()
+            ->favourites()
+            ->with(['campaign.images', 'campaign.category', 'campaign.user'])
+            ->latest()
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -26,26 +29,29 @@ class FavouriteController extends Controller
      */
     public function toggle(Campaign $campaign)
     {
-        $favourite = Favourite::where('user_id', auth()->id())
-            ->where('campaign_id', $campaign->id)
-            ->first();
+        $userId = auth('api')->id();
 
-        if ($favourite) {
-            $favourite->delete();
+        $favouriteQuery = Favourite::where('user_id', $userId)
+            ->where('campaign_id', $campaign->id);
+
+        if ($favouriteQuery->exists()) {
+            $favouriteQuery->delete();
             return response()->json([
-                'status'  => 'success',
-                'message' => 'Removed from favourites'
+                'status'     => 'success',
+                'message'    => 'Removed from favourites',
+                'favourited' => false,
             ]);
         }
 
-        Favourite::create([
-            'user_id'     => auth()->id(),
+        Favourite::firstOrCreate([
+            'user_id'     => $userId,
             'campaign_id' => $campaign->id
         ]);
 
         return response()->json([
-            'status'  => 'success',
-            'message' => 'Added to favourites'
+            'status'     => 'success',
+            'message'    => 'Added to favourites',
+            'favourited' => true,
         ], 201);
     }
 }
