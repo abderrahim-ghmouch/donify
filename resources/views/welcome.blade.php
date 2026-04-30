@@ -4,7 +4,7 @@
     <div class="relative overflow-hidden bg-[#fbf8f6]">
         {{-- Full-Depth Atmospheric Gradient (Footer to absolute Top) --}}
         <div
-            class="absolute inset-x-0 bottom-0 h-full bg-gradient-to-t from-[#064e3b]/40 via-[#064e3b]/10 to-transparent pointer-events-none z-0">
+            class="welcome-bottom-gradient absolute inset-x-0 bottom-0 h-full pointer-events-none z-0">
         </div>
 
         <!-- Hero Section -->
@@ -12,7 +12,7 @@
             class="relative min-h-[95vh] flex items-center justify-center overflow-hidden px-10 pt-10 z-10 font-quicksand bg-transparent">
             {{-- Mirrored Top-Down Gradient (Specifically for Hero) --}}
             <div
-                class="absolute inset-x-0 top-0 h-full bg-gradient-to-b from-[#064e3b]/40 via-[#064e3b]/10 to-transparent pointer-events-none -z-10">
+                class="welcome-hero-gradient absolute inset-x-0 top-0 h-full pointer-events-none -z-10">
             </div>
 
             <!-- Logo Watermark Background (Shifted Left) -->
@@ -32,16 +32,16 @@
                 </h1>
 
                 <p class="text-lg text-gray-600 mb-12 leading-relaxed max-w-2xl mx-auto font-medium">
-                    The Moroocan's most secure gateway for donating. Join a global network of changemakers today.
+                    The Moroocan's most secure gateway for donating. Join a global network of changemakers today
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-5 justify-center items-center px-4">
                     <a href="{{ route('login') }}"
-                        class="w-full sm:w-auto bg-transparent text-black px-12 md:px-20 py-4 rounded-xl font-bold text-sm uppercase tracking-[0.2em] text-center border-2 border-black hover:bg-black hover:text-white transition-all transform hover:scale-[1.08]">
+                        class="w-full sm:w-auto bg-transparent text-black px-12 md:px-16 py-3 rounded-md font-bold text-sm border border-black hover:text-[#996515] hover:border-[#996515] transition-all duration-500 text-center uppercase tracking-[0.2em]">
                         Login
                     </a>
                     <a href="{{ route('register') }}"
-                        class="w-full sm:w-auto bg-[#1A1A1A] text-white px-12 md:px-20 py-4 rounded-xl font-bold text-sm uppercase tracking-[0.2em] text-center hover:bg-[#a4e6bb] bgopacity-10 transition-all transform hover:scale-[1.02] shadow-2xl">
+                        class="w-full sm:w-auto bg-black text-white px-12 md:px-16 py-3 rounded-md font-bold text-sm border border-black hover:bg-[#996515] hover:text-white hover:border-[#996515] transition-all text-center uppercase tracking-[0.2em]">
                         Join Now
                     </a>
                 </div>
@@ -65,57 +65,58 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="py-24 px-6 bg-transparent z-10 relative">
+    <section class="py-24 px-6  z-10 relative bg-[#fbf8f6]">
         <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
             <div class="text-center group cursor-default p-8 transition-all duration-500">
                 <h3
                     class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">
-                    240M+ MAD</h3>
-                <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Total Raised</p>
+                    +20M dhs</h3>
+                <p class="text-black font-bold tracking-widest uppercase text-[10px]">Total Raised</p>
             </div>
             <div class="text-center group cursor-default p-8 transition-all duration-500 delay-100">
                 <h3
                     class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">
                     1,500</h3>
-                <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Active Campaigns</p>
+                <p class="text-black font-bold tracking-widest uppercase text-[10px]">Active Campaigns</p>
             </div>
             <div class="text-center group cursor-default p-8 transition-all duration-500 delay-200">
                 <h3
                     class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">
                     850</h3>
-                <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Organizations</p>
+                <p class="text-black font-bold tracking-widest uppercase text-[10px]">Organizations</p>
             </div>
             <div class="text-center group cursor-default p-8 transition-all duration-500 delay-300">
                 <h3
                     class="text-5xl font-black text-[#1A1A1A] mb-3 tracking-tighter group-hover:text-[#DAA520] transition-colors">
                     12K+</h3>
-                <p class="text-gray-400 font-bold tracking-widest uppercase text-[10px]">Happy Donors</p>
+                <p class="text-black font-bold tracking-widest uppercase text-[10px]">Happy Donors</p>
             </div>
         </div>
     </section>
 
     <!-- Institutional Partnership Interface -->
-    <section class="relative py-24 px-10 z-10">
+    <section class="bg-[#fbf8f6] relative py-24 px-10 z-10">
         <div
             class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12 border-t border-[#064e3b]/10 pt-24">
 
             {{-- Left: Identity Block --}}
             <div class="max-w-2xl space-y-6">
                 <h2 class="text-4xl md:text-5xl font-black text-[#1A1A1A] leading-tight tracking-tighter">
-                    Scale Your Social <br><span class="text-[#064e3b]">Impact as a Partner.</span>
+                    Scale Your Social <br>join <span class="text-[#175636]">Donify</span>
                 </h2>
-                <p class="text-[#1A1A1A]/60 text-lg font-medium max-w-lg leading-relaxed">
-                    Connect your organization to the most transparent donation ecosystem. Validate your mission and reach a
-                    global network of donors instantly.
+                <p class="text-[#1A1A1A]/90 text-lg font-medium max-w-lg leading-relaxed">
+                    Connect your <span class="text-[#e0cf37]">organization</span> to the most transparent donation ecosystem.
+
+
                 </p>
             </div>
 
             {{-- Right: Direct Access Protocol --}}
             <div class="flex-shrink-0">
                 <a href="{{ route('organisations.register') }}"
-                    class="text-3xl md:text-5xl font-black text-[#1A1A1A] uppercase tracking-tighter hover:text-[#064e3b] transition-all duration-500 flex items-center gap-6 group">
-                    Apply Now.
-                    <svg class="w-10 h-10 transform group-hover:translate-x-4 transition-transform duration-500"
+                    class="text-3xl md:text-5xl font-black text-[#1A1A1A] uppercase tracking-tighter hover:text-[#996515] transition-all duration-500 flex items-center gap-6 group">
+                    Apply Now
+                    <svg class="w-10 h-10 transform group-hover:translate-x-8 transition-transform duration-500"
                         fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                         <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
@@ -127,7 +128,7 @@
 
 
     <!-- Call to Action -->
-    <section class="w-full font-['Quicksand'] relative overflow-hidden bg-transparent z-10">
+    <section class="welcome-warm-section bg-[#fbf8f6] w-full font-['Quicksand'] relative overflow-hidden z-10">
         <div class="flex flex-col md:flex-row items-stretch">
 
             {{-- Left: Slogan Image --}}
@@ -153,11 +154,7 @@
                         <a href="{{ route('register') }}"
                             class="bg-black text-white px-8 py-3 rounded-md font-bold text-sm border border-black hover:bg-[#996515] hover:text-white hover:border-[#996515] transition-all text-center uppercase tracking-[0.2em]">
                             Get Started
-                        </a>
-                        <a href="#"
-                            class="bg-transparent text-black px-8 py-3 rounded-md font-bold text-sm border border-black hover:text-[#996515] hover:border-[#996515] transition-all duration-500 text-center uppercase tracking-[0.2em]">
-                            Our Vision
-                        </a>
+                     </a>
                     </div>
                 </div>
             </div>
