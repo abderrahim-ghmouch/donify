@@ -41,11 +41,6 @@ class Campaign extends Model
         return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function documents()
-    {
-        return $this->hasMany(Document::class);
-    }
-
     public function donations()
     {
         return $this->hasMany(Donation::class);

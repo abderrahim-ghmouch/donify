@@ -49,8 +49,8 @@ class OrganisationController extends Controller
             'password'    => 'required|string|min:9',
             'phone'       => 'required|string|max:20',
             'address'     => 'required|string',
-            'logo'        => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'document'    => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
+            'logo'        => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'document'    => 'required|file|mimes:pdf,jpg,jpeg,png,webp|max:5120',
         ]);
 
         // Handle logo (profile image)
