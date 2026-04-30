@@ -34,7 +34,7 @@ class CampaignController extends Controller
             'start_date'    => 'nullable|date',
             'end_date'      => 'nullable|date|after_or_equal:start_date',
             'images'        => 'nullable|array',
-            'images.*'      => 'image|mimes:jpeg,png,jpg,gif|max:4096',
+            'images.*'      => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096',
         ]);
 
         if (auth('organisation')->check()) {
@@ -231,7 +231,7 @@ class CampaignController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Unauthorized.'], 403);
         }
 
-        $request->validate(['image' => 'required|image|mimes:jpeg,png,jpg,gif|max:4096']);
+        $request->validate(['image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:4096']);
 
         $path = $request->file('image')->store('campaigns', 'public');
         $image = $campaign->images()->create(['url' => asset('storage/' . $path)]);
