@@ -63,13 +63,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Stripe::class);
     }
 
-    public function notifications()
-    {
-        return $this->hasMany(Notifcation::class);
-
-
-        }
-
     public function getJWTIdentifier()
     {
         return $this->getKey();
