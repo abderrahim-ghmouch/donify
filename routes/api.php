@@ -43,6 +43,7 @@ Route::middleware(['auth:api', 'check.banned'])->group(function () {
 
     // Donations
     Route::post('campaigns/{id}/donate', [DonationController::class, 'donate']);
+    Route::post('campaigns/{campaign}/donations/confirm', [DonationController::class, 'confirm']);
     Route::get('my-donations', [DonationController::class, 'myDonations']);
 
 });

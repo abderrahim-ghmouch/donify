@@ -44,7 +44,7 @@ class CampaignController extends Controller
             $validateData['user_id'] = auth('api')->id();
             $validateData['organisation_id'] = null;
         }
-        
+
         $validateData['status']  = 'pending';
 
         $campaign = Campaign::create($validateData);
@@ -78,7 +78,9 @@ class CampaignController extends Controller
      */
     public function myCampaigns()
     {
-        $query = Campaign::with(['images', 'category'])->latest();
+        $query = Campaign::with(['images', 'category'])
+            ->withCount('donations')
+            ->latest();
 
         if (auth('organisation')->check()) {
             $query->where('organisation_id', auth('organisation')->id());
