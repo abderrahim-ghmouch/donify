@@ -37,6 +37,11 @@ class Organisation extends Authenticatable implements JWTSubject
         return $this->hasMany(Campaign::class);
     }
 
+    public function verificationDocument()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

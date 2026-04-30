@@ -14,7 +14,9 @@ class OrganisationController extends Controller
      */
     public function index()
     {
-        $organisations = Organisation::where('is_verified', true)->get();
+        $organisations = Organisation::with('verificationDocument')
+            ->where('is_verified', true)
+            ->get();
 
         return response()->json([
             'status' => 'success',
@@ -27,7 +29,7 @@ class OrganisationController extends Controller
      */
     public function show($id)
     {
-        $organisation = Organisation::findOrFail($id);
+        $organisation = Organisation::with('verificationDocument')->findOrFail($id);
 
         return response()->json([
             'status' => 'success',
@@ -71,14 +73,19 @@ class OrganisationController extends Controller
             'phone'         => $validated['phone'],
             'address'       => $validated['address'],
             'logo'          => $logoPath,
-            'document_path' => $documentPath,
             'is_verified'   => false,
         ]);
+
+        if ($documentPath) {
+            $organisation->verificationDocument()->create([
+                'url' => $documentPath,
+            ]);
+        }
 
         return response()->json([
             'status'  => 'success',
             'message' => 'Organisation registered. Awaiting admin verification.',
-            'data'    => $organisation
+            'data'    => $organisation->load('verificationDocument')
         ], 201);
     }
 
@@ -114,7 +121,9 @@ class OrganisationController extends Controller
      */
     public function pending()
     {
-        $organisations = Organisation::where('is_verified', false)->get();
+        $organisations = Organisation::with('verificationDocument')
+            ->where('is_verified', false)
+            ->get();
 
         return response()->json([
             'status' => 'success',

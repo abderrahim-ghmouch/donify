@@ -10,7 +10,7 @@ class Image extends Model
     protected $fillable = ['url', 'imageable_id', 'imageable_type'];
 
     /**
-     * Get the parent imageable model (User or Campaign).
+     * Get the parent imageable model.
      */
     public function imageable(): MorphTo
     {
