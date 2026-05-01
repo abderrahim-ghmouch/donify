@@ -21,7 +21,7 @@ class FrontendController extends Controller
 
     public function campaign($id)
     {
-        $campaign = Campaign::with(['images', 'user', 'category', 'donations'])->findOrFail($id);
+        $campaign = Campaign::with(['images', 'user.images', 'organisation.verificationDocument', 'category', 'donations'])->findOrFail($id);
         return view('campaigns.show', compact('campaign'));
     }
 

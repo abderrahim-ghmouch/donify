@@ -21,6 +21,7 @@ return [
     'stripe' => [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
+        'connect_country' => env('STRIPE_CONNECT_COUNTRY', 'MA'),
     ],
 
     'resend' => [

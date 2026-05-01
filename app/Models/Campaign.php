@@ -46,6 +46,11 @@ class Campaign extends Model
         return $this->hasMany(Donation::class);
     }
 
+    public function payouts()
+    {
+        return $this->hasMany(Payout::class);
+    }
+
 
 
 
