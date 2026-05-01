@@ -16,12 +16,12 @@
 <body class="antialiased">
     <!-- Navbar -->
     @unless(isset($hide_nav) && $hide_nav)
-    <nav class="fixed  w-full z-50 top-0 transition-all duration-300  md:px-6 " id="navbar">
-        <div class="w-full md:max-w-[95%] mx-auto flex items-center justify-between md:grid md:grid-cols-3 bg-[#fbf8f6]/80 backdrop-blur-md border border-black/10 rounded-[1.2rem] md:rounded-[1.5rem] px-4 md:px-8 py-2 shadow-[0_15px_40px_rgba(0,0,0,0.05)]">
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 md:px-6" id="navbar">
+        <div class="w-full md:max-w-[95%] mx-auto flex items-center justify-between md:grid md:grid-cols-3 bg-[#f7ead8]/40 backdrop-blur-md border border-[#996515]/20 rounded-[1.2rem] md:rounded-[1.5rem] px-4 md:px-8 py-2 shadow-[0_15px_40px_rgba(153,101,21,0.12)]">
 
             {{-- Mobile: Toggle --}}
             <div class="flex md:hidden items-center">
-                <button id="mobile-menu-open" class="p-2.5 bg-black/5 hover:bg-black/10 rounded-xl text-[#1A1A1A] transition-all active:scale-95">
+                <button id="mobile-menu-open" class="p-2.5 bg-[#996515]/10 hover:bg-[#996515]/20 rounded-xl text-[#1A1A1A] transition-all active:scale-95">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
                     </svg>
@@ -48,7 +48,7 @@
                     <a id="navDashboardLink" href="/porter/dashboard" class="hidden text-[10px] font-black uppercase tracking-[0.3em] text-[#1A1A1A]/60 hover:text-[#064e3b] transition-all px-4">Dashboard</a>
                     <a id="navAdminLink" href="/admin" class="hidden text-[10px] font-black uppercase tracking-[0.3em] text-[#1A1A1A]/60 hover:text-[#064e3b] transition-all px-4">Admin Console</a>
 
-                    <a href="{{ route('profile') }}" class="text-[#1A1A1A] hover:text-[#064e3b] transition-all p-1.5 bg-gray-50 rounded-full hover:bg-gray-100">
+                    <a href="{{ route('profile') }}" class="text-[#1A1A1A] hover:text-[#064e3b] transition-all p-1.5 bg-[#996515]/10 rounded-full hover:bg-[#064e3b]/10">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>

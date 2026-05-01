@@ -42,30 +42,8 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     </div>
 
-                    {{-- Sort Select Hub --}}
-                    <div class="relative flex items-center min-w-[240px] px-8 bg-black rounded-[2rem] border-2 border-transparent hover:border-emerald-500/50 transition-all">
-                        <span class="text-[10px] font-black tracking-widest text-emerald-500/50 mr-4 uppercase">Sort.</span>
-                        <select id="sortSelect" onchange="applyFilters()" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
-                            <option value="progress">Active Progress</option>
-                            <option value="target">Goal Magnitude</option>
-                        </select>
-                        <div id="sortLabel" class="text-sm font-black text-white uppercase tracking-widest leading-none">Active Progress</div>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
-                    </div>
-                </div>
 
-                {{-- Telemetry Row --}}
-                <div class=" flex gap-12 mt-12 items-baseline">
-                    <div class="text-center">
-                        <span id="totalCount" class="text-3xl font-black text-[#1A1A1A] tracking-tighter">0</span>
-                        <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest block mt-1">Tracked</span>
-                    </div>
-                    <div class="w-px h-8 bg-black/5"></div>
-                    <div class="text-center">
-                        <span id="activeCount" class="text-3xl font-black text-[#059669] tracking-tighter">0</span>
-                        <span class="text-[9px] text-gray-400 font-bold uppercase tracking-widest block mt-1">Authorized</span>
-                    </div>
-                </div>
+
 
     </section>
 
@@ -101,7 +79,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-gray-200 mx-auto mb-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
                     </svg>
-                    <h3 class="text-3xl font-black text-[#1A1A1A] mb-4 tracking-tighter">No Data Found.</h3>
+                    <h2 class="text-3xl font-black text-[#1A1A1A] mb-4 tracking-tighter">No Data Found</h2>
                     <p class="text-gray-400 font-medium mb-10">The current criteria does not match any tracked initiatives.</p>
                     <button onclick="resetFilters()" class="px-12 py-6 bg-[#1A1A1A] text-[#059669] border-2 border-[#1A1A1A] rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all transform hover:-translate-y-1 shadow-2xl">Reset Hall</button>
                 </div>

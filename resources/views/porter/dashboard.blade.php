@@ -4,7 +4,7 @@
 
 {{-- Porter Command Dashboard (Luxury Raja Light) --}}
 <div class="min-h-screen bg-[#FAFAF5] font-quicksand relative overflow-hidden flex flex-col text-black selection:bg-emerald-500/ font-sans">
-    
+
     {{-- Atmospheric Depth Prestige --}}
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div class="absolute -top-[10%] -right-[5%] w-[70%] h-[70%] bg-emerald-500/5 blur-[180px] rounded-full opacity-40"></div>
@@ -18,7 +18,7 @@
                 <div class="absolute -inset-6 bg-emerald-500/5 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <img src="{{ asset('images/donifylg.png') }}" alt="Donify Logo" class="h-24 w-auto relative z-10 opacity-90 transition-all duration-500">
             </div>
-            
+
             <h1 class="text-7xl md:text-9xl font-black text-black leading-none mb-8 tracking-tighter">
                 Registry.
             </h1>
@@ -28,7 +28,33 @@
                     Entity: <span id="heroName" class="text-black font-black tracking-widest">...</span>
                 </h2>
             </div>
-            
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl mb-16">
+                <div class="bg-white rounded-2xl border-2 border-emerald-500/10 p-8 shadow-sm text-left">
+                    <div class="text-[10px] font-black uppercase tracking-[0.35em] text-black/30 mb-3">Total Raised</div>
+                    <div id="porterTotalRaised" class="text-4xl font-black tracking-tighter text-black">0 MAD</div>
+                </div>
+                <div class="bg-white rounded-2xl border-2 border-emerald-500/10 p-8 shadow-sm text-left">
+                    <div class="text-[10px] font-black uppercase tracking-[0.35em] text-black/30 mb-3">Campaigns</div>
+                    <div id="porterCampaignCount" class="text-4xl font-black tracking-tighter text-black">0</div>
+                </div>
+                <div class="bg-white rounded-2xl border-2 border-emerald-500/10 p-8 shadow-sm text-left">
+                    <div class="text-[10px] font-black uppercase tracking-[0.35em] text-black/30 mb-3">Donations</div>
+                    <div id="porterDonationCount" class="text-4xl font-black tracking-tighter text-black">0</div>
+                </div>
+            </div>
+
+            <div class="w-full max-w-5xl mb-16 bg-white rounded-2xl border-2 border-amber-500/15 p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-8 text-left">
+                <div>
+                    <div class="text-[10px] font-black uppercase tracking-[0.35em] text-black/30 mb-3">Payout Channel</div>
+                    <div id="stripeConnectStatus" class="text-2xl font-black tracking-tight text-black">Checking Stripe...</div>
+                    <p class="text-[11px] text-black/35 font-bold uppercase tracking-[0.18em] mt-3 max-w-xl">Connect Stripe Express so campaign funds can be transferred to your payout account.</p>
+                </div>
+                <button id="stripeConnectBtn" class="px-10 py-5 rounded-xl bg-emerald-900 text-white text-[10px] font-black uppercase tracking-[0.35em] hover:bg-black transition-all shadow-xl">
+                    Connect Stripe
+                </button>
+            </div>
+
             <button onclick="openMissionModal()" class="group relative px-20 py-8 bg-black text-white rounded-xl text-[11px] font-black uppercase tracking-[0.6em] transition-all shadow-3xl shadow-black/20 overflow-hidden">
                 <div class="absolute inset-0 bg-[#C5A021] translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                 <span class="relative z-10">Launch The Campaign</span>
@@ -36,7 +62,7 @@
         </div>
     </section>
 
-    {{-- Main Workspace --}}
+    {{-- Main workspace --}}
     <section class="relative z-10 px-8 pb-40">
         <div class="max-w-6xl mx-auto">
             <div class="flex items-center justify-between mb-16 px-10">
@@ -63,15 +89,15 @@
     <div id="missionModal" class="fixed inset-0 z-[100] hidden opacity-0 transition-all duration-500 flex items-center justify-center p-4 md:p-8">
         {{-- Prestige Backdrop --}}
         <div class="absolute inset-0 bg-[#FAFAF5]/80 backdrop-blur-xl transition-all" onclick="closeMissionModal()"></div>
-        
+
         {{-- Console Interface --}}
         <div class="relative w-full max-w-6xl bg-white rounded-2xl border-2 border-emerald-500/30 shadow-[0_60px_120px_rgba(6,78,59,0.15)] transform transition-all duration-700 translate-y-20 scale-[0.98] opacity-0 overflow-hidden" id="modalContainer">
-            
+
             {{-- Modular Header --}}
             <div class="relative flex flex-col items-center p-16 lg:p-24 border-b-2 border-emerald-500/10 bg-[#FAFAF5]/50 text-center">
                 <div class="text-[11px] font-black uppercase tracking-[0.8em] text-black mb-8 ml-[0.8em]">Mission Deployment Interface</div>
                 <h5 class="text-6xl md:text-8xl font-black text-black tracking-tighter mb-4 leading-none">Deploy.</h5>
-                
+
                 <button onclick="closeMissionModal()" class="absolute top-12 right-12 w-16 h-16 rounded-full bg-slate-50 hover:bg-slate-200 flex items-center justify-center transition-all group border-2 border-slate-100">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-slate-300 group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
@@ -80,7 +106,7 @@
             {{-- Form Body --}}
             <div class="p-0 max-h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-emerald-100 bg-white">
                 <form id="createCampaignForm" class="grid grid-cols-1 lg:grid-cols-12 text-slate-800 font-sans">
-                    
+
                     {{-- Left Column: Core Narrative --}}
                     <div class="lg:col-span-7 p-12 lg:p-24 space-y-16">
                         <div class="space-y-6">
@@ -104,7 +130,7 @@
                                 <option value="">SELECT DOMAIN</option>
                             </select>
                         </div>
-                        
+
                         <div class="space-y-6">
                             <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2">Budget Target (MAD)</label>
                             <input type="number" id="cTarget" placeholder="000,000"
@@ -114,12 +140,12 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                             <div class="space-y-6">
                                 <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2">Active From</label>
-                                <input type="date" id="cStartDate" 
+                                <input type="date" id="cStartDate"
                                     class="w-full bg-white border-2 border-emerald-500/10 rounded-xl outline-none py-6 px-10 text-[12px] font-black text-black focus:border-black/30 transition-all uppercase font-sans">
                             </div>
                             <div class="space-y-6">
                                 <label class="text-[11px] font-black text-black/20 uppercase tracking-[0.5em] ml-2">Active To</label>
-                                <input type="date" id="cEndDate" 
+                                <input type="date" id="cEndDate"
                                     class="w-full bg-white border-2 border-emerald-500/10 rounded-xl outline-none py-6 px-10 text-[12px] font-black text-black focus:border-black/30 transition-all uppercase font-sans">
                             </div>
                         </div>
