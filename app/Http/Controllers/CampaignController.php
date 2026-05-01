@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Models\Donation;
+use App\Models\Payout;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -89,6 +91,17 @@ class CampaignController extends Controller
         }
 
         $campaigns = $query->get();
+        $campaigns->each(function ($campaign) {
+            $completedDonations = (float) Donation::where('campaign_id', $campaign->id)
+                ->where('status', 'completed')
+                ->sum('amount');
+
+            $reservedPayouts = (float) Payout::where('campaign_id', $campaign->id)
+                ->whereIn('status', ['pending', 'processing', 'completed'])
+                ->sum('amount');
+
+            $campaign->available_for_payout = round($completedDonations - $reservedPayouts, 2);
+        });
 
         return response()->json([
             'status' => 'success',
