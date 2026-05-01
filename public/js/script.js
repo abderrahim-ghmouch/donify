@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             document.getElementById('heroName').textContent = `${u.first_name || ''} ${u.last_name || ''}`;
             success.classList.remove('hidden');
             setTimeout(() => success.classList.add('hidden'), 3000);
-        } catch { alert('Sync failure'); }
+        } catch { showPorterToast('SYNC FAILURE.'); }
         finally { btn.disabled = false; btn.textContent = 'Verify Identity'; }
     });
 
@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             setAvatar(res.url);
             const user = ApiClient.getUser();
             if (user) { user.images = { url: res.url }; ApiClient.setUser(user); }
-        } catch { alert('Upload failed'); }
+        } catch { showPorterToast('UPLOAD FAILED.'); }
     });
 });
 
@@ -541,9 +541,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show payment status if Stripe redirected back with a query param
     const params = new URLSearchParams(window.location.search);
     if (params.get('payment') === 'success') {
-        showPaymentMsg(msg, 'Verification Successful. Contribution finalized.', 'success');
+        confirmDonation(params.get('session_id'));
     } else if (params.get('payment') === 'cancel') {
         showPaymentMsg(msg, 'Pledge Cancelled. No funds were transferred.', 'cancel');
+    }
+
+    async function confirmDonation(sessionId) {
+        if (!sessionId) {
+            showPaymentMsg(msg, 'Payment session missing. Please contact support.', 'cancel');
+            return;
+        }
+
+        try {
+            const res = await ApiClient.request(`/campaigns/${campaignId}/donations/confirm`, {
+                method: 'POST',
+                body: JSON.stringify({ session_id: sessionId })
+            });
+
+            const campaign = res.data?.campaign || res.data || null;
+            const amount = campaign?.current_amount ?? null;
+            const target = campaign?.target_amount ?? null;
+
+            showPaymentMsg(msg, 'Verification Successful. Contribution finalized.', 'success');
+
+            if (amount !== null) {
+                const amountEl = document.getElementById('currentAmountDisplay');
+                if (amountEl) amountEl.textContent = `${fmtNum(amount)} MAD`;
+            }
+
+            if (amount !== null && target) {
+                const pct = Math.min(100, (Number(amount) / Math.max(1, Number(target))) * 100);
+                const bar = document.getElementById('campaignProgressBar');
+                const pctEl = document.getElementById('campaignPercent');
+                if (bar) bar.style.width = `${pct}%`;
+                if (pctEl) pctEl.textContent = `${pct.toFixed(1)}% Efficient`;
+            }
+        } catch (err) {
+            showPaymentMsg(msg, err.message || 'Could not confirm the payment yet.', 'cancel');
+        }
     }
 
     // Donate button — initiates the Stripe Checkout session
@@ -551,7 +586,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ApiClient.isAuthenticated()) { window.location.href = '/login'; return; }
 
         const amount = amountInput?.value;
-        if (!amount || amount < 10) { alert('Please enter a valid amount (Minimum 10 MAD).'); return; }
+        if (!amount || amount < 10) {
+            showPaymentMsg(msg, 'Please enter a valid amount. Minimum 10 MAD.', 'cancel');
+            return;
+        }
 
         donateBtn.disabled  = true;
         donateBtn.innerHTML = 'Authorizing...';
@@ -567,7 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = res.checkout_url;
             } else { throw new Error('Could not establish secure session.'); }
         } catch (err) {
-            alert(err.message || 'Donation failed. Please try again.');
+            showPaymentMsg(msg, err.message || 'Donation failed. Please try again.', 'cancel');
             donateBtn.disabled  = false;
             donateBtn.innerHTML = 'Initiate Support →';
         }
@@ -691,7 +729,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             favourites = favourites.filter(c => c.id !== id);
             document.getElementById('favCount').textContent = favourites.length;
             renderWatchlist();
-        } catch { alert('Action failed.'); }
+        } catch { showPorterToast('ACTION FAILED.'); }
     };
 
     await loadWatchlist();
@@ -710,7 +748,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     const user = ApiClient.getUser();
     document.getElementById('heroName').textContent = (user.first_name || 'Porter').toUpperCase();
 
-    await Promise.all([loadPorterCategories(), loadPorterCampaigns()]);
+    await Promise.all([loadPorterCategories(), loadPorterCampaigns(), loadPorterPayoutStatus()]);
+
+    document.getElementById('stripeConnectBtn')?.addEventListener('click', async () => {
+        const btn = document.getElementById('stripeConnectBtn');
+        btn.disabled = true;
+        btn.textContent = 'Opening Stripe...';
+        try {
+            const res = await ApiClient.request('/payouts/stripe/onboarding', { method: 'POST' });
+            window.location.href = res.url;
+        } catch (err) {
+            showPorterToast(err.message || 'STRIPE LINK FAILED.');
+            btn.disabled = false;
+            btn.textContent = 'Connect Stripe';
+        }
+    });
 
     // Image preview for the modal's upload zone
     const imageInput = document.getElementById('cImages');
@@ -790,6 +842,33 @@ function closeMissionModal() {
     setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = ''; }, 500);
 }
 
+/** loadPorterPayoutStatus — checks whether Stripe Express is ready for transfers */
+async function loadPorterPayoutStatus() {
+    const statusEl = document.getElementById('stripeConnectStatus');
+    const btn = document.getElementById('stripeConnectBtn');
+    if (!statusEl || !btn) return;
+
+    try {
+        const res = await ApiClient.request('/payouts/stripe/status');
+        const status = res.data || {};
+
+        if (status.ready) {
+            statusEl.textContent = 'Stripe connected. Payouts enabled.';
+            btn.textContent = 'Manage / Refresh Stripe';
+            btn.classList.remove('bg-emerald-900');
+            btn.classList.add('bg-black');
+        } else if (status.connected) {
+            statusEl.textContent = 'Stripe connected. Finish onboarding.';
+            btn.textContent = 'Finish Stripe Setup';
+        } else {
+            statusEl.textContent = 'Stripe not connected.';
+            btn.textContent = 'Connect Stripe';
+        }
+    } catch {
+        statusEl.textContent = 'Could not check Stripe payout status.';
+    }
+}
+
 /** loadPorterCategories — populates the category select in the deploy modal */
 async function loadPorterCategories() {
     try {
@@ -814,6 +893,17 @@ async function loadPorterCampaigns() {
 
 function renderPorterRegistry(list) {
     const el = document.getElementById('myCampaignsList');
+    const totalRaisedEl = document.getElementById('porterTotalRaised');
+    const campaignCountEl = document.getElementById('porterCampaignCount');
+    const donationCountEl = document.getElementById('porterDonationCount');
+
+    const totalRaised = list.reduce((sum, c) => sum + Number(c.current_amount || 0), 0);
+    const donationCount = list.reduce((sum, c) => sum + Number(c.donations_count || 0), 0);
+
+    if (totalRaisedEl) totalRaisedEl.textContent = `${fmtNum(totalRaised)} MAD`;
+    if (campaignCountEl) campaignCountEl.textContent = `${list.length}`;
+    if (donationCountEl) donationCountEl.textContent = `${donationCount}`;
+
     if (!list.length) {
         el.innerHTML = `<div class="py-32 text-center bg-white rounded-[3.5rem] border border-amber-500/5 shadow-xl"><p class="text-amber-900/10 font-black text-[12px] uppercase tracking-[0.8em] font-sans">Registry Stream Depleted.</p></div>`;
         return;
@@ -821,6 +911,8 @@ function renderPorterRegistry(list) {
     el.innerHTML = list.map(c => {
         const statusClass = c.status === 'active' ? 'text-emerald-700 border-emerald-200 bg-emerald-50' : 'text-slate-400 border-slate-100 bg-slate-50';
         const img = c.images?.[0]?.url || null;
+        const progress = Math.min(100, (Number(c.current_amount || 0) / Math.max(1, Number(c.target_amount || 1))) * 100).toFixed(1);
+        const availableForPayout = Number(c.available_for_payout || 0);
         return `
         <div class="group bg-white p-12 rounded-2xl border-2 border-emerald-500/20 flex items-center gap-16 shadow-xl transition-all duration-700 hover:shadow-2xl hover:border-emerald-500/40 font-sans">
             <div class="w-24 h-24 rounded-xl bg-slate-50 overflow-hidden flex-shrink-0 border-2 border-emerald-500/20">
@@ -834,11 +926,35 @@ function renderPorterRegistry(list) {
                 <h3 class="text-5xl font-black text-black tracking-tighter truncate leading-none">${escHtml(c.title)}</h3>
             </div>
             <div class="flex items-center gap-20 flex-shrink-0">
-                <span class="text-7xl font-black text-black tracking-tighter tabular-nums">${Number(c.current_amount || 0).toLocaleString()} <span class="text-[14px] text-emerald-600 uppercase tracking-[0.5em]">MAD</span></span>
-                <a href="/campaigns/${c.id}" class="px-12 py-6 rounded-lg bg-black text-[11px] font-black text-white hover:bg-zinc-800 uppercase tracking-[0.6em] transition-all shadow-xl">INTERFACE</a>
+                <div class="text-right space-y-3">
+                    <span class="text-7xl font-black text-black tracking-tighter tabular-nums block">${Number(c.current_amount || 0).toLocaleString()} <span class="text-[14px] text-emerald-600 uppercase tracking-[0.5em]">MAD</span></span>
+                    <div class="w-64 h-2 rounded-full bg-black/5 overflow-hidden ml-auto">
+                        <div class="h-full bg-emerald-500 rounded-full" style="width:${progress}%"></div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-3">
+                    <a href="/campaigns/${c.id}" class="px-12 py-6 rounded-lg bg-black text-[11px] font-black text-white hover:bg-zinc-800 uppercase tracking-[0.6em] transition-all shadow-xl text-center">INTERFACE</a>
+                    ${availableForPayout > 0 ? `<button onclick="requestCampaignPayout(${c.id}, ${availableForPayout})" class="px-12 py-5 rounded-lg bg-emerald-900 text-[10px] font-black text-white hover:bg-emerald-950 uppercase tracking-[0.35em] transition-all shadow-lg">PAYOUT ${availableForPayout.toLocaleString()} MAD</button>` : `<span class="text-center text-[9px] font-black uppercase tracking-[0.35em] text-black/25">No payable balance</span>`}
+                </div>
             </div>
         </div>`;
     }).join('');
+}
+
+/** requestCampaignPayout — transfers completed unpaid campaign funds to the porter's Stripe account */
+async function requestCampaignPayout(campaignId, amount) {
+    if (!confirm(`Request payout of ${Number(amount).toLocaleString()} MAD for this campaign?`)) return;
+
+    try {
+        await ApiClient.request(`/campaigns/${campaignId}/payout`, {
+            method: 'POST',
+            body: JSON.stringify({ amount })
+        });
+        showPorterToast('PAYOUT TRANSFER CREATED.');
+        await Promise.all([loadPorterPayoutStatus(), loadPorterCampaigns()]);
+    } catch (err) {
+        showPorterToast(err.message || 'PAYOUT FAILED.');
+    }
 }
 
 /**
@@ -887,8 +1003,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             await ApiClient.registerOrganisation(fd);
-            alert('Application Deployed. Access will be authorized upon manual admin verification.');
-            window.location.href = '/';
+            showPorterToast('APPLICATION DEPLOYED.');
+            setTimeout(() => { window.location.href = '/'; }, 1400);
         } catch (error) {
             const msg = error.message || (error.errors ? Object.values(error.errors)[0][0] : 'Validation failure.');
             errorDiv.textContent = msg;
