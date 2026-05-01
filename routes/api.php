@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FavouriteController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\OrganisationController;
+use App\Http\Controllers\StripeConnectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -103,5 +104,9 @@ Route::middleware(['auth:api', 'check.banned', 'porter'])->group(function () {
     Route::delete('campaigns/{id}', [CampaignController::class, 'destroy']);
 
     Route::post('campaigns/{id}/image', [CampaignController::class, 'uploadImage']);
+
+    Route::get('payouts/stripe/status', [StripeConnectController::class, 'status']);
+    Route::post('payouts/stripe/onboarding', [StripeConnectController::class, 'onboarding']);
+    Route::post('campaigns/{campaign}/payout', [StripeConnectController::class, 'campaignPayout']);
 
 });
