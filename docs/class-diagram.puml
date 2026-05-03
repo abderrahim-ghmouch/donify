@@ -1,0 +1,191 @@
+@startuml DonifyClassDiagram
+title Donify - Class Diagram (Updated)
+
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty methods
+
+package "Authentication" {
+  interface JWTSubject {
+    +getJWTIdentifier()
+    +getJWTCustomClaims()
+  }
+
+  abstract class Authenticatable
+}
+
+package "Domain Models" {
+  class User {
+    +id: bigint
+    +first_name: string
+    +last_name: string
+    +email: string
+    +password: string
+    +role: enum(admin, porter, donor)
+    +is_banned: boolean
+    +email_verified_at: datetime
+    +campaigns()
+    +donations()
+    +favourites()
+    +images()
+    +stripe()
+    +payouts()
+  }
+
+  class Organisation {
+    +id: bigint
+    +name: string
+    +description: text
+    +email: string
+    +password: string
+    +phone: string
+    +address: string
+    +logo: string
+    +is_verified: boolean
+    +campaigns()
+    +verificationDocument()
+    +getJWTIdentifier()
+    +getJWTCustomClaims()
+  }
+
+  class Campaign {
+    +id: bigint
+    +user_id: bigint
+    +category_id: bigint
+    +organisation_id: bigint
+    +title: string
+    +description: text
+    +target_amount: decimal
+    +current_amount: decimal
+    +status: enum(pending, active, completed, cancelled)
+    +start_date: date
+    +end_date: date
+    +user()
+    +category()
+    +organisation()
+    +images()
+    +donations()
+    +payouts()
+    +favourites()
+  }
+
+  class Category {
+    +id: bigint
+    +category_name: string
+    +campaigns()
+  }
+
+  class Donation {
+    +id: bigint
+    +user_id: bigint
+    +campaign_id: bigint
+    +amount: decimal
+    +status: enum(pending, completed, failed)
+    +user()
+    +campaign()
+  }
+
+  class Payment {
+    +id: bigint
+    +user_id: bigint
+    +donation_id: bigint
+    +payment_method: string
+    +amount: decimal
+    +currency: string
+    +status: enum(pending, completed, failed)
+    +transaction_id: string
+    +reference_id: string
+    +provider_data: json
+    +response_message: text
+    +user()
+    +donation()
+  }
+
+  class Payout {
+    +id: bigint
+    +user_id: bigint
+    +campaign_id: bigint
+    +amount: decimal
+    +currency: string
+    +status: enum(pending, processing, completed, failed)
+    +stripe_transfer_id: string
+    +provider_data: json
+    +failure_message: text
+    +user()
+    +campaign()
+  }
+
+  class Favourite {
+    +id: bigint
+    +user_id: bigint
+    +campaign_id: bigint
+    +user()
+    +campaign()
+  }
+
+  class Image {
+    +id: bigint
+    +url: string
+    +imageable_id: bigint
+    +imageable_type: string
+    +imageable()
+  }
+
+  class Stripe {
+    +id: bigint
+    +user_id: bigint
+    +stripe_customer_id: string
+    +stripe_account_id: string
+    +status: enum(pending, active, inactive)
+    +user()
+  }
+}
+
+Authenticatable <|-- User
+Authenticatable <|-- Organisation
+JWTSubject <|.. User
+JWTSubject <|.. Organisation
+
+User "1" -- "0..*" Campaign : creates
+Organisation "1" -- "0..*" Campaign : owns
+Category "1" -- "0..*" Campaign : classifies
+
+User "1" -- "0..*" Donation : makes
+Campaign "1" -- "0..*" Donation : receives
+
+User "1" -- "0..*" Payment : pays
+Donation "1" -- "0..1" Payment : has
+
+User "1" -- "0..*" Payout : receives
+Campaign "1" -- "0..*" Payout : funds
+
+User "1" -- "0..*" Favourite : saves
+Campaign "1" -- "0..*" Favourite : is saved in
+
+User "1" -- "0..1" Stripe : connect account
+
+User "1" .. "0..1" Image : avatar
+Organisation "1" .. "0..1" Image : verification document
+Campaign "1" .. "0..*" Image : gallery
+Image "*" .. "1" User : imageable
+Image "*" .. "1" Organisation : imageable
+Image "*" .. "1" Campaign : imageable
+
+note right of Image
+  Polymorphic relation:
+  imageable can be User, Organisation, or Campaign.
+end note
+
+note bottom of Payout
+  Stripe Connect transfers funds
+  directly to porter's account
+  with 5% platform fee.
+end note
+
+note bottom of Campaign
+  Status workflow:
+  pending → active → completed/cancelled
+  Admin approval required for activation.
+end note
+
+@enduml

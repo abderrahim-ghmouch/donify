@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('campaign_id')->constrained()->onDelete('cascade');
             $table->decimal('amount', 15, 2);
-            $table->string('currency', 3)->default('MAD');
+            $table->string('currency', 3)->default('USD');
             $table->enum('status', ['pending', 'processing', 'completed', 'failed'])->default('pending');
             $table->string('stripe_transfer_id')->nullable()->unique();
             $table->json('provider_data')->nullable();

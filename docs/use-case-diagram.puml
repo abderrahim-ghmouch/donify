@@ -1,0 +1,172 @@
+@startuml DonifyUseCaseDiagram
+title Donify - Use Case Diagram (Updated)
+
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Visitor" as Visitor
+actor "Registered User" as User
+actor "Donor" as Donor
+actor "Porter" as Porter
+actor "Organisation" as Organisation
+actor "Admin" as Admin
+actor "Stripe" as Stripe
+
+User <|-- Donor
+User <|-- Porter
+
+rectangle "Donify Platform" {
+  package "Public Access" {
+    usecase "Browse Home Page" as UC_Home
+    usecase "View Campaigns" as UC_ViewCampaigns
+    usecase "Search Campaigns" as UC_SearchCampaigns
+    usecase "Filter Campaigns" as UC_FilterCampaigns
+    usecase "View Campaign Details" as UC_ViewCampaign
+    usecase "View Categories" as UC_ViewCategories
+    usecase "View Organisations" as UC_ViewOrgs
+  }
+
+  package "Authentication" {
+    usecase "Register Account" as UC_Register
+    usecase "Login" as UC_Login
+    usecase "Logout" as UC_Logout
+    usecase "Manage Profile" as UC_Profile
+    usecase "Upload Avatar" as UC_Avatar
+  }
+
+  package "Donor Features" {
+    usecase "Add/Remove Favourite" as UC_Favourite
+    usecase "View Favourites" as UC_ViewFavourites
+    usecase "Make Donation" as UC_Donate
+    usecase "Confirm Donation Payment" as UC_ConfirmDonation
+    usecase "View My Donations" as UC_MyDonations
+  }
+
+  package "Porter Features" {
+    usecase "Create Campaign" as UC_CreateCampaign
+    usecase "View My Campaigns" as UC_ManageCampaigns
+    usecase "Update Campaign" as UC_UpdateCampaign
+    usecase "Delete Campaign" as UC_DeleteCampaign
+    usecase "Upload Campaign Image" as UC_CampaignImage
+    usecase "Connect Stripe Account" as UC_ConnectStripe
+    usecase "Check Payout Status" as UC_PayoutStatus
+    usecase "Request Campaign Payout" as UC_RequestPayout
+  }
+
+  package "Organisation Features" {
+    usecase "Register Organisation" as UC_RegisterOrg
+    usecase "Login as Organisation" as UC_LoginOrg
+    usecase "Create Organisation Campaign" as UC_OrgCampaign
+    usecase "Manage Organisation Campaigns" as UC_ManageOrgCampaigns
+  }
+
+  package "Admin Features" {
+    usecase "View Admin Dashboard" as UC_AdminDashboard
+    usecase "Manage Categories" as UC_ManageCategories
+    usecase "Create Category" as UC_CreateCategory
+    usecase "Manage Users" as UC_ManageUsers
+    usecase "Ban/Unban User" as UC_BanUser
+    usecase "View Pending Organisations" as UC_PendingOrgs
+    usecase "Verify Organisation" as UC_VerifyOrg
+    usecase "Reject Organisation" as UC_RejectOrg
+    usecase "View All Campaigns" as UC_ViewAllCampaigns
+    usecase "View Pending Campaigns" as UC_PendingCampaigns
+    usecase "Approve Campaign" as UC_ApproveCampaign
+    usecase "Reject Campaign" as UC_RejectCampaign
+  }
+
+  package "Payment Processing" {
+    usecase "Process Stripe Checkout" as UC_ProcessPayment
+    usecase "Handle Webhook" as UC_Webhook
+    usecase "Create Stripe Transfer" as UC_StripeTransfer
+  }
+}
+
+' Visitor interactions
+Visitor --> UC_Home
+Visitor --> UC_ViewCampaigns
+Visitor --> UC_SearchCampaigns
+Visitor --> UC_FilterCampaigns
+Visitor --> UC_ViewCampaign
+Visitor --> UC_ViewCategories
+Visitor --> UC_ViewOrgs
+Visitor --> UC_Register
+Visitor --> UC_Login
+Visitor --> UC_RegisterOrg
+
+' User interactions
+User --> UC_Logout
+User --> UC_Profile
+User --> UC_Avatar
+
+' Donor interactions
+Donor --> UC_Favourite
+Donor --> UC_ViewFavourites
+Donor --> UC_Donate
+Donor --> UC_ConfirmDonation
+Donor --> UC_MyDonations
+
+' Porter interactions
+Porter --> UC_CreateCampaign
+Porter --> UC_ManageCampaigns
+Porter --> UC_UpdateCampaign
+Porter --> UC_DeleteCampaign
+Porter --> UC_CampaignImage
+Porter --> UC_ConnectStripe
+Porter --> UC_PayoutStatus
+Porter --> UC_RequestPayout
+
+' Organisation interactions
+Organisation --> UC_LoginOrg
+Organisation --> UC_OrgCampaign
+Organisation --> UC_ManageOrgCampaigns
+Organisation --> UC_CampaignImage
+Organisation --> UC_ConnectStripe
+Organisation --> UC_RequestPayout
+
+' Admin interactions
+Admin --> UC_AdminDashboard
+Admin --> UC_ManageCategories
+Admin --> UC_CreateCategory
+Admin --> UC_ManageUsers
+Admin --> UC_BanUser
+Admin --> UC_PendingOrgs
+Admin --> UC_VerifyOrg
+Admin --> UC_RejectOrg
+Admin --> UC_ViewAllCampaigns
+Admin --> UC_PendingCampaigns
+Admin --> UC_ApproveCampaign
+Admin --> UC_RejectCampaign
+
+' Stripe interactions
+Stripe --> UC_ProcessPayment
+Stripe --> UC_Webhook
+Stripe --> UC_StripeTransfer
+
+' Include relationships
+UC_Donate ..> UC_ProcessPayment : <<include>>
+UC_ConfirmDonation ..> UC_ProcessPayment : <<include>>
+UC_RequestPayout ..> UC_StripeTransfer : <<include>>
+UC_ManageCategories ..> UC_CreateCategory : <<include>>
+UC_ManageCampaigns ..> UC_UpdateCampaign : <<extend>>
+UC_ManageCampaigns ..> UC_DeleteCampaign : <<extend>>
+
+' Extend relationships
+UC_CreateCampaign ..> UC_CampaignImage : <<extend>>
+UC_PendingOrgs ..> UC_VerifyOrg : <<extend>>
+UC_PendingOrgs ..> UC_RejectOrg : <<extend>>
+UC_PendingCampaigns ..> UC_ApproveCampaign : <<extend>>
+UC_PendingCampaigns ..> UC_RejectCampaign : <<extend>>
+
+note right of UC_RequestPayout
+  Requires Stripe Connect
+  account to be active.
+  Transfers funds with 5% fee.
+end note
+
+note right of UC_ApproveCampaign
+  Changes campaign status
+  from pending to active.
+end note
+
+@enduml

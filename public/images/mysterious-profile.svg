@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-labelledby="title desc">
+    <title id="title">Default profile</title>
+    <desc id="desc">Neutral default profile placeholder.</desc>
+    <rect width="160" height="160" fill="#f3f4f6"/>
+    <circle cx="80" cy="61" r="34" fill="#d1d5db"/>
+    <path fill="#d1d5db" d="M28 146c6-33 26-52 52-52s46 19 52 52H28Z"/>
+    <circle cx="80" cy="61" r="23" fill="#e5e7eb"/>
+    <path fill="#e5e7eb" d="M43 146c6-22 20-34 37-34s31 12 37 34H43Z"/>
+</svg>

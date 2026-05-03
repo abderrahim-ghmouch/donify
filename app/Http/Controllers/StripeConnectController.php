@@ -52,7 +52,7 @@ class StripeConnectController extends Controller
         if (!$stripe->stripe_account_id) {
             $account = Account::create([
                 'type' => 'express',
-                'country' => config('services.stripe.connect_country', 'MA'),
+                'country' => 'US',
                 'email' => $user->email,
                 'capabilities' => [
                     'card_payments' => ['requested' => true],
@@ -129,7 +129,7 @@ class StripeConnectController extends Controller
                 'user_id' => $user->id,
                 'campaign_id' => $lockedCampaign->id,
                 'amount' => $amount,
-                'currency' => 'MAD',
+                'currency' => 'USD',
                 'status' => 'pending',
             ]);
         });

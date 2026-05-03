@@ -17,7 +17,7 @@ class DonationController extends Controller
         $campaign = Campaign::findOrFail($campaignId);
 
         $request->validate([
-            'amount' => 'required|numeric|min:10' // Minimum MAD for valid transaction
+            'amount' => 'required|numeric|min:1'
         ]);
 
         try {
@@ -32,21 +32,33 @@ class DonationController extends Controller
                     'status' => 'pending'
                 ]);
 
-                // 2. Initialize Stripe Checkout Session
+                // 2. Initialize Stripe Checkout Session with direct transfer to porter
+                $porterStripe = $campaign->user->stripe;
+                
+                if (!$porterStripe?->stripe_account_id || $porterStripe->status !== 'active') {
+                    throw new \Exception('Campaign owner has not connected their payout account yet.');
+                }
+
                 $session = \Stripe\Checkout\Session::create([
                     'payment_method_types' => ['card'],
                     'line_items' => [[
                         'price_data' => [
-                            'currency' => 'mad',
+                            'currency' => 'usd',
                     'product_data' => [
                             'name' => "Contribution: " . $campaign->title,
                             'description' => "Supporting " . ($campaign->user->name ?? 'Community Initiative'),
                         ],
-                        'unit_amount' => $request->amount * 100, // Amount in fractional units (cents)
+                        'unit_amount' => $request->amount * 100,
                     ],
                     'quantity' => 1,
                 ]],
                 'mode' => 'payment',
+                'payment_intent_data' => [
+                    'application_fee_amount' => (int) round($request->amount * 100 * 0.05), // 5% platform fee
+                    'transfer_data' => [
+                        'destination' => $porterStripe->stripe_account_id,
+                    ],
+                ],
                 'success_url' => route('campaigns.show', $campaign->id) . '?payment=success&session_id={CHECKOUT_SESSION_ID}',
                 'cancel_url' => route('campaigns.show', $campaign->id) . '?payment=cancel',
                     'customer_email' => auth('api')->user()->email,
@@ -58,7 +70,7 @@ class DonationController extends Controller
                     'user_id' => auth('api')->id(),
                     'donation_id' => $donation->id,
                     'amount' => $request->amount,
-                    'currency' => 'MAD',
+                    'currency' => 'USD',
                     'payment_method' => 'stripe',
                     'status' => 'pending',
                     'transaction_id' => $session->id,
