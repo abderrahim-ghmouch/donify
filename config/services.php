@@ -22,6 +22,7 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
         'connect_country' => env('STRIPE_CONNECT_COUNTRY', 'MA'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
     ],
 
     'resend' => [
