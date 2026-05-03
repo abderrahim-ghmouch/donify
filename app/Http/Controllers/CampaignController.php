@@ -43,6 +43,15 @@ class CampaignController extends Controller
             $validateData['organisation_id'] = auth('organisation')->id();
             $validateData['user_id'] = null;
         } else {
+            // Check if normal porter already has a campaign
+            $existingCampaign = Campaign::where('user_id', auth('api')->id())->first();
+            if ($existingCampaign) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => 'You can only create one campaign. Please delete your existing campaign to create a new one.',
+                ], 403);
+            }
+            
             $validateData['user_id'] = auth('api')->id();
             $validateData['organisation_id'] = null;
         }
