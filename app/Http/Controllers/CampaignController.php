@@ -22,10 +22,7 @@ class CampaignController extends Controller
         return response()->json(['data' => $campaigns, 'message' => 'Campaigns retrieved successfully', 'status' => 200]);
     }
 
-    /**
-     * Porter creates a campaign — always starts as 'pending' for admin review.
-     * Supports optional image upload in the same request.
-     */
+    
     public function store(Request $request)
     {
         $validateData = $request->validate([
@@ -51,7 +48,7 @@ class CampaignController extends Controller
                     'message' => 'You can only create one campaign. Please delete your existing campaign to create a new one.',
                 ], 403);
             }
-            
+
             $validateData['user_id'] = auth('api')->id();
             $validateData['organisation_id'] = null;
         }

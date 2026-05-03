@@ -11,7 +11,7 @@
     <div class="w-full md:w-2/5 flex flex-col relative z-20 overflow-hidden">
 
         <!-- Background Quotes (Left) -->
-        <div class="absolute inset-0 z-0 pointer-events-none opacity-[0.05]">
+        <div class="absolute inset-0 z-0  opacity-[0.05]">
             <div class="absolute top-10 left-10 text-6xl font-black text-[#1A1A1A] -rotate-12 uppercase">Join</div>
             <div class="absolute top-1/4 right-20 text-7xl font-black text-[#064e3b] rotate-6 uppercase">Impact</div>
             <div class="absolute bottom-1/4 left-5 text-6xl font-black text-[#DAA520] -rotate-6 uppercase">Givers</div>
@@ -19,10 +19,12 @@
         </div>
 
         <!-- Form Content -->
+
         <div class="h-full flex flex-col px-8 md:px-16 py-10 relative z-10 overflow-hidden">
             <!-- Back Arrow -->
-            <div class="mb-6">
-                <a href="{{ route('home') }}" class="inline-flex items-center text-[#1A1A1A] hover:text-[#064e3b] transition-all group">
+
+            <div class="mb-10   ">
+                <a href="{{ route('home') }}" class="inline-flex items-center text-[#1A1A1A] hover:text-[#159774] transition-all group">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
@@ -38,46 +40,47 @@
                 </div>
 
                 <div class="mb-8">
-                    <h1 class="text-4xl md:text-5xl font-black text-[#1A1A1A] mb-3 leading-tight">Join Donify</h1>
-                    <p class="text-gray-500 font-medium text-lg leading-relaxed">Start your journey of giving and impact today.</p>
+                    <h1 class="text-4xl md:text-5xl font-black text-[#1a1a1a] mb-3 leading-tight">Join Donify</h1>
+                    <p class="text-[#185633] font-medium text-lg leading-relaxed">Start your journey of giving and impact today.</p>
                 </div>
 
                 <form id="registerForm" class="space-y-6">
+
                     <!-- Error Message -->
                     <div id="registerError" class="hidden bg-red-50 text-red-500 p-5 rounded-xl text-sm border border-red-100 italic">
                     </div>
 
                     <div class="grid grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">First Name</label>
+                            <label class="block text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]mb-2 ml-1">First Name</label>
                             <input type="text" id="first_name" required
                                 class="w-full px-6 py-4 rounded-xl bg-white border border-gray-200 focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all outline-none font-medium placeholder-gray-300 text-sm shadow-sm"
-                                placeholder="John">
+                                placeholder="abderrahim">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">Last Name</label>
+                            <label class="block text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]mb-2 ml-1">Last Name</label>
                             <input type="text" id="last_name" required
                                 class="w-full px-6 py-4 rounded-xl bg-white border border-gray-100 focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all outline-none font-medium placeholder-gray-300 text-sm shadow-sm"
-                                placeholder="Doe">
+                                placeholder="ghmouch">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">Email Address</label>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]mb-2 ml-1">Email Address</label>
                         <input type="email" id="email" required
                             class="w-full px-6 py-4 rounded-xl bg-white border border-gray-200 focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all outline-none font-medium placeholder-gray-300 text-sm shadow-sm"
-                            placeholder="john@example.com">
+                            placeholder="abderrahim@example.com">
                     </div>
 
                     <div class="grid grid-cols-2 gap-5">
                         <div>
-                            <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">Password</label>
+                            <label class="block text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]mb-2 ml-1">Password</label>
                             <input type="password" id="password" required
                                 class="w-full px-6 py-4 rounded-xl bg-white border border-gray-200 focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all outline-none font-medium placeholder-gray-300 text-sm shadow-sm"
                                 placeholder="Min. 9 characters">
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">Role</label>
+                            <label class="block text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]mb-2 ml-1">Role</label>
                             <div class="relative">
                                 <select id="role"
                                     class="w-full px-6 py-4 rounded-xl bg-white border border-gray-200 focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all outline-none font-bold text-gray-700 text-sm appearance-none shadow-sm cursor-pointer">
@@ -94,7 +97,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 ml-1">Profile Photo</label>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]mb-2 ml-1">Profile Photo</label>
                         <div class="flex items-center space-x-6 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
                             <div id="imagePreview"
                                 class="w-14 h-14 rounded-full bg-gray-50 flex items-center justify-center overflow-hidden border border-gray-200 transition-colors">
