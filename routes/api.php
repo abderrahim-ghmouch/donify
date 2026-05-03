@@ -60,19 +60,6 @@ Route::get('categories', [CategoryController::class, 'index']);
 Route::get('categories/{category}', [CategoryController::class, 'show']);
 
 
-// Public campaign routes (read-only)
-        Route::get('campaigns', [CampaignController::class, 'index']);
-
-        Route::get('campaigns/search', [CampaignController::class, 'search']);
-        Route::get('campaigns/filter', [CampaignController::class, 'filter']);
-
-        Route::get('campaigns/{id}', [CampaignController::class, 'show']);
-
-        // Organisation public routes
-Route::get('organisations', [OrganisationController::class, 'index']);
-Route::post('organisations/register', [OrganisationController::class, 'register']);
-Route::get('organisations/{id}', [OrganisationController::class, 'show']);
-
 // ==================== Admin Routes ====================
 Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
     Route::post('categories', [CategoryController::class, 'store']);
@@ -95,6 +82,17 @@ Route::middleware(['auth:api', 'check.banned', 'admin'])->group(function () {
     Route::post('campaigns/{id}/approve', [CampaignController::class, 'approve']);
     Route::post('campaigns/{id}/reject', [CampaignController::class, 'reject']);
 });
+
+// Public campaign routes (read-only)
+Route::get('campaigns', [CampaignController::class, 'index']);
+Route::get('campaigns/search', [CampaignController::class, 'search']);
+Route::get('campaigns/filter', [CampaignController::class, 'filter']);
+Route::get('campaigns/{id}', [CampaignController::class, 'show']);
+
+// Organisation public routes
+Route::get('organisations', [OrganisationController::class, 'index']);
+Route::post('organisations/register', [OrganisationController::class, 'register']);
+Route::get('organisations/{id}', [OrganisationController::class, 'show']);
 
 // ==================== Porter Routes ====================
 

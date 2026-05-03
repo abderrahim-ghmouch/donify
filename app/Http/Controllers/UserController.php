@@ -61,10 +61,20 @@ class UserController extends Controller
 
         // 1. Try Standard User Auth
         if ($token = auth('api')->attempt($credentials)) {
+            $user = auth('api')->user();
+            
+            if ($user->is_banned) {
+                auth('api')->logout();
+                return response()->json([
+                    'error' => 'Your account has been banned. Please contact support.',
+                    'status' => 'banned'
+                ], 403);
+            }
+            
             return response()->json([
                 'message' => 'Login successful',
                 'access_token' => $token,
-                'user' => auth('api')->user()->load('images'),
+                'user' => $user->load('images'),
             ]);
         }
 
@@ -73,6 +83,7 @@ class UserController extends Controller
             $org = auth('organisation')->user();
 
             if (!$org->is_verified) {
+                auth('organisation')->logout();
                 return response()->json([
                     'error' => 'Your account is pending verification.',
                     'status' => 'pending'
