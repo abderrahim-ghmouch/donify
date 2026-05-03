@@ -77,14 +77,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-
-    public function ilovehousni()
-    {
-        User::where("role", "admin")->get()->map(function ($user) {
-            return strtoupper($user->first_name . " " . $user->last_name);
-        });
-
-    }
-
-
 }
