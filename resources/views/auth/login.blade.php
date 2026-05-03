@@ -124,10 +124,12 @@
                 </div>
 
                 <!-- New Quote -->
-                <div class="absolute bottom-[20%] left-10 text-left max-w-[350px] opacity-100">
-                    <h3 class="text-4xl font-black text-[#064e3b] leading-tight italic mb-2">"Allah ydawmha naama"</h3>
-                    <p class="text-[#1A1A1A] font-bold uppercase tracking-widest text-[14px]">Sirajdin</p>
-                </div>
+    
+   <div class="absolute top-[40%] right-[15%] text-right max-w-[300px] opacity-100">
+                <h3 class="text-4xl font-black text-[#DAA520] leading-tight italic mb-2">"Happiness doesn’t result from what we get, but from what we give"</h3>
+                <p class="text-[#1A1A1A] font-bold uppercase tracking-widest text-[14px]">ben Carson</p>
+            </div>
+
             </div>
         </div>
     </div>
