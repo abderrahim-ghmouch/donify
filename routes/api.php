@@ -9,12 +9,17 @@ use App\Http\Controllers\DonationController;
 use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\StripeConnectController;
 
+use App\Http\Controllers\StripeWebhookController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
 | All routes here are prefixed with /api automatically.
 */
+
+// Stripe Webhook (must be outside auth middleware)
+Route::post('webhooks/stripe', [StripeWebhookController::class, 'handle']);
 
 // ==================== Public Auth Routes ====================
 Route::post('auth/register', [UserController::class, 'register']);
