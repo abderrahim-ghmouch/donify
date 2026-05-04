@@ -14,7 +14,7 @@ class DonationController extends Controller
      */
     public function donate(Request $request, $campaignId)
     {
-        $campaign = Campaign::findOrFail($campaignId);
+        $campaign = Campaign::with(['user', 'organisation'])->findOrFail($campaignId);
 
         $request->validate([
             'amount' => 'required|numeric|min:1'
@@ -32,40 +32,36 @@ class DonationController extends Controller
                     'status' => 'pending'
                 ]);
 
-                // 2. Initialize Stripe Checkout Session with direct transfer to porter
-                $porterStripe = $campaign->user->stripe;
-                
-                if (!$porterStripe?->stripe_account_id || $porterStripe->status !== 'active') {
-                    throw new \Exception('Campaign owner has not connected their payout account yet.');
+                // 2. Get owner name for display
+                $ownerName = 'Community Initiative';
+                if ($campaign->user_id) {
+                    $ownerName = trim(($campaign->user->first_name ?? '') . ' ' . ($campaign->user->last_name ?? ''));
+                } elseif ($campaign->organisation_id) {
+                    $ownerName = $campaign->organisation->name ?? 'Organization';
                 }
 
+                // 3. Create simple Stripe Checkout Session (no Connect required)
                 $session = \Stripe\Checkout\Session::create([
                     'payment_method_types' => ['card'],
                     'line_items' => [[
                         'price_data' => [
                             'currency' => 'usd',
-                    'product_data' => [
-                            'name' => "Contribution: " . $campaign->title,
-                            'description' => "Supporting " . ($campaign->user->name ?? 'Community Initiative'),
+                            'product_data' => [
+                                'name' => "Contribution: " . $campaign->title,
+                                'description' => "Supporting " . $ownerName,
+                            ],
+                            'unit_amount' => $request->amount * 100,
                         ],
-                        'unit_amount' => $request->amount * 100,
-                    ],
-                    'quantity' => 1,
-                ]],
-                'mode' => 'payment',
-                'payment_intent_data' => [
-                    'application_fee_amount' => (int) round($request->amount * 100 * 0.05), // 5% platform fee
-                    'transfer_data' => [
-                        'destination' => $porterStripe->stripe_account_id,
-                    ],
-                ],
-                'success_url' => route('campaigns.show', $campaign->id) . '?payment=success&session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => route('campaigns.show', $campaign->id) . '?payment=cancel',
+                        'quantity' => 1,
+                    ]],
+                    'mode' => 'payment',
+                    'success_url' => route('campaigns.show', $campaign->id) . '?payment=success&session_id={CHECKOUT_SESSION_ID}',
+                    'cancel_url' => route('campaigns.show', $campaign->id) . '?payment=cancel',
                     'customer_email' => auth('api')->user()->email,
                     'client_reference_id' => $donation->id,
                 ]);
 
-                // 3. Create Supporting Payment Logic
+                // 4. Create Payment Record
                 \App\Models\Payment::create([
                     'user_id' => auth('api')->id(),
                     'donation_id' => $donation->id,
