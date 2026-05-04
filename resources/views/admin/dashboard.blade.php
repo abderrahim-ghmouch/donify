@@ -181,6 +181,7 @@
                                     <th class="px-8 py-6">Email</th>
                                     <th class="px-8 py-6">Phone</th>
                                     <th class="px-8 py-6">Status</th>
+                                    <th class="px-8 py-6">Document</th>
                                     <th class="px-8 py-6 text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -192,6 +193,19 @@
                                         <td class="px-8 py-6 text-sm text-white/60">{{ $o->phone }}</td>
                                         <td class="px-8 py-6">
                                             <span class="text-sm font-bold text-white org-status">{{ $o->is_verified ? 'VERIFIED' : 'PENDING' }}</span>
+                                        </td>
+                                        <td class="px-8 py-6">
+                                            @if($o->verificationDocument)
+                                                <button onclick="viewDocument('{{ $o->verificationDocument->url }}')" class="px-4 py-2 bg-[#996515] text-white text-xs font-bold rounded-lg hover:bg-[#996515]/80 transition-all uppercase tracking-wider flex items-center gap-2">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                    </svg>
+                                                    View
+                                                </button>
+                                            @else
+                                                <span class="text-xs text-white/40">No document</span>
+                                            @endif
                                         </td>
                                         <td class="px-8 py-6 text-right">
                                             <div class="flex items-center justify-end gap-2 org-actions">
@@ -433,5 +447,46 @@
             }
         }
         window.deleteCategory = deleteCategory;
+
+        // View document function
+        function viewDocument(url) {
+            // Create modal
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-sm';
+            modal.onclick = (e) => {
+                if (e.target === modal) modal.remove();
+            };
+
+            const isPdf = url.toLowerCase().endsWith('.pdf');
+            
+            modal.innerHTML = `
+                <div class="relative max-w-6xl max-h-[90vh] bg-[#042f2e] rounded-2xl border-2 border-[#996515] shadow-2xl overflow-hidden">
+                    <div class="flex items-center justify-between p-6 border-b border-[#996515]/30">
+                        <h3 class="text-xl font-black text-white uppercase tracking-wider">Verification Document</h3>
+                        <button onclick="this.closest('.fixed').remove()" class="text-white/60 hover:text-white transition-all p-2 hover:bg-white/10 rounded-lg">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="p-6 overflow-auto max-h-[calc(90vh-100px)]">
+                        ${isPdf 
+                            ? `<iframe src="${url}" class="w-full h-[70vh] rounded-lg border border-[#996515]/30"></iframe>`
+                            : `<img src="${url}" alt="Verification Document" class="max-w-full h-auto rounded-lg border border-[#996515]/30">`
+                        }
+                    </div>
+                    <div class="p-6 border-t border-[#996515]/30 flex justify-end">
+                        <a href="${url}" target="_blank" class="px-6 py-3 bg-[#996515] text-white text-xs font-bold rounded-lg hover:bg-[#996515]/80 transition-all uppercase tracking-wider flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                            Open in New Tab
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
     </script>
 @endsection
