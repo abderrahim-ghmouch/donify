@@ -16,7 +16,7 @@
 <body class="antialiased">
     <!-- Navbar -->
     @unless(isset($hide_nav) && $hide_nav)
-    <nav class="fixed w-full z-50 top-0 transition-all duration-300 md:px-6" id="navbar">
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 md:px-6 py-4" id="navbar">
         <div class="w-full md:max-w-[95%] mx-auto flex items-center justify-between md:grid md:grid-cols-3 bg-[#f7ead8]/40 backdrop-blur-md border border-[#996515]/20 rounded-[1.2rem] md:rounded-[1.5rem] px-4 md:px-8 py-2 shadow-[0_15px_40px_rgba(153,101,21,0.12)]">
 
             {{-- Mobile: Toggle --}}

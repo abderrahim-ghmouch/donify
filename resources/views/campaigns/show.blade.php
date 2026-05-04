@@ -11,6 +11,7 @@
         ?? asset('images/mysterious-profile.svg');
     $categoryName = $campaign->category?->category_name ?? 'Visionary';
 @endphp
+
 {{-- campign dashboard --}}
 <div class="min-h-screen bg-[#fbf8f6] font-quicksand relative overflow-hidden">
 
@@ -40,13 +41,14 @@
             </h1>
 
             {{-- Lead Authority --}}
+
             <div class="flex items-center gap-5 border-t border-emerald-900/10 pt-8 md:pt-10">
                 <div class="w-14 h-14 rounded-lg bg-white border border-emerald-700/25 p-1 shadow-sm overflow-hidden group shrink-0">
                     <img class="w-full h-full object-cover rounded-md group-hover:scale-105 transition-transform duration-700" src="{{ $leadImage }}" alt="Lead">
                 </div>
                 <div>
-                    <span class="text-[9px] font-black text-[#059669] uppercase tracking-[0.3em] block mb-1">Project Lead.</span>
-                    <h3 class="text-base font-black text-[#1A1A1A] uppercase tracking-wider">{{ $leadName }}</h3>
+                    <span class="text-[9px] font-black text-[#059669]  tracking-[0.3em] block mb-1">Project Lead</span>
+                    <h2 class=" font-black text-[#1A1A1A]  tracking-wider">{{ $leadName }}</h2>
                 </div>
             </div>
         </div>
@@ -60,8 +62,8 @@
             <div class="flex-1 space-y-8 md:space-y-10">
                 {{-- Cinematic Asset --}}
                 <div class="rounded-lg overflow-hidden shadow-sm bg-white border border-emerald-800/20 group aspect-video">
-                    @if($campaign->images && count($campaign->images) > 0)
-                        <img src="{{ $campaign->images[0]->url }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Campaign Identity">
+                    @if($campaign->images && $campaign->images->count() > 0)
+                        <img src="{{ $campaign->images->first()->url }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" alt="Campaign Identity">
                     @else
                         <div class="w-full h-full flex items-center justify-center bg-gray-50 uppercase font-black text-gray-200 tracking-tight text-2xl md:text-3xl">Asset Pending</div>
                     @endif
@@ -118,7 +120,7 @@
                                     <label class="text-[9px] font-black text-white/40 uppercase tracking-widest ml-1">Contribute for {{ $leadFirstName }}</label>
                                     <div class="relative group">
                                         <div class="absolute left-6 top-1/2 -translate-y-1/2 text-[#1A1A1A] font-black text-xs opacity-30 select-none">MAD</div>
-                                        <input type="number" id="donationAmount" placeholder="0.00" class="w-full bg-white border border-emerald-100/80 focus:border-emerald-400/70 rounded-md py-5 md:py-6 pl-16 pr-6 text-[#1A1A1A] font-black text-2xl outline-none transition-all shadow-sm placeholder:text-gray-200">
+                                        <input type="number" id="donationAmount" placeholder="0.00" min="10" max="20000" class="w-full bg-white border border-emerald-100/80 focus:border-emerald-400/70 rounded-md py-5 md:py-6 pl-16 pr-6 text-[#1A1A1A] font-black text-2xl outline-none transition-all shadow-sm placeholder:text-gray-200">
                                     </div>
                                 </div>
                                 <button id="donateBtn" class="w-full bg-[#1A1A1A] text-white hover:bg-black rounded-md py-6 md:py-7 font-black uppercase tracking-[0.24em] md:tracking-[0.32em] text-[10px] transition-all shadow-sm active:scale-95 group border border-emerald-300/25">

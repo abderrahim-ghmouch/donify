@@ -108,11 +108,11 @@
         <div class="relative w-full max-w-6xl bg-white rounded-lg border border-emerald-800/20 shadow-2xl transform transition-all duration-700 translate-y-20 scale-[0.98] opacity-0 overflow-hidden" id="modalContainer">
 
             {{-- Modal Header --}}
-            <div class="relative flex flex-col items-center p-12 lg:p-20 border-b border-emerald-900/10 bg-white text-center">
-                <div class="text-xs font-black uppercase tracking-[0.6em] text-[#059669]/60 mb-6">New Campaign</div>
-                <h5 class="text-5xl md:text-7xl font-black text-[#1A1A1A] tracking-tighter leading-none">Deploy.</h5>
-                <button onclick="closeMissionModal()" class="absolute top-10 right-10 w-12 h-12 rounded-full bg-white hover:bg-gray-50 flex items-center justify-center transition-all border border-emerald-800/20">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#1A1A1A] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+            <div class="relative flex flex-col items-center p-12 lg:p-16 border-b border-emerald-900/10 bg-white text-center">
+                <div class="text-xs font-black uppercase tracking-[0.6em] text-[#059669]/60 mb-4">New Campaign</div>
+                <h5 class="text-3xl md:text-4xl font-black text-[#1A1A1A] tracking-tighter leading-none">Deploy.</h5>
+                <button onclick="closeMissionModal()" class="absolute top-8 right-8 w-10 h-10 rounded-full bg-white hover:bg-gray-50 flex items-center justify-center transition-all border border-emerald-800/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-[#1A1A1A] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
@@ -121,59 +121,60 @@
                 <form id="createCampaignForm" class="grid grid-cols-1 lg:grid-cols-12 font-quicksand">
 
                     {{-- Left: Narrative --}}
-                    <div class="lg:col-span-7 p-10 lg:p-20 space-y-12">
+                    <div class="lg:col-span-7 p-10 lg:p-16 space-y-10">
                         <div class="space-y-4">
-                            <label class="text-xs font-black text-[#1A1A1A]/60 uppercase tracking-[0.4em]">Campaign Title</label>
+                            <label class="text-xs font-black text-[#059669] uppercase tracking-[0.4em]">Campaign Title</label>
                             <input type="text" id="cTitle" placeholder="PROJECT LABEL"
-                                class="w-full bg-white border border-emerald-800/20 rounded-md outline-none py-6 px-8 text-xl font-black text-[#1A1A1A] placeholder:text-gray-200 focus:border-emerald-700/40 transition-all uppercase tracking-widest shadow-sm">
+                                class="w-full bg-[#064e3b]/5 border-2 border-[#064e3b]/20 rounded-lg outline-none py-5 px-6 text-lg font-black text-[#1A1A1A] placeholder:text-gray-300 focus:border-[#064e3b] focus:bg-white transition-all uppercase tracking-widest shadow-sm">
                         </div>
                         <div class="space-y-4">
-                            <label class="text-xs font-black text-[#1A1A1A]/60 uppercase tracking-[0.4em]">Description</label>
+                            <label class="text-xs font-black text-[#059669] uppercase tracking-[0.4em]">Description</label>
                             <textarea id="cDesc" placeholder="Describe your campaign..."
-                                class="w-full bg-white border border-emerald-800/20 rounded-md outline-none py-6 px-8 text-base font-medium text-[#1A1A1A] placeholder:text-gray-200 focus:border-emerald-700/40 h-56 resize-none leading-relaxed shadow-sm"></textarea>
+                                class="w-full bg-[#064e3b]/5 border-2 border-[#064e3b]/20 rounded-lg outline-none py-5 px-6 text-base font-medium text-[#1A1A1A] placeholder:text-gray-300 focus:border-[#064e3b] focus:bg-white h-48 resize-none leading-relaxed shadow-sm"></textarea>
                         </div>
                     </div>
 
                     {{-- Right: Config --}}
-                    <div class="lg:col-span-5 p-10 lg:p-20 space-y-12 bg-[#fff7ed]/85 border-l border-amber-300/80">
+                    <div class="lg:col-span-5 p-10 lg:p-16 space-y-10 bg-[#064e3b]/5 border-l-2 border-[#064e3b]/20">
                         <div class="space-y-4">
-                            <label class="text-xs font-black text-[#1A1A1A]/60 uppercase tracking-[0.4em]">Category</label>
-                            <select id="cCategory" class="w-full bg-white border border-emerald-800/20 rounded-md outline-none py-6 px-8 text-sm font-black text-[#1A1A1A] focus:border-emerald-700/40 transition-all cursor-pointer uppercase tracking-widest shadow-sm">
+                            <label class="text-xs font-black text-[#059669] uppercase tracking-[0.4em]">Category</label>
+                            <select id="cCategory" class="w-full bg-white border-2 border-[#064e3b]/20 rounded-lg outline-none py-5 px-6 text-sm font-black text-[#1A1A1A] focus:border-[#064e3b] transition-all cursor-pointer uppercase tracking-widest shadow-sm">
                                 <option value="">Select Category</option>
                             </select>
                         </div>
                         <div class="space-y-4">
-                            <label class="text-xs font-black text-[#1A1A1A]/60 uppercase tracking-[0.4em]">Target (MAD)</label>
-                            <input type="number" id="cTarget" placeholder="0"
-                                class="w-full bg-white border border-emerald-800/20 rounded-md outline-none py-6 px-8 text-5xl font-black text-[#1A1A1A] placeholder:text-gray-200 focus:border-emerald-700/40 transition-all tracking-tighter shadow-sm">
+                            <label class="text-xs font-black text-[#059669] uppercase tracking-[0.4em]">Target (MAD)</label>
+                            <input type="number" id="cTarget" placeholder="0" min="1" max="20000"
+                                class="w-full bg-white border-2 border-[#064e3b]/20 rounded-lg outline-none py-5 px-6 text-4xl font-black text-[#064e3b] placeholder:text-gray-200 focus:border-[#064e3b] transition-all tracking-tighter shadow-sm">
+                            <p class="text-[10px] font-bold text-[#059669]/60 uppercase tracking-wider ml-1">Maximum: 20,000 MAD</p>
                         </div>
-                        <div class="grid grid-cols-2 gap-6">
+                        <div class="grid grid-cols-2 gap-5">
                             <div class="space-y-4">
-                                <label class="text-xs font-black text-[#1A1A1A]/60 uppercase tracking-[0.4em]">Start Date</label>
-                                <input type="date" id="cStartDate" class="w-full bg-white border border-emerald-800/20 rounded-md outline-none py-4 px-6 text-sm font-black text-[#1A1A1A] focus:border-emerald-700/40 transition-all shadow-sm">
+                                <label class="text-xs font-black text-[#059669] uppercase tracking-[0.4em]">Start Date</label>
+                                <input type="date" id="cStartDate" class="w-full bg-white border-2 border-[#064e3b]/20 rounded-lg outline-none py-4 px-5 text-sm font-black text-[#1A1A1A] focus:border-[#064e3b] transition-all shadow-sm">
                             </div>
                             <div class="space-y-4">
-                                <label class="text-xs font-black text-[#1A1A1A]/60 uppercase tracking-[0.4em]">End Date</label>
-                                <input type="date" id="cEndDate" class="w-full bg-white border border-emerald-800/20 rounded-md outline-none py-4 px-6 text-sm font-black text-[#1A1A1A] focus:border-emerald-700/40 transition-all shadow-sm">
+                                <label class="text-xs font-black text-[#059669] uppercase tracking-[0.4em]">End Date</label>
+                                <input type="date" id="cEndDate" class="w-full bg-white border-2 border-[#064e3b]/20 rounded-lg outline-none py-4 px-5 text-sm font-black text-[#1A1A1A] focus:border-[#064e3b] transition-all shadow-sm">
                             </div>
                         </div>
                         <div class="space-y-4">
-                            <label class="text-xs font-black text-[#1A1A1A]/60 uppercase tracking-[0.4em]">Campaign Image</label>
+                            <label class="text-xs font-black text-[#059669] uppercase tracking-[0.4em]">Campaign Image</label>
                             <label class="block relative cursor-pointer group">
                                 <input type="file" id="cImages" class="absolute inset-0 opacity-0 z-10" accept="image/*">
-                                <div class="w-full py-10 border-2 border-dashed border-amber-300/80 rounded-lg flex items-center justify-center transition-all group-hover:border-amber-400 bg-white hover:bg-amber-50/30">
-                                    <p id="dropText" class="text-xs font-black text-[#1A1A1A]/40 uppercase tracking-[0.4em] group-hover:text-[#1A1A1A]/60 transition-colors">Upload Image (+)</p>
+                                <div class="w-full py-10 border-2 border-dashed border-[#064e3b]/30 rounded-lg flex items-center justify-center transition-all group-hover:border-[#064e3b] bg-white hover:bg-[#064e3b]/5">
+                                    <p id="dropText" class="text-xs font-black text-[#059669]/60 uppercase tracking-[0.4em] group-hover:text-[#059669] transition-colors">Upload Image (+)</p>
                                 </div>
                             </label>
                         </div>
                     </div>
 
                     {{-- Actions --}}
-                    <div class="lg:col-span-12 p-12 lg:p-20 bg-[#fff7ed]/85 border-t border-amber-300/80 flex flex-col items-center gap-10">
-                        <div id="galleryPreview" class="h-40 w-64 rounded-lg bg-white border border-emerald-800/20 overflow-hidden shadow-sm flex items-center justify-center cursor-pointer hover:border-emerald-700/40 transition-all" onclick="document.getElementById('cImages').click()">
+                    <div class="lg:col-span-12 p-10 lg:p-16 bg-[#064e3b]/5 border-t-2 border-[#064e3b]/20 flex flex-col items-center gap-8">
+                        <div id="galleryPreview" class="h-36 w-56 rounded-lg bg-white border-2 border-[#064e3b]/20 overflow-hidden shadow-sm flex items-center justify-center cursor-pointer hover:border-[#064e3b] transition-all" onclick="document.getElementById('cImages').click()">
                             <span class="text-xs font-black text-gray-200 uppercase tracking-[0.3em]">No Image</span>
                         </div>
-                        <button type="submit" id="submitBtn" class="w-full md:w-auto px-24 py-6 bg-[#1A1A1A] text-white rounded-md text-xs font-black uppercase tracking-[0.6em] hover:bg-black transition-all shadow-sm border border-emerald-300/25">
+                        <button type="submit" id="submitBtn" class="w-full md:w-auto px-20 py-5 bg-[#064e3b] text-white rounded-lg text-xs font-black uppercase tracking-[0.5em] hover:bg-[#053d31] transition-all shadow-sm border-2 border-[#064e3b] hover:border-[#053d31]">
                             Launch Campaign
                         </button>
                     </div>

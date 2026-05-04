@@ -1,6 +1,6 @@
 /**
- * Donify API Client (Native JS)
- * Handles JWT storage, headers, and API requests.
+ * fechi fexi b native D
+
  */
 
 const API_BASE_URL = '/api';
@@ -112,6 +112,30 @@ const ApiClient = {
 
     isAuthenticated() {
         return !!this.getToken();
+    },
+
+    get(endpoint) {
+        return this.request(endpoint, { method: 'GET' });
+    },
+
+    post(endpoint, data = {}) {
+        const isFormData = data instanceof FormData;
+        return this.request(endpoint, {
+            method: 'POST',
+            body: isFormData ? data : JSON.stringify(data),
+            headers: isFormData ? { 'Content-Type': null } : {}
+        });
+    },
+
+    put(endpoint, data = {}) {
+        return this.request(endpoint, {
+            method: 'PUT',
+            body: JSON.stringify(data)
+        });
+    },
+
+    delete(endpoint) {
+        return this.request(endpoint, { method: 'DELETE' });
     }
 };
 

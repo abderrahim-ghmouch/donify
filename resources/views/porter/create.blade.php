@@ -2,9 +2,9 @@
 
 @section('content')
 
-{{-- Porter Campaign Launchpad (Luxury Raja Theme) --}}
-<div id="porterCreatePage" class="min-h-screen bg-[#fbf8f6] font-quicksand relative overflow-hidden">
-    
+{{-- Porter Campaign Launchpa --}}
+<div id="porterCreatePage" class="min-h-screen bg-[#115a2d] font-quicksand relative overflow-hidden">
+
     {{-- Atmospheric Green Gradient (Footer based, consistent with profile) --}}
     <div class="absolute inset-x-0 bottom-0 h-[75%] bg-gradient-to-t from-[#064e3b]/55 via-[#064e3b]/15 to-transparent pointer-events-none z-0"></div>
 
@@ -14,18 +14,18 @@
             <div class="inline-block px-4 py-1.5 rounded-full bg-[#1A1A1A] text-white font-black text-[10px] uppercase tracking-widest mb-4">
                 Porter Initiative
             </div>
-            <h1 class="text-3xl md:text-4xl font-black text-[#1A1A1A] leading-none mb-3 tracking-tighter shadow-sm">Launch Campaign.</h1>
-            <p class="text-gray-400 text-base font-medium tracking-tight">Initiate your vision and start gathering support from our global donor base.</p>
+            <h1 class="text-3xl md:text-4xl font-black text-[#1A1A1A] leading-none mb-3 tracking-tighter shadow-sm">Launch Campaiag</h1>
+            <p class="text-gray-400 text-base font-medium tracking-tight">Initiate your vision and start gathering support from our global donor base</p>
         </div>
     </section>
 
     {{-- Campaign Form Registry --}}
     <div class="max-w-3xl mx-auto px-8 pb-24 relative z-10">
-        
+
         <div class="bg-[#064e3b]/10 p-8 rounded-2xl shadow-[0_0_0_2px_#064e3b]">
             <div class="flex items-center justify-between mb-8 border-b border-[#064e3b]/20 pb-6">
                 <div>
-                    <h2 class="text-xl font-black text-[#1A1A1A] mb-1 tracking-tight italic">Mission Details.</h2>
+                    <h2 class="text-xl font-black text-[#1A1A1A] mb-1 tracking-tight italic">Mission Details </h2>
                     <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Define your impact and contribution strategy</p>
                 </div>
                 <div id="launchSuccess" class="hidden px-5 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-[9px] font-black uppercase tracking-widest border border-emerald-100 italic">Campaign Initiated</div>

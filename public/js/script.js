@@ -88,12 +88,13 @@ function handleLogout() {
 document.addEventListener('DOMContentLoaded', () => {
     updateAuthUI();
 
-    // Admin guard: admins are not allowed on the public-facing site
+    // Admin guard: admins should go to admin dashboard after login
     if (ApiClient.isAuthenticated()) {
         const user = ApiClient.getUser();
         if (user?.role === 'admin') {
             const path = window.location.pathname;
-            if (!path.startsWith('/admin') && path !== '/logout') {
+            // Only redirect if on public pages, not already on admin or login/logout
+            if (!path.startsWith('/admin') && path !== '/login' && path !== '/logout' && path !== '/') {
                 window.location.href = '/admin';
             }
         }
@@ -124,9 +125,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             await ApiClient.login(email, password);
-            window.location.href = '/campaigns';
+            const user = ApiClient.getUser();
+            // Redirect based on role
+            if (user?.role === 'admin') {
+                window.location.href = '/admin';
+            } else {
+                window.location.href = '/campaigns';
+            }
         } catch (error) {
-            const message = error.error || 'Invalid email or password. Please try again.';
+            let message = 'Invalid email or password. Please try again.';
+            
+            if (error.status === 'banned') {
+                message = error.error || 'Your account has been banned. Please contact support.';
+            } else if (error.status === 'pending') {
+                message = error.error || 'Your account is pending verification.';
+            } else if (error.error) {
+                message = error.error;
+            }
+            
             errorDiv.textContent = message;
             errorDiv.classList.remove('hidden');
             btn.disabled  = false;
@@ -590,6 +606,10 @@ document.addEventListener('DOMContentLoaded', () => {
             showPaymentMsg(msg, 'Please enter a valid amount. Minimum 10 MAD.', 'cancel');
             return;
         }
+        if (amount > 20000) {
+            showPaymentMsg(msg, 'Maximum donation amount is 20,000 MAD per transaction.', 'cancel');
+            return;
+        }
 
         donateBtn.disabled  = true;
         donateBtn.innerHTML = 'Authorizing...';
@@ -797,7 +817,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         fd.append('target_amount', document.getElementById('cTarget').value);
         fd.append('start_date',    document.getElementById('cStartDate').value);
         fd.append('end_date',      document.getElementById('cEndDate').value);
-        if (imageInput?.files[0]) fd.append('image', imageInput.files[0]);
+        if (imageInput?.files[0]) fd.append('images[]', imageInput.files[0]);
 
         if (!fd.get('title') || !fd.get('category_id')) { showPorterToast('PROTOCOL INCOMPLETE.'); return; }
 

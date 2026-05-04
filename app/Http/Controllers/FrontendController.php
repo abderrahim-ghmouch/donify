@@ -58,11 +58,6 @@ class FrontendController extends Controller
 
     public function adminDashboard()
     {
-        // Check if user is authenticated and is an admin
-        if (!auth()->check() || auth()->user()->role !== 'admin') {
-            return redirect()->route('login')->with('error', 'Unauthorized access');
-        }
-
         $users = \App\Models\User::latest()->get();
         $campaigns = \App\Models\Campaign::with('images')->latest()->get();
         $organisations = \App\Models\Organisation::latest()->get();
