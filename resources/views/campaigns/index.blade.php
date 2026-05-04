@@ -31,11 +31,11 @@
 
                     {{-- Category Select Hub --}}
                     <div class="relative flex items-center min-w-[240px] px-8 bg-gray-50 rounded-[2rem] border-2 border-transparent hover:border-black/5 transition-all">
-                        <span class="text-[10px] font-black tracking-widest text-gray-400 mr-4 uppercase">Sector</span>
+                        <span class="text-[10px] font-black tracking-widest text-gray-400 mr-4 uppercase">Category</span>
                         <select id="categorySelect" onchange="handleCategoryChange()" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
-                            <option value="all">All Sectors</option>
+                            <option value="all">All Categories</option>
                         </select>
-                        <div id="categoryLabel" class="text-sm font-black text-[#1A1A1A] uppercase tracking-widest leading-none">All Sectors</div>
+                        <div id="categoryLabel" class="text-sm font-black text-[#1A1A1A] uppercase tracking-widest leading-none">All Categories</div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-auto text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
                     </div>
 
@@ -47,7 +47,7 @@
     {{-- Discovery Hub: Grid Area --}}
     <section class="relative z-10 px-8 pb-32">
         <div class="max-w-7xl mx-auto">
-
+            
 
 
             <div id="skeletonGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-left">
@@ -90,4 +90,121 @@
 
 @endsection
 
+@section('scripts')
+<script>
+let allCampaigns = [];
+let categories = [];
+let currentFilters = { search: '', category: 'all' };
+
+async function loadCategories() {
+    try {
+        const response = await fetch('/api/categories');
+        const data = await response.json();
+        categories = data.data;
+        
+        const select = document.getElementById('categorySelect');
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            option.textContent = cat.category_name;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Failed to load categories:', error);
+    }
+}
+
+async function loadCampaigns() {
+    try {
+        const response = await fetch('/api/campaigns');
+        const data = await response.json();
+        allCampaigns = data.data;
+        filterAndDisplay();
+    } catch (error) {
+        console.error('Failed to load campaigns:', error);
+    } finally {
+        document.getElementById('skeletonGrid').style.display = 'none';
+    }
+}
+
+function handleCategoryChange() {
+    const select = document.getElementById('categorySelect');
+    const label = document.getElementById('categoryLabel');
+    currentFilters.category = select.value;
+    label.textContent = select.options[select.selectedIndex].text;
+    filterAndDisplay();
+}
+
+function filterAndDisplay() {
+    let filtered = allCampaigns;
+    
+    if (currentFilters.search) {
+        filtered = filtered.filter(c => 
+            c.title.toLowerCase().includes(currentFilters.search.toLowerCase()) ||
+            c.description.toLowerCase().includes(currentFilters.search.toLowerCase())
+        );
+    }
+    
+    if (currentFilters.category !== 'all') {
+        filtered = filtered.filter(c => c.category_id == currentFilters.category);
+    }
+    
+    displayCampaigns(filtered);
+}
+
+function displayCampaigns(campaigns) {
+    const grid = document.getElementById('campaignsGrid');
+    const empty = document.getElementById('emptyState');
+    
+    if (campaigns.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+    }
+    
+    empty.classList.add('hidden');
+    grid.innerHTML = campaigns.map(campaign => {
+        const image = campaign.images?.[0]?.url || '/images/placeholder.jpg';
+        const progress = campaign.target_amount > 0 ? (campaign.current_amount / campaign.target_amount * 100) : 0;
+        
+        return `
+            <a href="/campaigns/${campaign.id}" class="group block bg-white rounded-xl overflow-hidden border border-black/5 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="${image}" alt="${campaign.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div class="p-8 bg-[#fbf8f6]/50">
+                    <h3 class="text-xl font-black text-[#1A1A1A] mb-3 line-clamp-2">${campaign.title}</h3>
+                    <p class="text-sm text-gray-500 mb-4 line-clamp-2">${campaign.description}</p>
+                    <div class="mb-3">
+                        <div class="flex justify-between text-xs font-bold mb-1">
+                            <span class="text-[#064e3b]">${Math.round(progress)}%</span>
+                            <span class="text-gray-400">${campaign.current_amount} / ${campaign.target_amount} MAD</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-[#064e3b] h-2 rounded-full transition-all" style="width: ${Math.min(progress, 100)}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        `;
+    }).join('');
+}
+
+function resetFilters() {
+    currentFilters = { search: '', category: 'all' };
+    document.getElementById('searchInput').value = '';
+    document.getElementById('categorySelect').value = 'all';
+    document.getElementById('categoryLabel').textContent = 'All Categories';
+    filterAndDisplay();
+}
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+    currentFilters.search = e.target.value;
+    filterAndDisplay();
+});
+
+loadCategories();
+loadCampaigns();
+</script>
+@endsection
 
