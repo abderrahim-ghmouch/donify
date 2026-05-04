@@ -2,12 +2,9 @@
 
 @section('content')
 
-{{-- Campaigns Discovery Console (Luxury Raja Theme) --}}
+
 <div class="min-h-screen bg-[#fbf8f6] font-quicksand relative overflow-hidden">
 
-    {{-- Global Atmospheric Green Gradient (Footer based) --}}
-    {{-- REACHES THE TITLE: Increased height and opacity shift --}}
-    {{-- Sync Global Atmosphere: Ultimate Static Rise (Porter Dashboard Spec) --}}
     <div class="absolute bottom-0 left-0 right-0 h-[1200px] bg-gradient-to-t from-[#064e3b]/90 via-[#064e3b]/20 via-40% to-transparent pointer-events-none z-0"></div>
 
     {{-- Hero Section: Discovery Identity --}}
@@ -34,7 +31,7 @@
 
                     {{-- Category Select Hub --}}
                     <div class="relative flex items-center min-w-[240px] px-8 bg-gray-50 rounded-[2rem] border-2 border-transparent hover:border-black/5 transition-all">
-                        <span class="text-[10px] font-black tracking-widest text-gray-400 mr-4 uppercase">Sector.</span>
+                        <span class="text-[10px] font-black tracking-widest text-gray-400 mr-4 uppercase">Sector</span>
                         <select id="categorySelect" onchange="handleCategoryChange()" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
                             <option value="all">All Sectors</option>
                         </select>
@@ -51,9 +48,6 @@
     <section class="relative z-10 px-8 pb-32">
         <div class="max-w-7xl mx-auto">
 
-            <div class="flex items-center justify-center mb-12 px-6">
-                <p id="resultsInfo" class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em]">Executing Data Fetch...</p>
-            </div>
 
 
             <div id="skeletonGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-left">

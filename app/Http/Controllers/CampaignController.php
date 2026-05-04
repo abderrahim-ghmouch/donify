@@ -227,6 +227,23 @@ class CampaignController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Unauthorized.'], 403);
         }
 
+        // Check if campaign has any money raised
+        if ($campaign->current_amount > 0) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cannot delete campaign with funds. Current amount: ' . number_format($campaign->current_amount) . ' MAD. Please request payout first.'
+            ], 422);
+        }
+
+        // Check if campaign has any donations (even pending ones)
+        $donationCount = Donation::where('campaign_id', $campaign->id)->count();
+        if ($donationCount > 0) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Cannot delete campaign with existing donations.'
+            ], 422);
+        }
+
         $campaign->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Campaign deleted successfully']);

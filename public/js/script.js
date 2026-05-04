@@ -817,22 +817,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         fd.append('target_amount', document.getElementById('cTarget').value);
         fd.append('start_date',    document.getElementById('cStartDate').value);
         fd.append('end_date',      document.getElementById('cEndDate').value);
-        if (imageInput?.files[0]) fd.append('images[]', imageInput.files[0]);
+        
+        // Handle image upload
+        if (imageInput?.files && imageInput.files.length > 0) {
+            fd.append('images[]', imageInput.files[0]);
+            console.log('Image attached:', imageInput.files[0].name, imageInput.files[0].type);
+        } else {
+            console.log('No image selected');
+        }
 
         if (!fd.get('title') || !fd.get('category_id')) { showPorterToast('PROTOCOL INCOMPLETE.'); return; }
 
         btn.disabled = true; btn.textContent = 'EXECUTING...';
         try {
-            await ApiClient.request('/campaigns', { method: 'POST', body: fd, headers: { 'Content-Type': null } });
+            const response = await ApiClient.request('/campaigns', { method: 'POST', body: fd, headers: { 'Content-Type': null } });
+            console.log('Campaign created:', response);
             e.target.reset();
             gallery.innerHTML    = '';
             dropText.textContent = 'Deploy Asset (+)';
+            dropText.className   = 'text-xs font-black text-[#059669]/60 uppercase tracking-[0.4em] group-hover:text-[#059669] transition-colors';
             closeMissionModal();
             showPorterToast('MISSION LOGGED TO REGISTRY.');
             await loadPorterCampaigns();
         } catch (err) {
+            console.error('Campaign creation error:', err);
             showPorterToast(err.message || 'TRANSMISSION FAILURE.');
-            btn.disabled = false; btn.textContent = 'Confirm Mission';
+            btn.disabled = false; btn.textContent = 'Launch Campaign';
         }
     });
 });
@@ -955,6 +965,7 @@ function renderPorterRegistry(list) {
                 <div class="flex flex-col gap-3">
                     <a href="/campaigns/${c.id}" class="px-12 py-6 rounded-lg bg-black text-[11px] font-black text-white hover:bg-zinc-800 uppercase tracking-[0.6em] transition-all shadow-xl text-center">INTERFACE</a>
                     ${availableForPayout > 0 ? `<button onclick="requestCampaignPayout(${c.id}, ${availableForPayout})" class="px-12 py-5 rounded-lg bg-emerald-900 text-[10px] font-black text-white hover:bg-emerald-950 uppercase tracking-[0.35em] transition-all shadow-lg">PAYOUT ${availableForPayout.toLocaleString()} MAD</button>` : `<span class="text-center text-[9px] font-black uppercase tracking-[0.35em] text-black/25">No payable balance</span>`}
+                    ${Number(c.current_amount || 0) === 0 ? `<button onclick="deleteCampaign(${c.id})" class="px-12 py-5 rounded-lg bg-red-900 text-[10px] font-black text-white hover:bg-red-950 uppercase tracking-[0.35em] transition-all shadow-lg">DELETE</button>` : ''}
                 </div>
             </div>
         </div>`;
@@ -974,6 +985,19 @@ async function requestCampaignPayout(campaignId, amount) {
         await Promise.all([loadPorterPayoutStatus(), loadPorterCampaigns()]);
     } catch (err) {
         showPorterToast(err.message || 'PAYOUT FAILED.');
+    }
+}
+
+/** deleteCampaign — deletes a campaign with no funds */
+async function deleteCampaign(campaignId) {
+    try {
+        await ApiClient.request(`/campaigns/${campaignId}`, {
+            method: 'DELETE'
+        });
+        showPorterToast('CAMPAIGN DELETED.');
+        await loadPorterCampaigns();
+    } catch (err) {
+        showPorterToast(err.message || 'DELETE FAILED.');
     }
 }
 
