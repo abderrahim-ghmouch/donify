@@ -310,7 +310,7 @@ php artisan test --filter=CampaignTest
 
 ---
 
-## 🚧 Roadmap
+## 🚧 ipcoming features
 
 - [ ] Email notifications for campaign updates
 - [ ] Social media sharing integration
@@ -359,4 +359,4 @@ For questions or support, please contact:
 
 ---
 
-**Built with ❤️ for making a difference**
+**Built with ❤️ for making a difference by Abderrahim Ghmouch at Youcode**
