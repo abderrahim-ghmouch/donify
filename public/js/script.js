@@ -393,7 +393,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const btn = document.createElement('button');
             btn.dataset.cat = c.id;
             btn.textContent = c.name || c.category_name;
-            btn.className   = 'px-5 py-2 rounded-full font-black text-[10px] uppercase tracking-widest border border-black/10 bg-white text-[#1A1A1A] transition-all hover:bg-[#1A1A1A] hover:text-white cursor-pointer whitespace-nowrap';
+            btn.className   = 'px-5 py-2 rounded-full font-bold text-[10px]  tracking-widest border border-black/10 bg-white text-[#1A1A1A] transition-all hover:bg-[#1A1A1A] hover:text-white cursor-pointer whitespace-nowrap';
             container.appendChild(btn);
         });
     }
@@ -468,13 +468,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const isFav  = favIds.has(c.id);
 
         return `
-        <div class="campaign-intel-card group bg-white rounded-xl overflow-hidden border border-black/5 hover:border-[#064e3b] transition-all duration-700 shadow-sm hover:shadow-2xl flex flex-col h-full relative cursor-pointer" onclick="window.location='/campaigns/${c.id}'">
+        <div class="campaign-intel-card group bg-[#fbf8f6] rounded-xl overflow-hidden border-2 border-[#064e3b]/40 hover:border-[#DAA520] transition-all duration-700 shadow-sm hover:shadow-2xl flex flex-col h-full relative cursor-pointer" onclick="window.location='/campaigns/${c.id}'">
             <div class="relative h-64 overflow-hidden bg-zinc-50 border-b border-black/[0.03]">
                 ${img
                     ? `<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${img}" alt="${escHtml(c.title)}">`
                     : `<div class="w-full h-full flex items-center justify-center text-gray-200"><svg class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>`
                 }
-                <div class="absolute top-6 left-6 px-4 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-[#059669] text-[8px] font-black uppercase tracking-widest border border-[#059669]/20 shadow-xl">
+                <div class="absolute top-6 left-6 px-4 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-[#059669] text-[8px] font-bold  tracking-widest border border-[#059669]/20 shadow-xl">
                     ${escHtml(cat)}
                 </div>
                 <button onclick="event.stopPropagation(); toggleFav(this, ${c.id})"
@@ -485,27 +485,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </svg>
                 </button>
             </div>
-            <div class="p-10 flex-grow flex flex-col bg-[#fbf8f6] border-t border-black/[0.02]">
+            <div class="p-10 flex-grow flex flex-col bg-gradient-to-br from-[#fbf8f6] to-[#f5ede4] border-t border-black/[0.02]">
                 <div class="flex items-center gap-2 mb-3">
-                    <span class="text-[9px] font-black text-emerald-600 uppercase tracking-[0.2em] italic">Project Lead:</span>
-                    <span class="text-[10px] font-bold text-[#1A1A1A] uppercase tracking-wider italic underline decoration-emerald-500/30 underline-offset-4">
+                    <span class="text-[9px] font-bold text-emerald-600  tracking-[0.2em] ">Project Lead:</span>
+                    <span class="text-[10px] font-bold text-[#1A1A1A]  tracking-wider  underline decoration-emerald-500/30 underline-offset-4">
                         ${escHtml(c.user ? c.user.name || `${c.user.first_name} ${c.user.last_name}` : 'Institutional Partner')}
                     </span>
                 </div>
-                <h3 class="text-2xl font-black text-[#1A1A1A] mb-8 tracking-tighter leading-tight group-hover:text-[#064e3b] transition-colors line-clamp-2" style="min-height:3.5rem;">
-                    ${escHtml(c.title)}.
+                <h3 class="text-2xl font-bold text-[#1A1A1A] mb-8 tracking-tighter leading-tight group-hover:text-[#064e3b] transition-colors line-clamp-2" style="min-height:3.5rem;">
+                    ${escHtml(c.title)}
                 </h3>
                 <div class="mt-auto space-y-6">
                     <div class="space-y-3">
                         <div class="flex justify-between items-baseline mb-2">
-                            <span class="text-xl font-black text-[#1A1A1A] tracking-tighter">${fmtNum(c.current_amount || 0)} MAD</span>
-                            <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">of ${fmtNum(c.target_amount || 0)} MAD</span>
+                            <span class="text-xl font-bold text-[#1A1A1A] tracking-tighter">${fmtNum(c.current_amount || 0)} MAD</span>
+                            <span class="text-[10px] text-gray-400 font-bold  tracking-widest">of ${fmtNum(c.target_amount || 0)} MAD</span>
                         </div>
                         <div class="w-full h-2 rounded-full bg-black/5 overflow-hidden border border-black/5">
                             <div class="h-full bg-[#059669] rounded-full transition-all duration-1000" style="width:${pct}%"></div>
                         </div>
                     </div>
-                    <div class="block w-full py-5 rounded-xl bg-[#1A1A1A] text-white text-center text-[10px] font-black uppercase tracking-widest hover:bg-[#064e3b] transition-all transform hover:-translate-y-1 shadow-xl active:scale-95">
+                    <div class="w-full py-5 rounded-xl bg-gradient-to-r from-[#064e3b] to-[#059669] text-white text-center text-[10px] font-bold tracking-widest hover:shadow-lg transition-all transform hover:-translate-y-1 active:scale-95">
                         View Details →
                     </div>
                 </div>
@@ -646,7 +646,7 @@ function showPaymentMsg(el, text, type) {
     if (!el) return;
     el.textContent = text;
     el.classList.remove('hidden');
-    const base = 'text-center text-[9px] font-black uppercase tracking-widest mt-4';
+    const base = 'text-center text-[9px] font-bold  tracking-widest mt-4';
     el.className = type === 'success' ? `${base} text-emerald-400 animate-pulse`
                  : type === 'cancel'  ? `${base} text-rose-400`
                  :                      `${base} text-white/60`;
@@ -704,33 +704,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         const cat = c.category ? (c.category.name || c.category.category_name || '') : 'Mission';
 
         return `
-        <div class="campaign-intel-card group bg-white rounded-xl overflow-hidden border border-black/5 hover:border-[#064e3b] transition-all duration-700 shadow-sm hover:shadow-2xl flex flex-col h-full relative cursor-pointer" onclick="window.location='/campaigns/${c.id}'">
+        <div class="campaign-intel-card group bg-[#fbf8f6] rounded-xl overflow-hidden border-2 border-[#064e3b]/40 hover:border-[#DAA520] transition-all duration-700 shadow-sm hover:shadow-2xl flex flex-col h-full relative cursor-pointer" onclick="window.location='/campaigns/${c.id}'">
             <div class="relative h-64 overflow-hidden bg-zinc-50 border-b border-black/[0.03]">
                 ${img ? `<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${img}" alt="${escHtml(c.title)}">` : `<div class="w-full h-full flex items-center justify-center text-gray-200"><svg class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>`}
-                <div class="absolute top-6 left-6 px-4 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-[#059669] text-[8px] font-black uppercase tracking-widest border border-[#059669]/20 shadow-xl">${escHtml(cat)}</div>
+                <div class="absolute top-6 left-6 px-4 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-[#059669] text-[8px] font-bold  tracking-widest border border-[#059669]/20 shadow-xl">${escHtml(cat)}</div>
                 <button onclick="event.stopPropagation(); removeFromWatchlist(event, ${c.id})" class="absolute top-6 right-6 p-3 rounded-xl backdrop-blur-md transition-all border border-[#FFD700]/30 bg-[#FFD700]/20 text-[#FFD700] hover:bg-[#FFD700]/40 z-30">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
                 </button>
             </div>
-            <div class="p-10 flex-grow flex flex-col bg-[#fbf8f6] border-t border-black/[0.02]">
+            <div class="p-10 flex-grow flex flex-col bg-gradient-to-br from-[#fbf8f6] to-[#f5ede4] border-t border-black/[0.02]">
                 <div class="flex items-center gap-2 mb-3">
-                    <span class="text-[9px] font-black text-emerald-600 uppercase tracking-[0.2em] italic">Project Lead:</span>
-                    <span class="text-[10px] font-bold text-[#1A1A1A] uppercase tracking-wider italic underline decoration-emerald-500/30 underline-offset-4">
+                    <span class="text-[9px] font-bold text-emerald-600  tracking-[0.2em] ">Project Lead:</span>
+                    <span class="text-[10px] font-bold text-[#1A1A1A]  tracking-wider  underline decoration-emerald-500/30 underline-offset-4">
                         ${escHtml(c.user ? c.user.name || `${c.user.first_name} ${c.user.last_name}` : 'Institutional Partner')}
                     </span>
                 </div>
-                <h3 class="text-2xl font-black text-[#1A1A1A] mb-8 tracking-tighter leading-tight group-hover:text-[#064e3b] transition-colors line-clamp-2" style="min-height:3.5rem;">${escHtml(c.title)}.</h3>
+                <h3 class="text-2xl font-bold text-[#1A1A1A] mb-8 tracking-tighter leading-tight group-hover:text-[#064e3b] transition-colors line-clamp-2" style="min-height:3.5rem;">${escHtml(c.title)}.</h3>
                 <div class="mt-auto space-y-6">
                     <div class="space-y-3">
                         <div class="flex justify-between items-baseline mb-2">
-                            <span class="text-xl font-black text-[#1A1A1A] tracking-tighter">${fmtNum(c.current_amount || 0)} MAD</span>
-                            <span class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">of ${fmtNum(c.target_amount || 0)} MAD</span>
+                            <span class="text-xl font-bold text-[#1A1A1A] tracking-tighter">${fmtNum(c.current_amount || 0)} MAD</span>
+                            <span class="text-[10px] text-gray-400 font-bold  tracking-widest">of ${fmtNum(c.target_amount || 0)} MAD</span>
                         </div>
                         <div class="w-full h-2 rounded-full bg-black/5 overflow-hidden border border-black/5">
                             <div class="h-full bg-[#059669] rounded-full transition-all duration-1000" style="width:${pct}%"></div>
                         </div>
                     </div>
-                    <div class="block w-full py-5 rounded-xl bg-[#1A1A1A] text-white text-center text-[10px] font-black uppercase tracking-widest hover:bg-[#064e3b] transition-all transform hover:-translate-y-1 shadow-xl active:scale-95">View Details →</div>
+                    <div class="block w-full py-5 rounded-xl bg-[#1A1A1A] text-white text-center text-[10px] font-bold  tracking-widest hover:bg-[#064e3b] transition-all transform hover:-translate-y-1 shadow-xl active:scale-95">View Details →</div>
                 </div>
             </div>
         </div>`;
@@ -794,14 +794,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const file = imageInput.files[0];
         if (file) {
             dropText.textContent = 'ASSET READY.';
-            dropText.className   = 'text-[11px] font-black text-emerald-600 uppercase tracking-[0.5em] text-center px-6';
+            dropText.className   = 'text-[11px] font-bold text-emerald-600  tracking-[0.5em] text-center px-6';
             const reader = new FileReader();
             reader.onload = e => { gallery.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`; };
             reader.readAsDataURL(file);
         } else {
             dropText.textContent = 'Deploy Asset (+)';
-            dropText.className   = 'text-[11px] font-black text-amber-900/20 uppercase tracking-[0.5em] text-center px-6';
-            gallery.innerHTML    = `<span class="text-[10px] font-black text-amber-900/10 uppercase tracking-[0.4em]">Asset Buffer Empty</span>`;
+            dropText.className   = 'text-[11px] font-bold text-amber-900/20  tracking-[0.5em] text-center px-6';
+            gallery.innerHTML    = `<span class="text-[10px] font-bold text-amber-900/10  tracking-[0.4em]">Asset Buffer Empty</span>`;
         }
     });
 
@@ -835,7 +835,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             e.target.reset();
             gallery.innerHTML    = '';
             dropText.textContent = 'Deploy Asset (+)';
-            dropText.className   = 'text-xs font-black text-[#059669]/60 uppercase tracking-[0.4em] group-hover:text-[#059669] transition-colors';
+            dropText.className   = 'text-xs font-bold text-[#059669]/60  tracking-[0.4em] group-hover:text-[#059669] transition-colors';
             closeMissionModal();
             showPorterToast('MISSION LOGGED TO REGISTRY.');
             await loadPorterCampaigns();
@@ -935,7 +935,7 @@ function renderPorterRegistry(list) {
     if (donationCountEl) donationCountEl.textContent = `${donationCount}`;
 
     if (!list.length) {
-        el.innerHTML = `<div class="py-32 text-center bg-white rounded-[3.5rem] border border-amber-500/5 shadow-xl"><p class="text-amber-900/10 font-black text-[12px] uppercase tracking-[0.8em] font-sans">Registry Stream Depleted.</p></div>`;
+        el.innerHTML = `<div class="py-32 text-center bg-white rounded-[3.5rem] border border-amber-500/5 shadow-xl"><p class="text-amber-900/10 font-bold text-[12px]  tracking-[0.8em] font-sans">Registry Stream Depleted.</p></div>`;
         return;
     }
     el.innerHTML = list.map(c => {
@@ -950,22 +950,22 @@ function renderPorterRegistry(list) {
             </div>
             <div class="flex-grow min-w-0 space-y-4">
                 <div class="flex items-center gap-6">
-                    <span class="text-[11px] font-black uppercase tracking-[0.3em] ${statusClass} px-6 py-2.5 rounded-lg border-2 border-emerald-500/30">${c.status}.</span>
-                    <span class="text-[12px] text-black/30 font-black uppercase tracking-[0.4em] italic opacity-60">${new Date(c.created_at).toLocaleDateString()}</span>
+                    <span class="text-[11px] font-bold  tracking-[0.3em] ${statusClass} px-6 py-2.5 rounded-lg border-2 border-emerald-500/30">${c.status}.</span>
+                    <span class="text-[12px] text-black/30 font-bold  tracking-[0.4em]  opacity-60">${new Date(c.created_at).toLocaleDateString()}</span>
                 </div>
-                <h3 class="text-5xl font-black text-black tracking-tighter truncate leading-none">${escHtml(c.title)}</h3>
+                <h3 class="text-5xl font-bold text-black tracking-tighter truncate leading-none">${escHtml(c.title)}</h3>
             </div>
             <div class="flex items-center gap-20 flex-shrink-0">
                 <div class="text-right space-y-3">
-                    <span class="text-7xl font-black text-black tracking-tighter tabular-nums block">${Number(c.current_amount || 0).toLocaleString()} <span class="text-[14px] text-emerald-600 uppercase tracking-[0.5em]">MAD</span></span>
+                    <span class="text-7xl font-bold text-black tracking-tighter tabular-nums block">${Number(c.current_amount || 0).toLocaleString()} <span class="text-[14px] text-emerald-600  tracking-[0.5em]">MAD</span></span>
                     <div class="w-64 h-2 rounded-full bg-black/5 overflow-hidden ml-auto">
                         <div class="h-full bg-emerald-500 rounded-full" style="width:${progress}%"></div>
                     </div>
                 </div>
                 <div class="flex flex-col gap-3">
-                    <a href="/campaigns/${c.id}" class="px-12 py-6 rounded-lg bg-black text-[11px] font-black text-white hover:bg-zinc-800 uppercase tracking-[0.6em] transition-all shadow-xl text-center">INTERFACE</a>
-                    ${availableForPayout > 0 ? `<button onclick="requestCampaignPayout(${c.id}, ${availableForPayout})" class="px-12 py-5 rounded-lg bg-emerald-900 text-[10px] font-black text-white hover:bg-emerald-950 uppercase tracking-[0.35em] transition-all shadow-lg">PAYOUT ${availableForPayout.toLocaleString()} MAD</button>` : `<span class="text-center text-[9px] font-black uppercase tracking-[0.35em] text-black/25">No payable balance</span>`}
-                    ${Number(c.current_amount || 0) === 0 ? `<button onclick="deleteCampaign(${c.id})" class="px-12 py-5 rounded-lg bg-red-900 text-[10px] font-black text-white hover:bg-red-950 uppercase tracking-[0.35em] transition-all shadow-lg">DELETE</button>` : ''}
+                    <a href="/campaigns/${c.id}" class="px-12 py-6 rounded-lg bg-black text-[11px] font-bold text-white hover:bg-zinc-800  tracking-[0.6em] transition-all shadow-xl text-center">INTERFACE</a>
+                    ${availableForPayout > 0 ? `<button onclick="requestCampaignPayout(${c.id}, ${availableForPayout})" class="px-12 py-5 rounded-lg bg-emerald-900 text-[10px] font-bold text-white hover:bg-emerald-950  tracking-[0.35em] transition-all shadow-lg">PAYOUT ${availableForPayout.toLocaleString()} MAD</button>` : `<span class="text-center text-[9px] font-bold  tracking-[0.35em] text-black/25">No payable balance</span>`}
+                    ${Number(c.current_amount || 0) === 0 ? `<button onclick="deleteCampaign(${c.id})" class="px-12 py-5 rounded-lg bg-red-900 text-[10px] font-bold text-white hover:bg-red-950  tracking-[0.35em] transition-all shadow-lg">DELETE</button>` : ''}
                 </div>
             </div>
         </div>`;
@@ -1007,7 +1007,7 @@ async function deleteCampaign(campaignId) {
  */
 function showPorterToast(msg) {
     const t = document.createElement('div');
-    t.className = 'fixed bottom-16 left-1/2 -translate-x-1/2 z-[200] bg-black text-white px-16 py-6 rounded-[2rem] text-[11px] font-black uppercase tracking-[0.5em] shadow-3xl flex items-center gap-8 transition-all duration-700 opacity-0 translate-y-12 border-2 border-white/10';
+    t.className = 'fixed bottom-16 left-1/2 -translate-x-1/2 z-[200] bg-black text-white px-16 py-6 rounded-[2rem] text-[11px] font-bold  tracking-[0.5em] shadow-3xl flex items-center gap-8 transition-all duration-700 opacity-0 translate-y-12 border-2 border-white/10';
     t.innerHTML = `<div class="w-3.5 h-3.5 rounded-full bg-emerald-300 animate-pulse"></div><span>${msg}</span>`;
     document.body.appendChild(t);
     setTimeout(() => { t.classList.replace('opacity-0', 'opacity-100'); t.classList.replace('translate-y-12', 'translate-y-0'); }, 10);
