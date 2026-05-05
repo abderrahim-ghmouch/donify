@@ -5,16 +5,20 @@
 <div id="profileLoading" class="min-h-screen flex items-center justify-center bg-cream font-quicksand">
     <div class="text-center">
         <div class="w-12 h-12 border-2 border-[#064e3b] border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-        <p class="text-sm font-bold tracking-widest text-gray-400">Retrieving Account</p>
+        <p class="text-sm font-bold tracking-widest text-[#064e3b]">Retrieving Account</p>
     </div>
 </div>
 
 {{-- Main Profile Experience --}}
 <div id="profilePage" class="min-h-screen bg-[#fbf8f6] font-quicksand relative overflow-hidden" style="display:none">
     
-    {{-- Refined Atmospheric Gradient (Footer based, slightly deeper/longer) --}}
-    {{-- Sync Global Atmosphere: Ultimate Static Rise (Porter Dashboard Spec) --}}
-    <div class="absolute bottom-0 left-0 right-0 h-[1200px] bg-gradient-to-t from-[#064e3b]/90 via-[#064e3b]/20 via-40% to-transparent pointer-events-none z-0"></div>
+    {{-- Atmospheric blobs --}}
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute inset-x-0 bottom-0 h-[800px] bg-gradient-to-t from-[#064e3b] via-[#064e3b]/60 to-transparent"></div>
+        <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-emerald-400/40 rounded-full blur-[150px]"></div>
+        <div class="absolute bottom-1/3 right-1/4 w-[450px] h-[450px] bg-emerald-500/35 rounded-full blur-[130px]"></div>
+        <div class="absolute top-1/2 right-1/3 w-[400px] h-[400px] bg-emerald-300/30 rounded-full blur-[140px]"></div>
+    </div>
 
     {{-- Hero Section (Bright Top) --}}
     <section class="relative pt-32 pb-20 px-8 z-10">
@@ -44,7 +48,7 @@
                 {{-- User Info (Dark Text on Bright Top) --}}
                 <div class="flex-1 text-center md:text-left">
                     <h1 id="heroName" class="text-4xl md:text-6xl font-black text-[#1A1A1A] leading-none mb-3 tracking-tighter">Loading...</h1>
-                    <p id="heroEmail" class="text-gray-400 text-xl font-medium tracking-tight">—</p>
+                    <p id="heroEmail" class="text-[#064e3b] text-xl font-medium tracking-tight">—</p>
                 </div>
 
             </div>
@@ -61,7 +65,7 @@
                 <div class="flex items-center justify-between mb-12">
                     <div>
                         <h2 class="text-2xl font-black text-[#1A1A1A] mb-1 tracking-tight">Details Registry</h2>
-                        <p class="text-[10px] text-gray-400 font-bold tracking-widest">Update Your Identification</p>
+                        <p class="text-[10px] text-[#064e3b] font-bold tracking-widest">Update Your Identification</p>
                     </div>
                     <div id="settingsSuccess" class="hidden px-5 py-2 bg-emerald-50 text-emerald-600 rounded-xl text-[9px] font-black tracking-widest border border-emerald-100">Synchronized</div>
                 </div>
@@ -70,16 +74,16 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div>
                             <label class="block text-[10px] font-black tracking-[0.2em] text-[#1A1A1A] mb-4 ml-2">First Identity</label>
-                            <input type="text" id="editFirstName" class="w-full px-8 py-6 rounded-2xl bg-gray-100/50 border-2 border-gray-200 outline-none focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all text-base font-semibold text-[#1A1A1A] placeholder-gray-300" placeholder="First Name">
+                            <input type="text" id="editFirstName" class="w-full px-8 py-6 rounded-2xl bg-gray-100/50 border-2 border-gray-200 outline-none focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all text-base font-semibold text-[#1A1A1A] placeholder-[#064e3b]/40" placeholder="First Name">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black tracking-[0.2em] text-[#1A1A1A] mb-4 ml-2">Last Identity</label>
-                            <input type="text" id="editLastName" class="w-full px-8 py-6 rounded-2xl bg-gray-100/50 border-2 border-gray-200 outline-none focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all text-base font-semibold text-[#1A1A1A] placeholder-gray-300" placeholder="Last Name">
+                            <input type="text" id="editLastName" class="w-full px-8 py-6 rounded-2xl bg-gray-100/50 border-2 border-gray-200 outline-none focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all text-base font-semibold text-[#1A1A1A] placeholder-[#064e3b]/40" placeholder="Last Name">
                         </div>
                     </div>
                     <div>
                         <label class="block text-[10px] font-black tracking-[0.2em] text-[#1A1A1A] mb-4 ml-2">Communication Link</label>
-                        <input type="email" id="editEmail" class="w-full px-8 py-6 rounded-2xl bg-gray-100/50 border-2 border-gray-200 outline-none focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all text-base font-semibold text-[#1A1A1A] placeholder-gray-300" placeholder="Email Address">
+                        <input type="email" id="editEmail" class="w-full px-8 py-6 rounded-2xl bg-gray-100/50 border-2 border-gray-200 outline-none focus:border-[#064e3b] focus:ring-4 focus:ring-[#064e3b]/5 transition-all text-base font-semibold text-[#1A1A1A] placeholder-[#064e3b]/40" placeholder="Email Address">
                     </div>
                     <div>
                         <label class="block text-[10px] font-black tracking-[0.2em] text-[#1A1A1A] mb-4 ml-2">Verified role</label>
