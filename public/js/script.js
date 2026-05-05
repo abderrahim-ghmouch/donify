@@ -474,7 +474,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     ? `<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${img}" alt="${escHtml(c.title)}">`
                     : `<div class="w-full h-full flex items-center justify-center text-gray-200"><svg class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>`
                 }
-                <div class="absolute top-6 left-6 px-4 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-[#059669] text-[8px] font-bold  tracking-widest border border-[#059669]/20 shadow-xl">
+                <div class="absolute top-6 left-6 px-5 py-2.5 rounded-full bg-black/80 backdrop-blur-md text-[#059669] text-sm font-bold tracking-wide border border-[#059669]/20 shadow-xl">
                     ${escHtml(cat)}
                 </div>
                 <button onclick="event.stopPropagation(); toggleFav(this, ${c.id})"
@@ -487,9 +487,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             </div>
             <div class="p-10 flex-grow flex flex-col bg-gradient-to-br from-[#fbf8f6] to-[#f5ede4] border-t border-black/[0.02]">
                 <div class="flex items-center gap-2 mb-3">
-                    <span class="text-[9px] font-bold text-emerald-600  tracking-[0.2em] ">Project Lead:</span>
-                    <span class="text-[10px] font-bold text-[#1A1A1A]  tracking-wider  underline decoration-emerald-500/30 underline-offset-4">
-                        ${escHtml(c.user ? c.user.name || `${c.user.first_name} ${c.user.last_name}` : 'Institutional Partner')}
                     </span>
                 </div>
                 <h3 class="text-2xl font-bold text-[#1A1A1A] mb-8 tracking-tighter leading-tight group-hover:text-[#064e3b] transition-colors line-clamp-2" style="min-height:3.5rem;">
@@ -707,16 +704,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="campaign-intel-card group bg-[#fbf8f6] rounded-xl overflow-hidden border-2 border-[#064e3b]/40 hover:border-[#DAA520] transition-all duration-700 shadow-sm hover:shadow-2xl flex flex-col h-full relative cursor-pointer" onclick="window.location='/campaigns/${c.id}'">
             <div class="relative h-64 overflow-hidden bg-zinc-50 border-b border-black/[0.03]">
                 ${img ? `<img class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="${img}" alt="${escHtml(c.title)}">` : `<div class="w-full h-full flex items-center justify-center text-gray-200"><svg class="h-20 w-20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg></div>`}
-                <div class="absolute top-6 left-6 px-4 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-[#059669] text-[8px] font-bold  tracking-widest border border-[#059669]/20 shadow-xl">${escHtml(cat)}</div>
+                <div class="absolute top-6 left-6 px-5 py-2.5 rounded-full bg-black/80 backdrop-blur-md text-[#059669] text-sm font-bold tracking-wide border border-[#059669]/20 shadow-xl">${escHtml(cat)}</div>
                 <button onclick="event.stopPropagation(); removeFromWatchlist(event, ${c.id})" class="absolute top-6 right-6 p-3 rounded-xl backdrop-blur-md transition-all border border-[#FFD700]/30 bg-[#FFD700]/20 text-[#FFD700] hover:bg-[#FFD700]/40 z-30">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
                 </button>
             </div>
             <div class="p-10 flex-grow flex flex-col bg-gradient-to-br from-[#fbf8f6] to-[#f5ede4] border-t border-black/[0.02]">
                 <div class="flex items-center gap-2 mb-3">
-                    <span class="text-[9px] font-bold text-emerald-600  tracking-[0.2em] ">Project Lead:</span>
-                    <span class="text-[10px] font-bold text-[#1A1A1A]  tracking-wider  underline decoration-emerald-500/30 underline-offset-4">
-                        ${escHtml(c.user ? c.user.name || `${c.user.first_name} ${c.user.last_name}` : 'Institutional Partner')}
                     </span>
                 </div>
                 <h3 class="text-2xl font-bold text-[#1A1A1A] mb-8 tracking-tighter leading-tight group-hover:text-[#064e3b] transition-colors line-clamp-2" style="min-height:3.5rem;">${escHtml(c.title)}.</h3>
