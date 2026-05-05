@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="flex flex-col md:flex-row h-screen bg-[#fbf8f6] font-quicksand overflow-hidden relative">
-    
+
     {{-- Identity Zone (Left): Natural Perspective --}}
     <div class="hidden md:flex md:w-1/2 relative overflow-hidden bg-[url('{{ asset('images/people.jpeg') }}')] bg-cover bg-center">
         {{-- Right-to-Left Dark Emerald Transition --}}
         <div class="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-l from-[#0d1f1a] via-transparent to-transparent z-10"></div>
     </div>
-    
+
     {{-- Form Zone (Right): Midnight Emerald Theme --}}
     <div class="w-full md:w-1/2 overflow-y-auto custom-scrollbar relative z-20 shadow-lg bg-gradient-to-bl from-[#10b981] via-[#064e3b] to-[#0d1f1a]">
         <div class="max-w-4xl mx-auto px-8 py-20 relative z-10">
@@ -28,7 +28,7 @@
                     <div class="h-6 w-px bg-white/10"></div>
                     <span class="text-[12px] font-black uppercase tracking-[0.4em] text-[#fbf8f6]/30">Empowering Impact</span>
                 </div>
-                <h1 class="text-3xl font-bold text-[#fbf8f6] leading-tight tracking-tight">Be the <span class="text-white/40">Change.</span></h1>
+                <h1 class="text-3xl font-bold text-[#fbf8f6] leading-tight tracking-tight">Be the <span class="text-white/40">Change</span></h1>
             </div>
 
             {{-- State Headers --}}

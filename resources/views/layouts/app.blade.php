@@ -6,7 +6,7 @@
     <title>Donify - The place if you can or if  you want</title>
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Tailwind CDN (using for layout) -->
     <script src="https://cdn.tailwindcss.com"></script>

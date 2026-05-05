@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen bg-[#fbf8f6] font-quicksand relative overflow-hidden">
+<div class="min-h-screen bg-[#fbf8f6] font-['Comfortaa'] relative overflow-hidden">
 
     {{-- Atmospheric blobs --}}
     <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -118,7 +118,7 @@
 
             {{-- Form --}}
             <div class="max-h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:bg-emerald-200 bg-white">
-                <form id="createCampaignForm" class="grid grid-cols-1 lg:grid-cols-12 font-quicksand">
+                <form id="createCampaignForm" class="grid grid-cols-1 lg:grid-cols-12 font-['Comfortaa']">
 
                     {{-- Left: Narrative --}}
                     <div class="lg:col-span-7 p-10 lg:p-16 space-y-10">
